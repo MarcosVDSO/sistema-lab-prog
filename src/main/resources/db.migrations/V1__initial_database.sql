@@ -1,5 +1,5 @@
 
-CREATE TABLE Address (
+CREATE TABLE Addresses (
     addressId UUID PRIMARY KEY,
     country VARCHAR(50) NOT NULL,
     "state" VARCHAR(50) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE Address (
     createdAt TIMESTAMPTZ NOT NULL
 );
 
-CREATE TABLE Employee (
+CREATE TABLE Employees (
     employeeId UUID PRIMARY KEY,
     addressId UUID,
     firstname VARCHAR(100) NOT NULL,
@@ -22,11 +22,11 @@ CREATE TABLE Employee (
 
     CONSTRAINT fk_addressId 
         FOREIGN KEY (addressId)
-        REFERENCES Address(addressId)
+        REFERENCES Addresses(addressId)
         ON DELETE SET NULL
 );
 
-CREATE TABLE Admin (
+CREATE TABLE Admins (
     adminId UUID PRIMARY KEY,
     addressId UUID,
     firstname VARCHAR(100) NOT NULL,
@@ -38,11 +38,18 @@ CREATE TABLE Admin (
 
     CONSTRAINT fk_addressId 
         FOREIGN KEY (addressId)
-        REFERENCES Address(addressId)
+        REFERENCES Addresses(addressId)
         ON DELETE SET NULL
 );
 
-CREATE TABLE Customer (
+CREATE TABLE Carts (
+    cartId UUID PRIMARY KEY,
+    total INTEGER NOT NULL,
+    createdAt TIMESTAMPTZ NOT NULL,
+    updatedAt TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE Customers (
     customerId UUID PRIMARY KEY,
     addressId UUID,
     cartId UUID,
@@ -55,51 +62,44 @@ CREATE TABLE Customer (
 
     CONSTRAINT fk_addressId 
         FOREIGN KEY (addressId)
-        REFERENCES Address(addressId)
-        ON DELETE SET NULL
+        REFERENCES Addresses(addressId)
+        ON DELETE SET NULL,
 
     CONSTRAINT fk_cartId 
         FOREIGN KEY (cartId)
-        REFERENCES Cart(cartId)
+        REFERENCES Carts(cartId)
         ON DELETE SET NULL
 );
 
-CREATE TABLE Cart (
-    cartId UUID PRIMARY KEY,
-    total INTEGER NOT NULL,
-    createdAt TIMESTAMPTZ NOT NULL,
-    updatedAt TIMESTAMPTZ NOT NULL
-);
-
-CREATE TABLE CartItem (
+CREATE TABLE CartItems (
     cartItemId UUID PRIMARY KEY,
     cartId UUID,
-    quantity INTEGER NO NULL,
+    quantity INTEGER NOT NULL,
     createdAt TIMESTAMP NOT NULL,
     updatedAt TIMESTAMP NOT NULL,
 
     CONSTRAINT fk_cartId 
         FOREIGN KEY (cartId)
-        REFERENCES Cart(cartId)
+        REFERENCES Carts(cartId)
         ON DELETE SET NULL
 );
 
-CREATE TABLE ProductSku (
+CREATE TABLE ProductSkus (
     productSkuId UUID PRIMARY KEY,
-    cartItemID UUID,
+    cartItemId UUID,
     sku VARCHAR(100) NOT NULL,
     quantity INTEGER NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     createdAt TIMESTAMP NOT NULL,
-    updatedAt TIMESTAMP NOT NULL
+    updatedAt TIMESTAMP NOT NULL,
 
     CONSTRAINT fk_cartItemId 
         FOREIGN KEY (cartItemId)
-        REFERENCES CartItem(cartItemId)
+        REFERENCES CartItems(cartItemId)
         ON DELETE SET NULL
 );
 
-CREATE TABLE Product (
+CREATE TABLE Products (
     productId UUID PRIMARY KEY,
     productSkuId UUID,
     productName VARCHAR(100) NOT NULL,
@@ -110,35 +110,35 @@ CREATE TABLE Product (
 
     CONSTRAINT fk_productSkuId 
         FOREIGN KEY (productSkuId)
-        REFERENCES ProductSku(productSkuId)
+        REFERENCES ProductSkus(productSkuId)
         ON DELETE SET NULL
 );
 
-CREATE TABLE Category (
+CREATE TABLE Categories (
     categoryId UUID PRIMARY KEY,
     productId UUID,
     categoryName VARCHAR(255) NOT NULL,
     categoryDescription VARCHAR(255) NOT NULL,
     createdAt TIMESTAMP NOT NULL,
-    updatedAt TIMESTAMP NOT NULL
+    updatedAt TIMESTAMP NOT NULL,
 
     CONSTRAINT fk_productId 
         FOREIGN KEY (productId)
-        REFERENCES Product(productId)
+        REFERENCES Products(productId)
         ON DELETE SET NULL
 );
 
-CREATE TABLE SubCategory (
+CREATE TABLE SubCategories (
     subCategoryId UUID PRIMARY KEY,
     categoryId UUID,
     subCategoryName VARCHAR(255) NOT NULL,
     subCategoryDescription VARCHAR(255) NOT NULL,
     createdAt TIMESTAMP NOT NULL,
-    updatedAt TIMESTAMP NOT NULL 
+    updatedAt TIMESTAMP NOT NULL,
 
     CONSTRAINT fk_categoryId 
         FOREIGN KEY (categoryId)
-        REFERENCES Category(categoryId)
+        REFERENCES Categories(categoryId)
         ON DELETE SET NULL
 );
 
