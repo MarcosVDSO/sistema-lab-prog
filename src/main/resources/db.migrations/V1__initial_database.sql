@@ -1,45 +1,22 @@
 
-CREATE TABLE Addresses (
-    addressId UUID PRIMARY KEY,
-    country VARCHAR(50) NOT NULL,
-    "state" VARCHAR(50) NOT NULL,
-    landmark VARCHAR(50) NOT NULL,
-    city VARCHAR(50) NOT NULL,
-    cep VARCHAR(50) NOT NULL,
-    neighborhood VARCHAR(50) NOT NULL,
-    createdAt TIMESTAMPTZ NOT NULL
-);
-
 CREATE TABLE Employees (
     employeeId UUID PRIMARY KEY,
-    addressId UUID,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
     username VARCHAR(100) NOT NULL UNIQUE,
     "password" VARCHAR(100) NOT NULL,
     profilePhoto VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-
-    CONSTRAINT fk_addressId 
-        FOREIGN KEY (addressId)
-        REFERENCES Addresses(addressId)
-        ON DELETE SET NULL
+    email VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Admins (
     adminId UUID PRIMARY KEY,
-    addressId UUID,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
     username VARCHAR(100) NOT NULL UNIQUE,
     "password" VARCHAR(100) NOT NULL,
     profilePhoto VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-
-    CONSTRAINT fk_addressId 
-        FOREIGN KEY (addressId)
-        REFERENCES Addresses(addressId)
-        ON DELETE SET NULL
+    email VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Carts (
@@ -51,7 +28,6 @@ CREATE TABLE Carts (
 
 CREATE TABLE Customers (
     customerId UUID PRIMARY KEY,
-    addressId UUID,
     cartId UUID,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
@@ -60,58 +36,83 @@ CREATE TABLE Customers (
     profilePhoto VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
 
-    CONSTRAINT fk_addressId 
-        FOREIGN KEY (addressId)
-        REFERENCES Addresses(addressId)
+    CONSTRAINT fk_cartId 
+        FOREIGN KEY (cartId)
+        REFERENCES Carts(cartId)
+        ON DELETE SET NULL
+);
+
+CREATE TABLE Addresses (
+    addressId UUID PRIMARY KEY,
+    adminId UUID,
+    employeeId UUID,
+    customerId UUID,
+    country VARCHAR(50) NOT NULL,
+    "state" VARCHAR(50) NOT NULL,
+    landmark VARCHAR(50) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    cep VARCHAR(50) NOT NULL,
+    neighborhood VARCHAR(50) NOT NULL,
+    createdAt TIMESTAMPTZ NOT NULL,
+
+    CONSTRAINT fk_adminId
+        FOREIGN KEY (adminId)
+        REFERENCES Admins(adminId)
         ON DELETE SET NULL,
 
-    CONSTRAINT fk_cartId 
-        FOREIGN KEY (cartId)
-        REFERENCES Carts(cartId)
-        ON DELETE SET NULL
+    CONSTRAINT fk_employeeId
+            FOREIGN KEY (employeeId)
+            REFERENCES Employees(employeeId)
+            ON DELETE SET NULL,
+
+    CONSTRAINT fk_customerId
+            FOREIGN KEY (customerId)
+            REFERENCES Customers(customerId)
+            ON DELETE SET NULL
 );
 
-CREATE TABLE CartItems (
-    cartItemId UUID PRIMARY KEY,
-    cartId UUID,
-    quantity INTEGER NOT NULL,
+CREATE TABLE Products (
+    productId UUID PRIMARY KEY,
+    productName VARCHAR(100) NOT NULL,
+    productDescription VARCHAR(255) NOT NULL,
+    summary VARCHAR(255) NOT NULL,
     createdAt TIMESTAMP NOT NULL,
-    updatedAt TIMESTAMP NOT NULL,
-
-    CONSTRAINT fk_cartId 
-        FOREIGN KEY (cartId)
-        REFERENCES Carts(cartId)
-        ON DELETE SET NULL
+    updatedAt TIMESTAMP NOT NULL
 );
+
 
 CREATE TABLE ProductSkus (
     productSkuId UUID PRIMARY KEY,
-    cartItemId UUID,
+    productId UUID,
     sku VARCHAR(100) NOT NULL,
     quantity INTEGER NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     createdAt TIMESTAMP NOT NULL,
     updatedAt TIMESTAMP NOT NULL,
 
-    CONSTRAINT fk_cartItemId 
-        FOREIGN KEY (cartItemId)
-        REFERENCES CartItems(cartItemId)
+    CONSTRAINT fk_productId
+        FOREIGN KEY (productId)
+        REFERENCES Products(productId)
         ON DELETE SET NULL
 );
 
-CREATE TABLE Products (
-    productId UUID PRIMARY KEY,
+CREATE TABLE CartItems (
+    cartItemId UUID PRIMARY KEY,
+    cartId UUID,
     productSkuId UUID,
-    productName VARCHAR(100) NOT NULL,
-    productDescription VARCHAR(255) NOT NULL,
-    summary VARCHAR(255) NOT NULL,
+    quantity INTEGER NOT NULL,
     createdAt TIMESTAMP NOT NULL,
     updatedAt TIMESTAMP NOT NULL,
 
-    CONSTRAINT fk_productSkuId 
-        FOREIGN KEY (productSkuId)
-        REFERENCES ProductSkus(productSkuId)
-        ON DELETE SET NULL
+    CONSTRAINT fk_cartId 
+        FOREIGN KEY (cartId)
+        REFERENCES Carts(cartId)
+        ON DELETE SET NULL,
+
+    CONSTRAINT fk_productSkuId
+         FOREIGN KEY (productSkuId)
+         REFERENCES ProductSkus(productSkuId)
+         ON DELETE SET NULL
 );
 
 CREATE TABLE Categories (
