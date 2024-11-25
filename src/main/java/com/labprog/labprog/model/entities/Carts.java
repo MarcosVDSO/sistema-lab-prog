@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Carts {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "cartId")
+    @Column(name = "cart_id")
     private UUID cartId;
 
     @OneToOne(mappedBy = "cart")
@@ -31,10 +31,10 @@ public class Carts {
     @Column(name = "total", nullable = false)
     private Long total;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
 }

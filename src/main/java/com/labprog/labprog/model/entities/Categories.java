@@ -19,25 +19,25 @@ import java.util.UUID;
 public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "categoryId")
+    @Column(name = "category_id")
     private UUID categoryId;
 
     @ManyToOne
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "product_id")
     private Products product;
 
     @OneToMany(mappedBy = "category")
     private List<SubCategories> subCategories;
 
-    @Column(name = "categoryName", nullable = false)
+    @Column(name = "category_name", nullable = false)
     private String categoryName;
 
-    @Column(name = "categoryDescription", nullable = false)
+    @Column(name = "category_description", nullable = false)
     private String categoryDescription;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }

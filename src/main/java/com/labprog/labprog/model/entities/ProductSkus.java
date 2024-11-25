@@ -19,14 +19,14 @@ import java.util.UUID;
 public class ProductSkus {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "productSkuId")
+    @Column(name = "product_sku_id")
     private UUID productSkuId;
 
     @OneToMany(mappedBy = "productSku")
     private List<CartItems> cartItem;
 
     @ManyToOne
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "product_id")
     private Products product;
 
     @Column(name = "sku", nullable = false)
@@ -38,10 +38,10 @@ public class ProductSkus {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
 }

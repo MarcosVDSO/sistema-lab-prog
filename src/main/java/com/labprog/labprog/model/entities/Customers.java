@@ -18,14 +18,14 @@ import java.util.UUID;
 public class Customers {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "customerId")
+    @Column(name = "customer_id")
     private UUID adminId;
 
     @OneToMany(mappedBy = "addressId")
     private List<Addresses> addresses;
 
     @OneToOne
-    @JoinColumn(name = "cartId")
+    @JoinColumn(name = "cart_id")
     private Carts cart;
 
     @Column(name = "firstname", nullable = false)
@@ -40,7 +40,7 @@ public class Customers {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "profilePhoto", nullable = false)
+    @Column(name = "profile_photo", nullable = false)
     private String profilePhoto;
 
     @Column(name = "email", nullable = false)

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Admins ")
+@Table(name = "Admins")
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Admins {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "adminId")
+    @Column(name = "admin_id")
     private UUID adminId;
 
     @OneToMany(mappedBy = "addressId")
@@ -36,7 +36,7 @@ public class Admins {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "profilePhoto", nullable = false)
+    @Column(name = "profile_photo", nullable = false)
     private String profilePhoto;
 
     @Column(name = "email", nullable = false)

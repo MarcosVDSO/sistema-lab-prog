@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Employees {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "employeeId")
+    @Column(name = "employee_id")
     private UUID employeeId;
 
     @OneToMany(mappedBy = "addressId")
@@ -36,7 +36,7 @@ public class Employees {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "profilePhoto", nullable = false)
+    @Column(name = "profile_photo", nullable = false)
     private String profilePhoto;
 
     @Column(name = "email", nullable = false)

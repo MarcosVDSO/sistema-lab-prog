@@ -18,23 +18,23 @@ import java.util.UUID;
 public class CartItems {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "cartItemId")
+    @Column(name = "cart_item_id")
     private UUID cartItemId;
 
     @ManyToOne
-    @JoinColumn(name = "cartId")
+    @JoinColumn(name = "cart_id")
     private Carts cart;
 
     @ManyToOne
-    @JoinColumn(name = "productSkuId")
+    @JoinColumn(name = "product_sku_id")
     private ProductSkus productSku;
 
     @Column(name = "quantity", nullable = false)
     private Long quantity;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }

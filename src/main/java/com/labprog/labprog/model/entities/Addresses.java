@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Addresses {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "addressId")
+    @Column(name = "address_id")
     private UUID addressId;
 
     @Column(name = "country", nullable = false)
@@ -36,18 +36,18 @@ public class Addresses {
     @Column(name = "cep", nullable = false)
     private String cep;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "adminId")
+    @JoinColumn(name = "admin_id")
     private Admins admin;
 
     @ManyToOne
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customer_id")
     private Customers customer;
 
     @ManyToOne
-    @JoinColumn(name = "employeeId")
+    @JoinColumn(name = "employee_id")
     private Employees employee;
 }

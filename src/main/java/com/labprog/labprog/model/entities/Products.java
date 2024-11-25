@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "productId")
+    @Column(name = "product_id")
     private UUID productId;
 
     @OneToMany(mappedBy = "product")
@@ -28,19 +28,19 @@ public class Products {
     @OneToMany(mappedBy = "product")
     private List<Categories> categories;
 
-    @Column(name = "productName", nullable = false)
+    @Column(name = "product_name", nullable = false)
     private String productName;
 
-    @Column(name = "productDescription", nullable = false)
+    @Column(name = "product_description", nullable = false)
     private String productDescription;
 
     @Column(name = "summary", nullable = false)
     private String summary;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
 }

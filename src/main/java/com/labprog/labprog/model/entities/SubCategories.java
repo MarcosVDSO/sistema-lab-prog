@@ -18,22 +18,22 @@ import java.util.UUID;
 public class SubCategories {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "subCategoryId")
+    @Column(name = "subCategory_id")
     private UUID subCategoryId;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "category_id")
     private Categories category;
 
-    @Column(name = "subCategoryName", nullable = false)
+    @Column(name = "subCategory_name", nullable = false)
     private String subCategoryName;
 
-    @Column(name = "subCategoryDescription", nullable = false)
+    @Column(name = "subCategory_description", nullable = false)
     private String subCategoryDescription;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }
