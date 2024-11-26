@@ -2,7 +2,9 @@ package com.labprog.labprog.model.repositories;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 public class CategoryRepositoryTest {
     @Autowired
     CartItemsRepository repository;
