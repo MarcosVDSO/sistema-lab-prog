@@ -10,6 +10,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.labprog.labprog.model.entities.Addresses;
 
+import java.time.LocalDateTime;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
@@ -19,7 +21,25 @@ public class AddressRepositoryTest {
 
     @Test
     public void testCreateAddress() {
-    
+
+        Addresses address = Addresses.builder()
+                .country("Brazil")
+                .state("Maranhão")
+                .landmark("Perto da praça")
+                .city("São Luis")
+                .cep("123")
+                .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
+                .build();
+
+        Addresses save = repository.save(address);
+
+        Assertions.assertNotNull(save);
+        Assertions.assertEquals(address.getCountry(), save.getCountry());
+        Assertions.assertEquals(address.getState(), save.getState());
+        Assertions.assertEquals(address.getLandmark(), save.getLandmark());
+        Assertions.assertEquals(address.getCity(), save.getCity());
+        Assertions.assertEquals(address.getCep(), save.getCep());
+        Assertions.assertEquals(address.getCreatedAt(), save.getCreatedAt());
     }
 
     @Test
