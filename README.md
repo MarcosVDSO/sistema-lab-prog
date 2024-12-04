@@ -1,2 +1,2 @@
 # sistema-lab-prog
-Sistema Web Full-Stack
+Back-end para um e-commerce
