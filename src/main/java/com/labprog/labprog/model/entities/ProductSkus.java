@@ -22,7 +22,7 @@ public class ProductSkus {
     @Column(name = "product_sku_id")
     private UUID productSkuId;
 
-    @OneToMany(mappedBy = "productSku")
+    @OneToMany(mappedBy = "productSkus")
     private List<CartItems> cartItem;
 
     @ManyToOne
