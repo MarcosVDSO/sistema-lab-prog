@@ -26,6 +26,7 @@ public class ProductController {
             Products savedProducts = productServices.createProduct(products);
             return new ResponseEntity<>(savedProducts,HttpStatus.CREATED);
         } catch (RuntimeException e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }

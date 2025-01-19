@@ -53,7 +53,6 @@ CREATE TABLE Addresses (
     city VARCHAR(50) NOT NULL,
     cep VARCHAR(50) NOT NULL,
     neighborhood VARCHAR(50) NOT NULL,
-    createdAt TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_admin_id
         FOREIGN KEY (admin_id)
