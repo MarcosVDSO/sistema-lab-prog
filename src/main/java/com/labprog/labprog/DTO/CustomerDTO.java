@@ -15,21 +15,12 @@ import java.util.UUID;
 public class CustomerDTO {
 
     private List<Addresses> addresses;
-
     private String firstname;
-
-
     private String lastname;
-
-
     private String username;
-
     private Carts cart;
     private String password;
-
-
     private String profilePhoto;
-
-
     private String email;
+
 }

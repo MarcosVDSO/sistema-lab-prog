@@ -57,7 +57,6 @@ public class CustomersService {
         existingCustomer.setEmail(updatedCustomer.getEmail());
         existingCustomer.setPassword(updatedCustomer.getPassword());
         existingCustomer.setProfilePhoto(updatedCustomer.getProfilePhoto());
-        existingCustomer.setAddresses(updatedCustomer.getAddresses());
         logger.info("substituiu campos: {} {}", updatedCustomer.getFirstname(), existingCustomer.getFirstname());
         return customerRepository.save(existingCustomer);
     }
