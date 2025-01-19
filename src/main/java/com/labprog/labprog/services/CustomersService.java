@@ -14,26 +14,26 @@ import java.util.UUID;
 
 @Service
 public class CustomersService {
-        @Autowired
-        CustomerRepository customerRepository;
+    @Autowired
+    CustomerRepository customerRepository;
 
-        private static final Logger logger = LoggerFactory.getLogger(CustomersService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomersService.class);
 
-        public List<Customers> findAll() {
-            return customerRepository.findAll();
-        }
+    public List<Customers> findAll() {
+        return customerRepository.findAll();
+    }
 
-        public Optional<Customers> findById(UUID id) {
-            return customerRepository.findById(id);
-        }
+    public Optional<Customers> findById(UUID id) {
+        return customerRepository.findById(id);
+    }
 
-        @Transactional
-        public Customers save(Customers customer) {
-            logger.info("Salvando novo cliente: {}", customer.getEmail());
-            verifyCustomer(customer, true);
-            logger.info("cliente verificado: {}", customer.getEmail());
-            return customerRepository.save(customer);
-        }
+    @Transactional
+    public Customers save(Customers customer) {
+        logger.info("Salvando novo cliente: {}", customer.getEmail());
+        verifyCustomer(customer, true);
+        logger.info("cliente verificado: {}", customer.getEmail());
+        return customerRepository.save(customer);
+    }
 
     public Customers update(UUID customerId, Customers updatedCustomer) {
         logger.info("cliente sendo efigtadp: {}", updatedCustomer.getEmail());

@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.labprog.labprog.DTO.ProductDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,4 +41,11 @@ public class Products {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    public Products(ProductDTO productDTO) {
+        this.productName = productDTO.getProductName();
+        this.productDescription = productDTO.getProductDescription();
+        this.summary = productDTO.getSummary();
+        this.productSkus = productDTO.getProductSkus();
+        this.categories = productDTO.getCategories();
+    }
 }
