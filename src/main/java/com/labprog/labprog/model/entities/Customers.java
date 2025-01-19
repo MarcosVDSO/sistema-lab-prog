@@ -1,11 +1,13 @@
 package com.labprog.labprog.model.entities;
 
+import com.labprog.labprog.DTO.CustomerDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,9 +21,9 @@ public class Customers {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "customer_id")
-    private UUID adminId;
+    private UUID customerId;
 
-    @OneToMany(mappedBy = "addressId")
+    @OneToMany(mappedBy = "addressId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Addresses> addresses;
 
     @OneToOne
@@ -45,4 +47,15 @@ public class Customers {
 
     @Column(name = "email", nullable = false)
     private String email;
+
+    public Customers(CustomerDTO customerDTO) {
+        this.cart = customerDTO.getCart();
+        this.firstname = customerDTO.getFirstname();
+        this.lastname = customerDTO.getLastname();
+        this.username = customerDTO.getUsername();
+        this.password = customerDTO.getPassword();
+        this.profilePhoto = customerDTO.getProfilePhoto();
+        this.email = customerDTO.getEmail();
+        this.addresses = customerDTO.getAddresses();
+    }
 }
