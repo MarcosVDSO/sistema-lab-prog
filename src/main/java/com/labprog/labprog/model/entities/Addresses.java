@@ -36,7 +36,7 @@ public class Addresses {
     @Column(name = "cep", nullable = false)
     private String cep;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "createdat", nullable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne
