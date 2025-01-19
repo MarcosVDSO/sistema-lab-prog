@@ -1,7 +1,6 @@
 package com.labprog.labprog.services;
 
 import com.labprog.labprog.model.entities.ProductSkus;
-import com.labprog.labprog.model.entities.Products;
 import com.labprog.labprog.model.repositories.ProductSkusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ProductSkuServices {
+public class ProductSkuService {
 
     @Autowired
     private ProductSkusRepository productSkusRepository;

@@ -1,7 +1,7 @@
 package com.labprog.labprog.controllers;
 
 import com.labprog.labprog.model.entities.Products;
-import com.labprog.labprog.services.ProductServices;
+import com.labprog.labprog.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class ProductController {
 
     @Autowired
-    private ProductServices productServices;
+    private ProductService productServices;
 
     @PostMapping
     public Products createProduct(@RequestBody Products products) {

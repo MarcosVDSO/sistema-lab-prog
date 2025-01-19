@@ -1,7 +1,7 @@
 package com.labprog.labprog.controllers;
 
 import com.labprog.labprog.model.entities.ProductSkus;
-import com.labprog.labprog.services.ProductSkuServices;
+import com.labprog.labprog.services.ProductSkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequestMapping("/productSku")
 public class ProductSkuController {
     @Autowired
-    private ProductSkuServices productSkuServices;
+    private ProductSkuService productSkuServices;
 
     @PostMapping
     public ProductSkus createProductSku(@RequestBody ProductSkus productSku) {
@@ -35,7 +35,7 @@ public class ProductSkuController {
         return productSkuServices.updateProductSku(id, productSku);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProductSkuById(@PathVariable UUID id) {
         productSkuServices.deleteProductSkuById(id);
         return ResponseEntity.noContent().build();
