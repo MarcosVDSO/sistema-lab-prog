@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.labprog.labprog.DTO.ProductSkuDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,4 +45,11 @@ public class ProductSkus {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    public ProductSkus(ProductSkuDTO productSkuDTO) {
+        this.cartItem = productSkuDTO.getCartItem();
+        this.product = productSkuDTO.getProduct();
+        this.quantity = productSkuDTO.getQuantity();
+        this.price = productSkuDTO.getPrice();
+
+    }
 }
