@@ -36,9 +36,6 @@ public class Addresses {
     @Column(name = "cep", nullable = false)
     private String cep;
 
-    @Column(name = "createdat", nullable = false)
-    private LocalDateTime createdAt;
-
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admins admin;
