@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.labprog.labprog.DTO.EmployeesDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,4 +41,16 @@ public class Employees {
 
     @Column(name = "email", nullable = false)
     private String email;
+
+    public Employees(EmployeesDTO employeesDTO) {
+        this.employeeId = employeesDTO.getEmployeeId();
+        this.firstname = employeesDTO.getFirstname();
+        this.lastname = employeesDTO.getLastname();
+        this.username = employeesDTO.getUsername();
+        this.password = employeesDTO.getPassword();
+        this.profilePhoto = employeesDTO.getProfilePhoto();
+        this.email = employeesDTO.getEmail();
+        this.addresses = employeesDTO.getAddresses();
+
+    }
 }
