@@ -49,6 +49,7 @@ public class Customers {
     private String email;
 
     public Customers(CustomerDTO customerDTO) {
+        this.customerId = customerDTO.getCustomerId();
         this.cart = customerDTO.getCart();
         this.firstname = customerDTO.getFirstname();
         this.lastname = customerDTO.getLastname();

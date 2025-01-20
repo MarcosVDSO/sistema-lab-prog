@@ -59,6 +59,8 @@ public class CustomersService {
         existingCustomer.setProfilePhoto(updatedCustomer.getProfilePhoto());
         logger.info("substituiu campos: {} {}", updatedCustomer.getFirstname(), existingCustomer.getFirstname());
         return customerRepository.save(existingCustomer);
+        //coment
+
     }
 
 
