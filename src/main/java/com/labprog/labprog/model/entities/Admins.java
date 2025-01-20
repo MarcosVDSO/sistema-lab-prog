@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.labprog.labprog.DTO.AdminDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,4 +43,14 @@ public class Admins {
     @Column(name = "email", nullable = false)
     private String email;
 
+    public Admins(AdminDTO adminDTO) {
+        this.adminId = adminDTO.getAdminId();
+        this.firstname = adminDTO.getFirstname();
+        this.lastname = adminDTO.getLastname();
+        this.username = adminDTO.getUsername();
+        this.password = adminDTO.getPassword();
+        this.profilePhoto = adminDTO.getProfilePhoto();
+        this.email = adminDTO.getEmail();
+        this.addresses = adminDTO.getAddresses();
+    }
 }

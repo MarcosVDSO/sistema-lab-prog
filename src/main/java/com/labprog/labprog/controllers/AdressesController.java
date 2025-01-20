@@ -1,6 +1,7 @@
 package com.labprog.labprog.controllers;
 
 import com.labprog.labprog.DTO.AddressesDTO;
+import com.labprog.labprog.DTO.CustomerDTO;
 import com.labprog.labprog.model.entities.Addresses;
 import com.labprog.labprog.model.entities.Customers;
 import com.labprog.labprog.services.AddressesService;
@@ -19,16 +20,6 @@ public class AdressesController {
     @Autowired
     AddressesService addressesService;
 
-//    @GetMapping("/{uid}")
-//    public ResponseEntity<List<Addresses>> get(@PathVariable UUID uid) {
-//        try {
-//            List<Addresses> Addresses = addressesService.getAdressesByCustomerId(uid);
-//            return new ResponseEntity<>(Addresses, HttpStatus.OK);
-//        }
-//        catch (RuntimeException e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
     @GetMapping("/{uid}")
     public ResponseEntity<Addresses> getAdress(@PathVariable UUID uid) {
         try {
@@ -47,6 +38,26 @@ public class AdressesController {
             return new ResponseEntity<>(savedAddress, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{uid}")
+    public ResponseEntity<Addresses> updateAddress(@PathVariable UUID uid, @RequestBody AddressesDTO addressesDTO) {
+        try {
+            Addresses address = new Addresses(addressesDTO);
+            Addresses updatedAdress = addressesService.update(uid, address);
+            return new ResponseEntity<>(updatedAdress, HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @DeleteMapping("/{uid}")
+    public ResponseEntity<Addresses> deleteAddress(@PathVariable UUID uid) {
+        try {
+            addressesService.deleteById(uid);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

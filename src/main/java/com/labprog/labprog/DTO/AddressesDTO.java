@@ -33,10 +33,7 @@ public class AddressesDTO {
 
     private String cep;
 
-
-    private LocalDateTime createdAt;
-
-
+    private String neighborhood;
     private Admins admin;
 
 

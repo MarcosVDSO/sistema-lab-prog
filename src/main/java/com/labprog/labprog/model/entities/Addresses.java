@@ -37,8 +37,8 @@ public class Addresses {
     @Column(name = "cep", nullable = false)
     private String cep;
 
-    @Column(name = "createdat", nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "neighborhood", nullable = false)
+    private String neighborhood;
 
     @ManyToOne
     @JoinColumn(name = "admin_id")
@@ -58,11 +58,11 @@ public class Addresses {
         this.landmark = addressesDTO.getLandmark();
         this.city = addressesDTO.getCity();
         this.cep = addressesDTO.getCep();
-        this.createdAt = addressesDTO.getCreatedAt();
         this.admin = addressesDTO.getAdmin();
         this.customer = addressesDTO.getCustomer();
         this.employee = addressesDTO.getEmployee();
         this.addressId = addressesDTO.getAddressId();
+        this.neighborhood = addressesDTO.getNeighborhood();
 
     }
 }

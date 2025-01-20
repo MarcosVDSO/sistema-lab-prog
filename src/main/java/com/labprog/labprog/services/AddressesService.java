@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.stereotype.Service;
 
 import java.rmi.server.UID;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -58,6 +59,12 @@ public class AddressesService {
         }
         if (addresses.getState() == null) {
             throw new IllegalArgumentException("Estado é obrigatorio");
+        }
+        if (addresses.getLandmark() == null) {
+            throw new IllegalArgumentException("Ponto de referencia é nulo");
+        }
+        if (addresses.getNeighborhood() == null) {
+            throw new IllegalArgumentException("Vizinhança é nula");
         }
 
     }
