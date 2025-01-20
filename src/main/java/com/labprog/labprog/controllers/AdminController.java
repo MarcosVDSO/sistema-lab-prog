@@ -22,55 +22,34 @@ public class AdminController {
 
     @PostMapping
     public ResponseEntity<Admins> addAdmin(@RequestBody AdminDTO adminDTO) {
-        try {
             Admins admin = new Admins(adminDTO);
             Admins savedAdmin = adminService.save(admin);
             return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
     }
 
     @DeleteMapping("/{uid}")
     public ResponseEntity<Admins> deleteAdmin(@PathVariable UUID uid) {
-        try {
-            adminService.deleteById(uid);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        adminService.deleteById(uid);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
     public ResponseEntity<List<Admins>> getAllAdmin() {
-        try {
-            List<Admins> admin = adminService.findAll();
-            return new ResponseEntity<>(admin, HttpStatus.OK);
-        }
-        catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        List<Admins> admin = adminService.findAll();
+        return new ResponseEntity<>(admin, HttpStatus.OK);
     }
     @GetMapping("/{uid}")
     public ResponseEntity<Admins> getAdmin(@PathVariable UUID uid) {
-        try {
-            Optional<Admins> admin = adminService.findById(uid);
-            return new ResponseEntity<>(admin.get(), HttpStatus.OK);
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        Optional<Admins> admin = adminService.findById(uid);
+        return new ResponseEntity<>(admin.get(), HttpStatus.OK);
+
     }
     @PutMapping("/{uid}")
     public ResponseEntity<Admins> updateAdmin(@PathVariable UUID uid, @RequestBody AdminDTO adminDTO) {
-        try {
-            Admins admin = new Admins(adminDTO);
-            Admins updatedAdmin = adminService.update(uid, admin);
+        Admins admin = new Admins(adminDTO);
+        Admins updatedAdmin = adminService.update(uid, admin);
+        return new ResponseEntity<>(updatedAdmin, HttpStatus.OK);
 
-            return new ResponseEntity<>(updatedAdmin, HttpStatus.OK);
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
     
 }
