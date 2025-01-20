@@ -1,5 +1,6 @@
 package com.labprog.labprog.services;
 
+import com.labprog.labprog.exceptions.*;
 import com.labprog.labprog.model.entities.Customers;
 import com.labprog.labprog.model.entities.Employees;
 import com.labprog.labprog.model.repositories.EmployeesRepository;
@@ -35,17 +36,17 @@ public class EmployeesService {
     public Employees update(UUID customerId, Employees updatedCustomer) {
 
         Employees updatedEmployee = employeesRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new ObjectNotFoundException());
 
         verifyCustomer(updatedEmployee, false);
         // Atualizar apenas os campos que realmente mudaram
         if (!updatedCustomer.getEmail().equals(updatedEmployee.getEmail())
                 && employeesRepository.existsByEmail(updatedCustomer.getEmail())) {
-            throw new IllegalArgumentException("Email já está em uso");
+            throw new DuplicateEmailException();
         }
         if (!updatedCustomer.getUsername().equals(updatedEmployee.getUsername())
                 && employeesRepository.existsByUsername(updatedCustomer.getUsername())) {
-            throw new IllegalArgumentException("Nome de usuário já está em uso");
+            throw new DuplicateUserNameException();
         }
 
         updatedEmployee.setFirstname(updatedCustomer.getFirstname());
@@ -54,7 +55,6 @@ public class EmployeesService {
         updatedEmployee.setPassword(updatedCustomer.getPassword());
         updatedEmployee.setProfilePhoto(updatedCustomer.getProfilePhoto());
         return employeesRepository.save(updatedEmployee);
-        //coment
 
     }
 
@@ -62,39 +62,39 @@ public class EmployeesService {
     public void deleteById(UUID employeerId) {
         Optional<Employees> employee = employeesRepository.findById(employeerId);
         if (employee.isEmpty()) {
-            throw new RuntimeException("Cliente não encontrado");
+            throw new ObjectNotFoundException();
         }
         employeesRepository.deleteById(employeerId);
     }
 
     private void verifyCustomer(Employees employee, boolean isNewEmployee) {
         if (employee == null) {
-            throw new IllegalArgumentException("Usuário inválido");
+            throw new ObjectNotFoundException();
         }
         if (employee.getFirstname() == null || employee.getLastname() == null) {
-            throw new IllegalArgumentException("Nome e sobrenome são obrigatórios");
+            throw new InvalidAddressException();
         }
         if (employee.getEmail() == null) {
-            throw new IllegalArgumentException("Email é obrigatório");
+            throw new InvalidEmailException();
         }
         if (employee.getPassword() == null) {
-            throw new IllegalArgumentException("Senha é obrigatória");
+            throw new InvalidPasswordException();
         }
-//        if (customer.getAddresses() == null || customer.getAddresses().isEmpty()) {
-//            throw new IllegalArgumentException("Pelo menos um endereço é obrigatório");
-//        }
+
         if (employee.getUsername() == null) {
-            throw new IllegalArgumentException("Nome de usuário é obrigatório");
+            throw new InvalidUserNameException();
         }
 
         if (isNewEmployee) {
             if (employeesRepository.existsByEmail(employee.getEmail())) {
-                throw new IllegalArgumentException("O email já está cadastrado");
+                throw new DuplicateEmailException();
             }
             if (employeesRepository.existsByUsername(employee.getUsername())) {
-                throw new IllegalArgumentException("O nome de usuário já está cadastrado");
+                throw new DuplicateUserNameException();
             }
         }
+
+
     }
 
 }

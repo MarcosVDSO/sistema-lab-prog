@@ -25,54 +25,33 @@ public class EmployeesController {
 
     @PostMapping
     public ResponseEntity<Employees> addEmployee(@RequestBody EmployeesDTO employeesDTO) {
-        try {
-            Employees employee = new Employees(employeesDTO);
-            Employees savedEmployee = employeesService.save(employee);
-            return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
+        Employees employee = new Employees(employeesDTO);
+        Employees savedEmployee = employeesService.save(employee);
+        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{uid}")
     public ResponseEntity<Employees> deleteEmployee(@PathVariable UUID uid) {
-        try {
-            employeesService.deleteById(uid);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        employeesService.deleteById(uid);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
     public ResponseEntity<List<Employees>> getAllEmployees() {
-        try {
-            List<Employees> employee = employeesService.findAll();
-            return new ResponseEntity<>(employee, HttpStatus.OK);
-        }
-        catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        List<Employees> employee = employeesService.findAll();
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
     @GetMapping("/{uid}")
     public ResponseEntity<Employees> getEmployee(@PathVariable UUID uid) {
-        try {
-            Optional<Employees> employee = employeesService.findById(uid);
-            return new ResponseEntity<>(employee.get(), HttpStatus.OK);
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        Optional<Employees> employee = employeesService.findById(uid);
+        return new ResponseEntity<>(employee.get(), HttpStatus.OK);
+
     }
     @PutMapping("/{uid}")
     public ResponseEntity<Employees> updateEmployee(@PathVariable UUID uid, @RequestBody EmployeesDTO employeeDTO) {
-        try {
-            Employees employee = new Employees(employeeDTO);
-            Employees updatedEmployee = employeesService.update(uid, employee);
+        Employees employee = new Employees(employeeDTO);
+        Employees updatedEmployee = employeesService.update(uid, employee);
+        return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
 
-            return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 }

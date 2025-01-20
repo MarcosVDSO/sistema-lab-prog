@@ -26,55 +26,35 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<Customers> addCustomer(@RequestBody CustomerDTO customerDTO) {
-        try {
-            Customers customer = new Customers(customerDTO);
-            Customers savedCustomer = customersService.save(customer);
-            return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
+        Customers customer = new Customers(customerDTO);
+        Customers savedCustomer = customersService.save(customer);
+        return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{uid}")
-    public ResponseEntity<Customers> deleteCustomer(@PathVariable UUID uid) {
-        try {
-            customersService.deleteById(uid);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<String> deleteCustomer(@PathVariable UUID uid) {
+        customersService.deleteById(uid);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
     public ResponseEntity<List<Customers>> getAllCustomers() {
-        try {
-            List<Customers> customers = customersService.findAll();
-            return new ResponseEntity<>(customers, HttpStatus.OK);
-        }
-        catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        List<Customers> customers = customersService.findAll();
+        return new ResponseEntity<>(customers, HttpStatus.OK);
+
     }
     @GetMapping("/{uid}")
     public ResponseEntity<Customers> getCustomer(@PathVariable UUID uid) {
-        try {
-            Optional<Customers> customer = customersService.findById(uid);
-            return new ResponseEntity<>(customer.get(), HttpStatus.OK);
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        Optional<Customers> customer = customersService.findById(uid);
+        return new ResponseEntity<>(customer.get(), HttpStatus.OK);
+
     }
     @PutMapping("/{uid}")
     public ResponseEntity<Customers> updateCustomer(@PathVariable UUID uid, @RequestBody CustomerDTO customerDTO) {
-        try {
-            Customers customer = new Customers(customerDTO);
-            Customers updatedCustomer = customersService.update(uid, customer);
-            logger.info("passou pelo servico: ");
-            return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        Customers customer = new Customers(customerDTO);
+        Customers updatedCustomer = customersService.update(uid, customer);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+
     }
 
 }

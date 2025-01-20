@@ -1,5 +1,6 @@
 package com.labprog.labprog.services;
 
+import com.labprog.labprog.exceptions.ObjectNotFoundException;
 import com.labprog.labprog.model.entities.Addresses;
 import com.labprog.labprog.model.entities.Customers;
 import com.labprog.labprog.model.repositories.AddressRepository;
@@ -32,7 +33,7 @@ public class AddressesService {
     }
     public Addresses update(UUID id, Addresses address) {
         Addresses existingAddres = addressRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
+                .orElseThrow(() -> new ObjectNotFoundException("Address Not Found"));
         verifyAddress(address);
         existingAddres.setCep(address.getCep());
         existingAddres.setCity(address.getCity());
