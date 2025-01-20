@@ -17,6 +17,8 @@ public class ProductSkuService {
 
     public ProductSkus createProductSku(ProductSkus productSku) {
 
+        this.validateProductSku(productSku);
+
         productSku.setCreatedAt(LocalDateTime.now());
         productSku.setUpdatedAt(LocalDateTime.now());
 
@@ -47,6 +49,21 @@ public class ProductSkuService {
     public void deleteProductSkuById(UUID id) {
         ProductSkus productSku = getProductSkuById(id);
         productSkusRepository.delete(productSku);
+    }
+
+    private void validateProductSku(ProductSkus productSku) {
+        if (productSku.getProduct() == null) {
+            throw new RuntimeException("Product doesnt exist");
+        }
+
+        if (productSku.getPrice() == null || productSku.getPrice() <= 0) {
+            throw new RuntimeException("Price value is not valid");
+        }
+
+        if (productSku.getQuantity() == null || productSku.getQuantity() <= 0) {
+            throw new RuntimeException("Quantity value is not valid");
+        }
+
     }
 
 }

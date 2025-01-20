@@ -18,6 +18,8 @@ public class SubCategoryService {
 
     public SubCategories createSubCategory(SubCategories subCategory) {
 
+        this.validateSubCategory(subCategory);
+
         subCategory.setCreatedAt(LocalDateTime.now());
         subCategory.setUpdatedAt(LocalDateTime.now());
 
@@ -48,6 +50,16 @@ public class SubCategoryService {
     public void deleteSubCategory(UUID id) {
         SubCategories subCategory = getSubCategoryById(id);
         subCategoriesRepository.delete(subCategory);
+    }
+
+    private void validateSubCategory(SubCategories subCategory) {
+        if (subCategory.getSubCategoryName() == null) {
+            throw new RuntimeException("Sub category name is required");
+        }
+
+        if (subCategory.getSubCategoryDescription() == null) {
+            throw new RuntimeException("Sub category description is required");
+        }
     }
 
 }
