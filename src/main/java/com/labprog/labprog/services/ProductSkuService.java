@@ -5,6 +5,7 @@ import com.labprog.labprog.model.repositories.ProductSkusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +16,10 @@ public class ProductSkuService {
     private ProductSkusRepository productSkusRepository;
 
     public ProductSkus createProductSku(ProductSkus productSku) {
+
+        productSku.setCreatedAt(LocalDateTime.now());
+        productSku.setUpdatedAt(LocalDateTime.now());
+
         return productSkusRepository.save(productSku);
     }
 
@@ -34,6 +39,7 @@ public class ProductSkuService {
         productSku.setProduct(productSkuData.getProduct());
         productSku.setPrice(productSkuData.getPrice());
         productSku.setQuantity(productSkuData.getQuantity());
+        productSku.setUpdatedAt(LocalDateTime.now());
 
         return productSkusRepository.save(productSku);
     }

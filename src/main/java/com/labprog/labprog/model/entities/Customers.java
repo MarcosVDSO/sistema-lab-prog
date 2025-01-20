@@ -1,11 +1,9 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.labprog.labprog.DTO.CustomerDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,9 @@ public class Customers {
     @OneToMany(mappedBy = "addressId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Addresses> addresses;
 
+    @Setter
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "cart_id")
     private Carts cart;
 

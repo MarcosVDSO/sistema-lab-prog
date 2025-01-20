@@ -6,6 +6,7 @@ import com.labprog.labprog.model.repositories.SubCategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +17,10 @@ public class SubCategoryService {
     private SubCategoriesRepository subCategoriesRepository;
 
     public SubCategories createSubCategory(SubCategories subCategory) {
+
+        subCategory.setCreatedAt(LocalDateTime.now());
+        subCategory.setUpdatedAt(LocalDateTime.now());
+
         return subCategoriesRepository.save(subCategory);
     }
 
@@ -35,6 +40,7 @@ public class SubCategoryService {
         subCategory.setCategory(subCategoryData.getCategory());
         subCategory.setSubCategoryName(subCategoryData.getSubCategoryName());
         subCategory.setSubCategoryDescription(subCategoryData.getSubCategoryDescription());
+        subCategory.setUpdatedAt(LocalDateTime.now());
 
         return subCategoriesRepository.save(subCategory);
     }
