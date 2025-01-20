@@ -1,6 +1,6 @@
 
 CREATE TABLE Employees (
-    employee_id UUID PRIMARY KEY,
+    employee_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
     username VARCHAR(100) NOT NULL UNIQUE,
@@ -10,7 +10,7 @@ CREATE TABLE Employees (
 );
 
 CREATE TABLE Admins (
-    admin_id UUID PRIMARY KEY,
+    admin_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
     username VARCHAR(100) NOT NULL UNIQUE,
@@ -20,14 +20,14 @@ CREATE TABLE Admins (
 );
 
 CREATE TABLE Carts (
-    cart_id UUID PRIMARY KEY,
+    cart_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     total INTEGER NOT NULL,
-    createdAt TIMESTAMPTZ NOT NULL,
-    updatedAt TIMESTAMPTZ NOT NULL
+    createdAt TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Customers (
-    customer_id UUID PRIMARY KEY,
+    customer_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     cart_id UUID,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Customers (
 );
 
 CREATE TABLE Addresses (
-    address_id UUID PRIMARY KEY,
+    address_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     admin_id UUID,
     employee_id UUID,
     customer_id UUID,
@@ -53,7 +53,6 @@ CREATE TABLE Addresses (
     city VARCHAR(50) NOT NULL,
     cep VARCHAR(50) NOT NULL,
     neighborhood VARCHAR(50) NOT NULL,
-    createdAt TIMESTAMPTZ NOT NULL,
 
     CONSTRAINT fk_admin_id
         FOREIGN KEY (admin_id)
@@ -72,23 +71,23 @@ CREATE TABLE Addresses (
 );
 
 CREATE TABLE Products (
-    product_id UUID PRIMARY KEY,
+    product_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     product_name VARCHAR(100) NOT NULL,
     product_description VARCHAR(255) NOT NULL,
     summary VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 
 CREATE TABLE ProductSkus (
-    product_sku_id UUID PRIMARY KEY,
+    product_sku_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     product_id UUID,
     sku VARCHAR(100) NOT NULL,
     quantity INTEGER NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_product_id
         FOREIGN KEY (product_id)
@@ -97,12 +96,12 @@ CREATE TABLE ProductSkus (
 );
 
 CREATE TABLE CartItems (
-    cart_item_id UUID PRIMARY KEY,
+    cart_item_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     cart_id UUID,
     product_sku_id UUID,
     quantity INTEGER NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_cart_id
         FOREIGN KEY (cart_id)
@@ -116,12 +115,12 @@ CREATE TABLE CartItems (
 );
 
 CREATE TABLE Categories (
-    category_id UUID PRIMARY KEY,
+    category_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     product_id UUID,
     category_name VARCHAR(255) NOT NULL,
     category_description VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_product_id
         FOREIGN KEY (product_id)
@@ -130,12 +129,12 @@ CREATE TABLE Categories (
 );
 
 CREATE TABLE SubCategories (
-    subCategory_id UUID PRIMARY KEY,
+    subCategory_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     category_id UUID,
     subCategory_name VARCHAR(255) NOT NULL,
     subCategory_description VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_category_id
         FOREIGN KEY (category_id)

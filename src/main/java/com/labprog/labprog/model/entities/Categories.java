@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.labprog.labprog.DTO.CategoryDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,4 +41,12 @@ public class Categories {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    public Categories(CategoryDTO categoryDTO) {
+        this.categoryId = categoryDTO.getCategory_id();
+        this.categoryName = categoryDTO.getCategory_name();
+        this.categoryDescription = categoryDTO.getCategory_description();
+        this.createdAt = categoryDTO.getCreated_at();
+        this.updatedAt = categoryDTO.getUpdated_at();
+    }
 }

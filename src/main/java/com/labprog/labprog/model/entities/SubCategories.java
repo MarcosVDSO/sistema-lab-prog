@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.labprog.labprog.DTO.SubCategoryDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,4 +37,10 @@ public class SubCategories {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    public SubCategories(SubCategoryDTO subCategoryDTO) {
+        this.category = subCategoryDTO.getCategory();
+        this.subCategoryName = subCategoryDTO.getSubCategoryName();
+        this.subCategoryDescription = subCategoryDTO.getSubCategoryDescription();
+    }
 }
