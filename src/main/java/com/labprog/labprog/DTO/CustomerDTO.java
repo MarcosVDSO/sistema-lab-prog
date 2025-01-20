@@ -13,6 +13,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 public class CustomerDTO {
+    private UUID customerId;
 
     private List<Addresses> addresses;
 

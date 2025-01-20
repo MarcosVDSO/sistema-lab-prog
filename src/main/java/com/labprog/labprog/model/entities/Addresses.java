@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.labprog.labprog.DTO.AddressesDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,4 +51,18 @@ public class Addresses {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employees employee;
+
+    public Addresses(AddressesDTO addressesDTO) {
+        this.country = addressesDTO.getCountry();
+        this.state = addressesDTO.getState();
+        this.landmark = addressesDTO.getLandmark();
+        this.city = addressesDTO.getCity();
+        this.cep = addressesDTO.getCep();
+        this.createdAt = addressesDTO.getCreatedAt();
+        this.admin = addressesDTO.getAdmin();
+        this.customer = addressesDTO.getCustomer();
+        this.employee = addressesDTO.getEmployee();
+        this.addressId = addressesDTO.getAddressId();
+
+    }
 }
