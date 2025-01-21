@@ -39,7 +39,7 @@ public class ProductSkusRepositoryTest {
         ProductSkus productSkus = ProductSkus.builder()
                 .cartItem(new ArrayList<CartItems>())
                 .product(saveProduct)
-                .uuid("uuid")
+                .sku("123456")
                 .quantity(10L)
                 .price(5.0D)
                 .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
@@ -50,7 +50,7 @@ public class ProductSkusRepositoryTest {
         Assertions.assertNotNull(save);
         Assertions.assertEquals(productSkus.getCartItem(), save.getCartItem());
         Assertions.assertEquals(productSkus.getProduct(), save.getProduct());
-        Assertions.assertEquals(productSkus.getUuid(), save.getUuid());
+        Assertions.assertEquals(productSkus.getSku(), save.getSku());
         Assertions.assertEquals(productSkus.getQuantity(), save.getQuantity());
         Assertions.assertEquals(productSkus.getPrice(), save.getPrice());
         Assertions.assertEquals(productSkus.getCreatedAt(), save.getCreatedAt());

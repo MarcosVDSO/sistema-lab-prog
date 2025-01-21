@@ -52,9 +52,6 @@ public class ProductSkuService {
     }
 
     private void validateProductSku(ProductSkus productSku) {
-        if (productSku.getProduct() == null) {
-            throw new RuntimeException("Product doesnt exist");
-        }
 
         if (productSku.getPrice() == null || productSku.getPrice() <= 0) {
             throw new RuntimeException("Price value is not valid");

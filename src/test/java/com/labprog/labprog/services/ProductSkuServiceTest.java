@@ -1,7 +1,10 @@
 package com.labprog.labprog.services;
 
+import com.labprog.labprog.model.entities.Categories;
 import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.model.entities.Products;
+import com.labprog.labprog.model.repositories.ProductsRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.swing.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.UUID;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -18,15 +23,30 @@ import javax.swing.*;
 public class ProductSkuServiceTest {
     @Autowired
     private ProductSkuService productSkuService;
+    @Autowired
+    private ProductsRepository productsRepository;
 
     @Test
     public void shouldCreateAnProductSkuSuccessfully() {
 
-        Products product = new Products();
+        UUID productId = UUID.randomUUID();
+
+        Products product = Products.builder()
+                .productId(productId)
+                .productSkus(new ArrayList<ProductSkus>())
+                .categories(new ArrayList<Categories>())
+                .productName("produto")
+                .productDescription("descricao")
+                .summary("Sumario")
+                .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
+                .updatedAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
+                .build();
 
         ProductSkus productSkus = ProductSkus.builder()
+                .productSkuId(UUID.randomUUID())
                 .quantity(10L)
                 .price(10.2)
+                .product(product)
                 .build();
 
         ProductSkus productSku = productSkuService.createProductSku(productSkus);
