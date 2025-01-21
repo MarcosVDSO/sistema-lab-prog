@@ -37,7 +37,13 @@ public class CategoryService {
 
     public Optional<Categories> getCategoryById(UUID category_id) {
         logger.info("Searching category with ID: {}", category_id);
-        return categoriesRepository.findById(category_id);
+        Optional<Categories> category = categoriesRepository.findById(category_id);
+
+        if (category == null) {
+            throw new RuntimeException("Category not found");
+        }
+
+        return category;
     }
 
     public Categories udpateCategory(UUID category_id, Categories updatedCategory) {
