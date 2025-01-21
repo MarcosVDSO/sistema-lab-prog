@@ -48,9 +48,15 @@ public class ProductService {
         return productsRepository.save(product);
     }
 
-    public void deleteProduct(UUID id) {
+    public Products deleteProduct(UUID id) {
         Products product = getProductById(id);
+
+        if (product == null) {
+            throw new RuntimeException("Product not found with id" + id);
+        }
+
         productsRepository.delete(product);
+        return product;
     }
 
     private void validateProduct(Products product) {
