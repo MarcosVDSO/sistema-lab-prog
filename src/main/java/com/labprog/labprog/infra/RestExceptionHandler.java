@@ -43,7 +43,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(InvalidAddressException.class)
-    private ResponseEntity<String> invalidAddresHandler(InvalidAddressException ex) {
+    private ResponseEntity<String> invalidAddressHandler(InvalidAddressException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Address");
     }
 

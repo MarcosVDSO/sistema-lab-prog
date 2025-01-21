@@ -53,6 +53,8 @@ public class CustomersService {
         existingCustomer.setLastname(updatedCustomer.getLastname());
         existingCustomer.setEmail(updatedCustomer.getEmail());
         existingCustomer.setPassword(updatedCustomer.getPassword());
+        existingCustomer.setAddresses(updatedCustomer.getAddresses());
+        existingCustomer.setUsername(updatedCustomer.getUsername());
         existingCustomer.setProfilePhoto(updatedCustomer.getProfilePhoto());
 
         return customerRepository.save(existingCustomer);
