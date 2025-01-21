@@ -16,8 +16,7 @@ import java.util.List;
 public class ProductSkuDTO {
 
     private List<CartItems> cartItem;
-    private Products product;
     private Long quantity;
     private Double price;
-
+    private String sku;
 }

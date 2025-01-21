@@ -17,6 +17,8 @@ public class ProductSkuService {
 
     public ProductSkus createProductSku(ProductSkus productSku) {
 
+        this.validateProductSku(productSku);
+
         productSku.setCreatedAt(LocalDateTime.now());
         productSku.setUpdatedAt(LocalDateTime.now());
 
@@ -44,9 +46,31 @@ public class ProductSkuService {
         return productSkusRepository.save(productSku);
     }
 
-    public void deleteProductSkuById(UUID id) {
+    public ProductSkus deleteProductSkuById(UUID id) {
         ProductSkus productSku = getProductSkuById(id);
+
+        if (productSku == null) {
+            throw new RuntimeException("Product sku not found with id" + id);
+        }
+
         productSkusRepository.delete(productSku);
+        return productSku;
+    }
+
+    private void validateProductSku(ProductSkus productSku) {
+
+        if (productSku.getPrice() == null || productSku.getPrice() <= 0) {
+            throw new RuntimeException("Price value is not valid");
+        }
+
+        if (productSku.getQuantity() == null || productSku.getQuantity() <= 0) {
+            throw new RuntimeException("Quantity value is not valid");
+        }
+
+        if (productSku.getSku() == null || productSku.getSku().isEmpty()) {
+            throw new RuntimeException("Sku value is not valid");
+        }
+
     }
 
 }

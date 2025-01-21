@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class CartItems {
     private UUID cartItemId;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "cart_id")
     private Carts cart;
 
