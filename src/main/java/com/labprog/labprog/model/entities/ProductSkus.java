@@ -1,5 +1,7 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.labprog.labprog.DTO.ProductSkuDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,9 +26,11 @@ public class ProductSkus {
     private UUID productSkuId;
 
     @OneToMany(mappedBy = "productSku")
+    @JsonBackReference
     private List<CartItems> cartItem;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "product_id")
     private Products product;
 

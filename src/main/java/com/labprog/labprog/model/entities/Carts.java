@@ -1,5 +1,7 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,9 +25,11 @@ public class Carts {
     private UUID cartId;
 
     @OneToOne(mappedBy = "cart")
+    @JsonManagedReference
     private Customers customer;
 
     @OneToMany(mappedBy = "cart")
+    @JsonManagedReference
     private List<CartItems> cartItems;
 
     @Column(name = "total", nullable = false)

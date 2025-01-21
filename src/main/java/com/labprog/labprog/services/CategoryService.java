@@ -22,6 +22,8 @@ public class CategoryService {
     public Categories createCategory(Categories category) {
         logger.info("Adding new category: {}", category.getCategoryName());
 
+        verifyCategory(category);
+
         category.setCreatedAt(LocalDateTime.now());
         category.setUpdatedAt(LocalDateTime.now());
 
@@ -42,6 +44,8 @@ public class CategoryService {
         logger.info("Updating category with ID: {}", category_id);
         Categories existingCategory = categoriesRepository.findById(category_id).orElseThrow(() -> new RuntimeException("Category not found"));
 
+        verifyCategory(updatedCategory);
+
         existingCategory.setCategoryName(updatedCategory.getCategoryName());
         existingCategory.setCategoryDescription(updatedCategory.getCategoryDescription());
         existingCategory.setUpdatedAt(LocalDateTime.now());
@@ -53,6 +57,15 @@ public class CategoryService {
         logger.info("Deleting category with ID: {}", category_id);
         Categories category = categoriesRepository.findById(category_id).orElseThrow(() -> new RuntimeException("Category not found"));
         categoriesRepository.delete(category);
+    }
+
+    private void verifyCategory(Categories category) {
+        if (category == null) {
+            throw new IllegalArgumentException("Category can not be null");
+        }
+        if (category.getCategoryName() == null || category.getCategoryName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Category name is required");
+        }
     }
 
 }

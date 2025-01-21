@@ -21,35 +21,34 @@ public class CartController {
     @Autowired
     private CartItemService cartItemService;
 
-    // Criar carrinho para um cliente
+    //Cart CRUD
+
     @PostMapping("/customer/{customerId}")
     public ResponseEntity<Carts> createCart(@PathVariable UUID customerId) {
         Carts cart = cartService.createCart(customerId);
         return new ResponseEntity<>(cart, HttpStatus.CREATED);
     }
 
-    // Obter carrinho de um cliente
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<Carts> getCart(@PathVariable UUID customerId) {
         Carts cart = cartService.getCartByCustomerId(customerId);
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
-    // Atualizar carrinho
     @PutMapping("/{cartId}")
     public ResponseEntity<Carts> updateCart(@PathVariable UUID cartId, @RequestBody Carts updatedCart) {
         Carts cart = cartService.updateCart(cartId, updatedCart);
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
-    // Deletar carrinho
     @DeleteMapping("/{cartId}")
     public ResponseEntity<Void> deleteCart(@PathVariable UUID cartId) {
         cartService.deleteCart(cartId);
         return ResponseEntity.noContent().build();
     }
 
-    // Adicionar item ao carrinho
+    //CartItems CRUD
+
     @PostMapping("/customer/{customerId}/items")
     public ResponseEntity<CartItems> addCartItem(@PathVariable UUID customerId,
                                                  @RequestParam UUID productSkuId,
@@ -58,14 +57,12 @@ public class CartController {
         return new ResponseEntity<>(cartItem, HttpStatus.CREATED);
     }
 
-    // Obter item do carrinho
     @GetMapping("/items/{cartItemId}")
     public ResponseEntity<CartItems> getCartItem(@PathVariable UUID cartItemId) {
         CartItems cartItem = cartItemService.getCartItem(cartItemId);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 
-    // Atualizar item do carrinho
     @PutMapping("/items/{cartItemId}")
     public ResponseEntity<CartItems> updateCartItem(@PathVariable UUID cartItemId,
                                                     @RequestParam Long quantity) {
@@ -73,7 +70,6 @@ public class CartController {
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 
-    // Deletar item do carrinho
     @DeleteMapping("/items/{cartItemId}")
     public ResponseEntity<Void> deleteCartItem(@PathVariable UUID cartItemId) {
         cartItemService.deleteCartItem(cartItemId);
