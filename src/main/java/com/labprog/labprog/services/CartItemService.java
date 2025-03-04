@@ -41,8 +41,6 @@ public class CartItemService {
         cartItem.setCart(cart);
         cartItem.setProductSku(productSku);
         cartItem.setQuantity(quantity);
-        cartItem.setCreatedAt(LocalDateTime.now());
-        cartItem.setUpdatedAt(LocalDateTime.now());
 
         cart.setTotal((long) (cart.getTotal() + productSku.getPrice() * quantity));
         cartsRepository.save(cart);
@@ -62,7 +60,6 @@ public class CartItemService {
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));
 
         cartItem.setQuantity(quantity);
-        cartItem.setUpdatedAt(LocalDateTime.now());
 
         Carts cart = cartItem.getCart();
         cart.setTotal((long) (cart.getTotal() + cartItem.getProductSku().getPrice() * (quantity - cartItem.getQuantity())));

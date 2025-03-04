@@ -23,12 +23,8 @@ public class Categories {
     @Column(name = "category_id")
     private UUID categoryId;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    @OneToOne(mappedBy = "category")
     private Products product;
-
-    @OneToMany(mappedBy = "category")
-    private List<SubCategories> subCategories;
 
     @Column(name = "category_name", nullable = false)
     private String categoryName;
@@ -36,17 +32,9 @@ public class Categories {
     @Column(name = "category_description", nullable = false)
     private String categoryDescription;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
-
     public Categories(CategoryDTO categoryDTO) {
         this.categoryId = categoryDTO.getCategory_id();
         this.categoryName = categoryDTO.getCategory_name();
         this.categoryDescription = categoryDTO.getCategory_description();
-        this.createdAt = categoryDTO.getCreated_at();
-        this.updatedAt = categoryDTO.getUpdated_at();
     }
 }

@@ -22,9 +22,6 @@ public class CategoryService {
     public Categories createCategory(Categories category) {
         logger.info("Adding new category: {}", category.getCategoryName());
 
-        category.setCreatedAt(LocalDateTime.now());
-        category.setUpdatedAt(LocalDateTime.now());
-
         return categoriesRepository.save(category);
     }
 
@@ -44,7 +41,6 @@ public class CategoryService {
 
         existingCategory.setCategoryName(updatedCategory.getCategoryName());
         existingCategory.setCategoryDescription(updatedCategory.getCategoryDescription());
-        existingCategory.setUpdatedAt(LocalDateTime.now());
 
         return categoriesRepository.save(existingCategory);
     }

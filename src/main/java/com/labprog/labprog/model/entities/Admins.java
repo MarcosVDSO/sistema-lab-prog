@@ -22,7 +22,7 @@ public class Admins {
     @Column(name = "admin_id")
     private UUID adminId;
 
-    @OneToMany(mappedBy = "addressId")
+    @OneToMany(mappedBy = "admin")
     private List<Addresses> addresses;
 
     @Column(name = "firstname", nullable = false)
@@ -37,9 +37,6 @@ public class Admins {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "profile_photo", nullable = false)
-    private String profilePhoto;
-
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -49,7 +46,6 @@ public class Admins {
         this.lastname = adminDTO.getLastname();
         this.username = adminDTO.getUsername();
         this.password = adminDTO.getPassword();
-        this.profilePhoto = adminDTO.getProfilePhoto();
         this.email = adminDTO.getEmail();
         this.addresses = adminDTO.getAddresses();
     }

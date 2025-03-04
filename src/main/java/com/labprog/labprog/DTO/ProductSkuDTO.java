@@ -15,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductSkuDTO {
 
-    private List<CartItems> cartItem;
-    private Long quantity;
-    private Double price;
+    private CartItems cartItem;
+    private Long stockQuantity;
+    private Long price;
     private String sku;
 }

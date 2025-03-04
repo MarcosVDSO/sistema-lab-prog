@@ -31,10 +31,4 @@ public class Carts {
     @Column(name = "total", nullable = false)
     private Long total;
 
-    @Column(name = "createdat", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updatedat", nullable = false)
-    private LocalDateTime updatedAt;
-
 }

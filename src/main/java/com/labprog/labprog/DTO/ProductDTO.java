@@ -16,7 +16,7 @@ import java.util.List;
 public class ProductDTO {
 
     private List<ProductSkus> productSkus;
-    private List<Categories> categories;
+    private Categories category;
     private String productName;
     private String productDescription;
     private String summary;

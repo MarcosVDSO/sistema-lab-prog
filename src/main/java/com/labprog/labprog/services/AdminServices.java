@@ -53,7 +53,6 @@ public class AdminServices {
         updatedAdmin.setLastname(admin.getLastname());
         updatedAdmin.setEmail(admin.getEmail());
         updatedAdmin.setPassword(admin.getPassword());
-        updatedAdmin.setProfilePhoto(admin.getProfilePhoto());
         return adminRepository.save(updatedAdmin);
 
     }

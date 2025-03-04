@@ -23,8 +23,9 @@ public class Products {
     @OneToMany(mappedBy = "product")
     private List<ProductSkus> productSkus;
 
-    @OneToMany(mappedBy = "product")
-    private List<Categories> categories;
+    @OneToOne
+    @JoinColumn(name = "category_id")
+    private Categories category;
 
     @Column(name = "product_name", nullable = false)
     private String productName;
@@ -35,17 +36,17 @@ public class Products {
     @Column(name = "summary", nullable = false)
     private String summary;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "manufacturer", nullable = false)
+    private String manufacturer;
 
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+    @Column(name = "brand_name", nullable = false)
+    private String brandName;
 
     public Products(ProductDTO productDTO) {
         this.productName = productDTO.getProductName();
         this.productDescription = productDTO.getProductDescription();
         this.summary = productDTO.getSummary();
         this.productSkus = productDTO.getProductSkus();
-        this.categories = productDTO.getCategories();
+        this.category = productDTO.getCategory();
     }
 }

@@ -19,9 +19,6 @@ public class ProductSkuService {
 
         this.validateProductSku(productSku);
 
-        productSku.setCreatedAt(LocalDateTime.now());
-        productSku.setUpdatedAt(LocalDateTime.now());
-
         return productSkusRepository.save(productSku);
     }
 
@@ -40,8 +37,7 @@ public class ProductSkuService {
 
         productSku.setProduct(productSkuData.getProduct());
         productSku.setPrice(productSkuData.getPrice());
-        productSku.setQuantity(productSkuData.getQuantity());
-        productSku.setUpdatedAt(LocalDateTime.now());
+        productSku.setStockQuantity(productSkuData.getStockQuantity());
 
         return productSkusRepository.save(productSku);
     }
@@ -63,7 +59,7 @@ public class ProductSkuService {
             throw new RuntimeException("Price value is not valid");
         }
 
-        if (productSku.getQuantity() == null || productSku.getQuantity() <= 0) {
+        if (productSku.getStockQuantity() == null || productSku.getStockQuantity() <= 0) {
             throw new RuntimeException("Quantity value is not valid");
         }
 

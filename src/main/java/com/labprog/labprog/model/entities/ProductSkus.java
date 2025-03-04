@@ -23,31 +23,28 @@ public class ProductSkus {
     @Column(name = "product_sku_id")
     private UUID productSkuId;
 
-    @OneToMany(mappedBy = "productSku")
-    private List<CartItems> cartItem;
+    @OneToOne(mappedBy = "productSku")
+    private CartItems cartItem;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Products product;
 
+    @OneToOne(mappedBy = "productSku")
+    private OrderItems orderItem;
+
     @Column(name = "sku", nullable = false)
     private String sku;
 
-    @Column(name = "quantity", nullable = false)
-    private Long quantity;
+    @Column(name = "stock_quantity", nullable = false)
+    private Long stockQuantity;
 
     @Column(name = "price", nullable = false)
-    private Double price;
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+    private Long price;
 
     public ProductSkus(ProductSkuDTO productSkuDTO) {
         this.cartItem = productSkuDTO.getCartItem();
-        this.quantity = productSkuDTO.getQuantity();
+        this.stockQuantity = productSkuDTO.getStockQuantity();
         this.price = productSkuDTO.getPrice();
         this.sku = productSkuDTO.getSku();
     }

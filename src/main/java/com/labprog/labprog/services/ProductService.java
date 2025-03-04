@@ -21,9 +21,6 @@ public class ProductService {
 
         this.validateProduct(product);
 
-        product.setCreatedAt(LocalDateTime.now());
-        product.setUpdatedAt(LocalDateTime.now());
-
         return productsRepository.save(product);
     }
 
@@ -43,7 +40,6 @@ public class ProductService {
         product.setProductName(productData.getProductName());
         product.setProductDescription(productData.getProductDescription());
         product.setSummary(productData.getSummary());
-        product.setUpdatedAt(LocalDateTime.now());
 
         return productsRepository.save(product);
     }

@@ -12,18 +12,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AdminDTO {
     private UUID adminId;
-
     private List<Addresses> addresses;
-
     private String firstname;
-
     private String lastname;
-
     private String username;
-
     private String password;
-
     private String profilePhoto;
-
     private String email;
 }

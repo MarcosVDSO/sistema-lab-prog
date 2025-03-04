@@ -1,7 +1,6 @@
 package com.labprog.labprog.model.repositories;
 
 import com.labprog.labprog.model.entities.Categories;
-import com.labprog.labprog.model.entities.SubCategories;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
@@ -22,7 +21,6 @@ public class CategoryRepositoryTest {
     @Test
     public void testCreateCategory() {
         Categories category = Categories.builder()
-                .subCategories(new ArrayList<SubCategories>())
                 .categoryName("Fones")
                 .categoryDescription("Fones de ouvido")
                 .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))

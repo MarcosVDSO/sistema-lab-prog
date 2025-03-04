@@ -53,7 +53,6 @@ public class EmployeesService {
         updatedEmployee.setLastname(updatedCustomer.getLastname());
         updatedEmployee.setEmail(updatedCustomer.getEmail());
         updatedEmployee.setPassword(updatedCustomer.getPassword());
-        updatedEmployee.setProfilePhoto(updatedCustomer.getProfilePhoto());
         return employeesRepository.save(updatedEmployee);
 
     }

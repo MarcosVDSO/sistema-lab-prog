@@ -32,8 +32,6 @@ public class CartService {
             Carts cart = new Carts();
             cart.setCustomer(customer.get());
             cart.setTotal(0L);
-            cart.setCreatedAt(LocalDateTime.now());
-            cart.setUpdatedAt(LocalDateTime.now());
             if (customer.get().getCart() == null) {
                 customer.get().setCart(cart);
             }
@@ -55,7 +53,6 @@ public class CartService {
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
 
         existingCart.setTotal(updatedCart.getTotal());
-        existingCart.setUpdatedAt(LocalDateTime.now());
 
         return cartsRepository.save(existingCart);
     }

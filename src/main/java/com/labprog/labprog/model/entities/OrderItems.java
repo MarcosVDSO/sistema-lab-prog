@@ -6,29 +6,31 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "CartItems")
+@Table(name = "OrderItems")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartItems {
+public class OrderItems {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "cart_item_id")
-    private UUID cartItemId;
+    @Column(name = "order_item_id")
+    private UUID orderItemId;
+
+    @Column(name = "quantity", nullable = false)
+    private Long quantity;
+
+    @Column(name = "price", nullable = false)
+    private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Carts cart;
+    @JoinColumn(name = "order_id")
+    private Orders order;
 
     @OneToOne
     @JoinColumn(name = "product_sku_id")
     private ProductSkus productSku;
-
-    @Column(name = "quantity", nullable = false)
-    private Long quantity;
 }

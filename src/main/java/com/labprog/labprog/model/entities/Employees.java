@@ -21,7 +21,7 @@ public class Employees {
     @Column(name = "employee_id")
     private UUID employeeId;
 
-    @OneToMany(mappedBy = "addressId")
+    @OneToMany(mappedBy = "employee")
     private List<Addresses> addresses;
 
     @Column(name = "firstname", nullable = false)
@@ -36,9 +36,6 @@ public class Employees {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "profile_photo", nullable = false)
-    private String profilePhoto;
-
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -48,7 +45,6 @@ public class Employees {
         this.lastname = employeesDTO.getLastname();
         this.username = employeesDTO.getUsername();
         this.password = employeesDTO.getPassword();
-        this.profilePhoto = employeesDTO.getProfilePhoto();
         this.email = employeesDTO.getEmail();
         this.addresses = employeesDTO.getAddresses();
 

@@ -21,7 +21,7 @@ public class Customers {
     @Column(name = "customer_id")
     private UUID customerId;
 
-    @OneToMany(mappedBy = "addressId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Addresses> addresses;
 
     @Setter
@@ -42,9 +42,6 @@ public class Customers {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "profile_photo", nullable = false)
-    private String profilePhoto;
-
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -55,7 +52,6 @@ public class Customers {
         this.lastname = customerDTO.getLastname();
         this.username = customerDTO.getUsername();
         this.password = customerDTO.getPassword();
-        this.profilePhoto = customerDTO.getProfilePhoto();
         this.email = customerDTO.getEmail();
         this.addresses = customerDTO.getAddresses();
     }

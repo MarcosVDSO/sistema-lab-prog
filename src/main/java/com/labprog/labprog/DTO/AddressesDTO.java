@@ -17,28 +17,14 @@ import java.util.UUID;
 public class AddressesDTO {
 
     private UUID addressId;
-
-
     private String country;
-
-
     private String state;
-
-
     private String landmark;
-
-
     private String city;
-
-
     private String cep;
-
     private String neighborhood;
     private Admins admin;
-
-
     private Customers customer;
-
     private Employees employee;
 
 }
