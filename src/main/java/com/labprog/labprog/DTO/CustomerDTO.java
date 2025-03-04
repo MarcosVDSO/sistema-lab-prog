@@ -19,6 +19,7 @@ public class CustomerDTO {
     private String firstname;
     private String lastname;
     private String username;
+    private String cpf;
     private Carts cart;
     private String password;
     private String profilePhoto;

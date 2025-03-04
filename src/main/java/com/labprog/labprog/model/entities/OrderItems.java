@@ -28,7 +28,7 @@ public class OrderItems {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Orders order;
+    private OrdersDTO order;
 
     @OneToOne
     @JoinColumn(name = "product_sku_id")

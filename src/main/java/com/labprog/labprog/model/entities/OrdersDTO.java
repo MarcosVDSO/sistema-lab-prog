@@ -17,14 +17,14 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Orders {
+public class OrdersDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_id")
     private UUID orderId;
 
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private String status;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

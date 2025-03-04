@@ -20,5 +20,7 @@ public class ProductDTO {
     private String productName;
     private String productDescription;
     private String summary;
+    private String manufacturer;
+    private String brand_name;
 
 }

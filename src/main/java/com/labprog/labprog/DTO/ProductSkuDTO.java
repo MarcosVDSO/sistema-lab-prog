@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import netscape.javascript.JSObject;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -15,8 +17,10 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductSkuDTO {
 
-    private CartItems cartItem;
+    private Products product;
     private Long stockQuantity;
     private Long price;
     private String sku;
+    private Map<String, Object> product_attributes;
+    
 }
