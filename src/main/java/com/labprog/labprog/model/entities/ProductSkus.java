@@ -26,7 +26,6 @@ public class ProductSkus {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonIgnore
     private Products product;
 
     @OneToOne(mappedBy = "productSku")

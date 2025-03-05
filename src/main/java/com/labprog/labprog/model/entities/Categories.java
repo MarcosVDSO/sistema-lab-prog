@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.labprog.labprog.DTO.CategoryDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class Categories {
     private UUID categoryId;
 
     @OneToOne(mappedBy = "category")
+    @JsonIgnore
     private Products product;
 
     @Column(name = "category_name", nullable = false)

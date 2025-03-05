@@ -1,6 +1,10 @@
 package com.labprog.labprog.controllers;
 
+import com.labprog.labprog.DTO.CategoryDTO;
 import com.labprog.labprog.DTO.ProductDTO;
+import com.labprog.labprog.DTO.ProductSkuDTO;
+import com.labprog.labprog.model.entities.Categories;
+import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.model.entities.Products;
 import com.labprog.labprog.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,41 @@ public class ProductController {
             Products products = new Products(productDTO);
             Products savedProducts = productServices.createProduct(products);
             return new ResponseEntity<>(savedProducts,HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/productSku/{id}")
+    public ResponseEntity<Products> addProductSkuToProduct(@PathVariable UUID id, @RequestBody ProductSkuDTO productSkuDTO) {
+        try {
+            ProductSkus productSku = new ProductSkus(productSkuDTO);
+            Products product = productServices.addProductSku(id, productSku);
+            return new ResponseEntity<>(product, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/newCategory/{id}")
+    public ResponseEntity<Products> addCategoryToProduct(@PathVariable UUID id, @RequestBody CategoryDTO categoryDTO) {
+        try {
+            Categories categories = new Categories(categoryDTO);
+            Products product = productServices.addNewCategory(id, categories);
+            return new ResponseEntity<>(product, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("category/{productId}/{categoryId}")
+    public ResponseEntity<Products> addCategoryToProduct(@PathVariable UUID productId, @PathVariable UUID categoryId) {
+        try {
+            Products product = productServices.addCategory(productId, categoryId);
+            return new ResponseEntity<>(product, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

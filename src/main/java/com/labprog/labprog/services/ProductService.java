@@ -1,6 +1,9 @@
 package com.labprog.labprog.services;
 
+import com.labprog.labprog.model.entities.Categories;
+import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.model.entities.Products;
+import com.labprog.labprog.model.repositories.ProductSkusRepository;
 import com.labprog.labprog.model.repositories.ProductsRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,11 +21,17 @@ public class ProductService {
 
     @Autowired
     private ProductsRepository productsRepository;
+    @Autowired
+    private ProductSkuService productSkuService;
+    @Autowired
+    private CategoryService categoryService;
 
     public Products createProduct(Products product) {
 
         this.validateProduct(product);
-
+        if (product.getProductSkus() == null) {
+            product.setProductSkus(new ArrayList<>());
+        }
         return productsRepository.save(product);
     }
 
@@ -67,6 +77,42 @@ public class ProductService {
 
         productsRepository.delete(product);
         return product;
+    }
+
+    public Products addProductSku(UUID productId, ProductSkus productSkuData) {
+        Products product = getProductById(productId);
+
+        ProductSkus productSku = productSkuService.createProductSku(productSkuData);
+        productSku.setProduct(product);
+
+        product.getProductSkus().add(productSku);
+
+        return productsRepository.save(product);
+    }
+
+    public Products addNewCategory(UUID productId, Categories categoryData) {
+        Products product = getProductById(productId);
+
+        Categories category = categoryService.createCategory(categoryData);
+        category.setProduct(product);
+
+        product.setCategory(category);
+
+        return productsRepository.save(product);
+    }
+
+    public Products addCategory(UUID productId, UUID categoryId) {
+        Products product = getProductById(productId);
+
+        Categories category = categoryService.getCategoryById(categoryId).orElse(null);
+
+        if (product != null && category != null) {
+            product.setCategory(category);
+            category.setProduct(product);
+            return productsRepository.save(product);
+        }
+
+        return null;
     }
 
     private void validateProduct(Products product) {
