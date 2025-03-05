@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.labprog.labprog.DTO.ProductDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,6 +22,7 @@ public class Products {
     private UUID productId;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<ProductSkus> productSkus;
 
     @OneToOne
@@ -42,15 +44,13 @@ public class Products {
     @Column(name = "brand_name", nullable = false)
     private String brandName;
 
-    @Column(name = "product_image", nullable = false)
-    private String productImage;
-
     public Products(ProductDTO productDTO) {
         this.productName = productDTO.getProductName();
         this.productDescription = productDTO.getProductDescription();
         this.summary = productDTO.getSummary();
         this.productSkus = productDTO.getProductSkus();
         this.category = productDTO.getCategory();
-        this.productImage = productDTO.getProductImage();
+        this.brandName = productDTO.getBrandName();
+        this.manufacturer = productDTO.getManufacturer();
     }
 }

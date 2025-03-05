@@ -2,6 +2,7 @@ package com.labprog.labprog.services;
 
 import com.labprog.labprog.model.entities.Products;
 import com.labprog.labprog.model.repositories.ProductsRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
@@ -37,9 +38,22 @@ public class ProductService {
 
         Products product = getProductById(id);
 
-        product.setProductName(productData.getProductName());
-        product.setProductDescription(productData.getProductDescription());
-        product.setSummary(productData.getSummary());
+        if (productData.getProductName() != null) {
+            product.setProductName(productData.getProductName());
+        }
+
+        if (productData.getProductDescription() != null) {
+            product.setProductDescription(productData.getProductDescription());
+        }
+        if (productData.getSummary() != null) {
+            product.setSummary(productData.getSummary());
+        }
+        if (productData.getManufacturer() != null) {
+            product.setManufacturer(productData.getManufacturer());
+        }
+        if (productData.getBrandName() != null) {
+            product.setBrandName(productData.getBrandName());
+        }
 
         return productsRepository.save(product);
     }
@@ -66,6 +80,14 @@ public class ProductService {
 
         if (product.getSummary() == null) {
             throw new RuntimeException("Product summary is empty");
+        }
+
+        if (product.getManufacturer() == null) {
+            throw new RuntimeException("Product manufacturer is empty");
+        }
+
+        if (product.getBrandName() == null) {
+            throw new RuntimeException("Product brand name is empty");
         }
     }
 

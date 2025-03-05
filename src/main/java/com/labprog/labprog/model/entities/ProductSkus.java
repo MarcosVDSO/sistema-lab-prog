@@ -1,17 +1,12 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.labprog.labprog.DTO.ProductSkuDTO;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -31,6 +26,7 @@ public class ProductSkus {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Products product;
 
     @OneToOne(mappedBy = "productSku")
@@ -45,14 +41,18 @@ public class ProductSkus {
     @Column(name = "price", nullable = false)
     private Long price;
 
-    @Type(JsonBinaryType.class)
-    @Column(name = "product_attributes", columnDefinition = "jsonb")
-    private Map<String, Object> product_attributes;
+    @Column(name = "product_image", nullable = false)
+    private String productImage;
+//
+//    @Type(JsonBinaryType.class)
+//    @Column(name = "product_attributes", columnDefinition = "jsonb")
+//    private Map<String, Object> product_attributes;
 
     public ProductSkus(ProductSkuDTO productSkuDTO) {
         this.cartItem = productSkuDTO.getCartItem();
         this.stockQuantity = productSkuDTO.getStockQuantity();
         this.price = productSkuDTO.getPrice();
         this.sku = productSkuDTO.getSku();
+        this.productImage = productSkuDTO.getProductImage();
     }
 }

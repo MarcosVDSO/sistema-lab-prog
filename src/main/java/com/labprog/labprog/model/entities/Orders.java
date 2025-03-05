@@ -17,7 +17,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrdersDTO {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_id")

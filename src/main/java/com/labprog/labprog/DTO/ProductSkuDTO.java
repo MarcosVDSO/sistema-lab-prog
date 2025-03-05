@@ -2,6 +2,7 @@ package com.labprog.labprog.DTO;
 
 import com.labprog.labprog.model.entities.CartItems;
 import com.labprog.labprog.model.entities.Products;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,5 +24,6 @@ public class ProductSkuDTO {
     private Long price;
     private String sku;
     private Map<String, Object> product_attributes;
+    private String productImage;
 
 }

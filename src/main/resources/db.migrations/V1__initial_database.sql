@@ -97,6 +97,7 @@ CREATE TABLE ProductSkus (
     stock_quantity INTEGER NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     product_attributes JSONB NOT NULL,
+    product_image VARCHAR(255) NOT NULL,
 
     CONSTRAINT fk_product_id
         FOREIGN KEY (product_id)
