@@ -39,7 +39,7 @@ public class AdminServices {
                 .orElseThrow(() -> new ObjectNotFoundException("Admin not found"));
 
         verifyAdmin(updatedAdmin, false);
-        // Atualizar apenas os campos que realmente mudaram
+
         if (!updatedAdmin.getEmail().equals(updatedAdmin.getEmail())
                 && adminRepository.existsByEmail(updatedAdmin.getEmail())) {
             throw new DuplicateEmailException();
@@ -48,11 +48,19 @@ public class AdminServices {
                 && adminRepository.existsByUsername(updatedAdmin.getUsername())) {
             throw new DuplicateUserNameException();
         }
+        if (admin.getFirstname() != null) {
+            updatedAdmin.setFirstname(admin.getFirstname());
+        }
+        if (admin.getLastname() != null) {
+            updatedAdmin.setLastname(admin.getLastname());
+        }
+        if (admin.getEmail() != null) {
+            updatedAdmin.setEmail(admin.getEmail());
+        }
+        if (admin.getPassword() != null) {
+            updatedAdmin.setPassword(admin.getPassword());
+        }
 
-        updatedAdmin.setFirstname(admin.getFirstname());
-        updatedAdmin.setLastname(admin.getLastname());
-        updatedAdmin.setEmail(admin.getEmail());
-        updatedAdmin.setPassword(admin.getPassword());
         return adminRepository.save(updatedAdmin);
 
     }

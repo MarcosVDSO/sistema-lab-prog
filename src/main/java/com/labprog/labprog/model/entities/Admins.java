@@ -34,6 +34,9 @@ public class Admins {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @Column(name = "cpf", nullable = false, unique = true)
+    private String cpf;
+
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -48,5 +51,6 @@ public class Admins {
         this.password = adminDTO.getPassword();
         this.email = adminDTO.getEmail();
         this.addresses = adminDTO.getAddresses();
+        this.cpf = adminDTO.getCpf();
     }
 }
