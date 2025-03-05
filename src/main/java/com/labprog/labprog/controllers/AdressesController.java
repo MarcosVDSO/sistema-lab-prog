@@ -3,6 +3,7 @@ package com.labprog.labprog.controllers;
 import com.labprog.labprog.DTO.AddressesDTO;
 import com.labprog.labprog.DTO.CustomerDTO;
 import com.labprog.labprog.model.entities.Addresses;
+import com.labprog.labprog.model.entities.Admins;
 import com.labprog.labprog.model.entities.Customers;
 import com.labprog.labprog.services.AddressesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,12 @@ public class AdressesController {
         }catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Addresses>> getAllAddresses() {
+        List<Addresses> admin = addressesService.findAll();
+        return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
     @PostMapping
