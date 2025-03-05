@@ -18,9 +18,10 @@ import java.util.Map;
 public class ProductSkuDTO {
 
     private Products product;
+    private CartItems cartItem;
     private Long stockQuantity;
     private Long price;
     private String sku;
     private Map<String, Object> product_attributes;
-    
+
 }

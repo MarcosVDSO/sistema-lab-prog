@@ -42,11 +42,15 @@ public class Products {
     @Column(name = "brand_name", nullable = false)
     private String brandName;
 
+    @Column(name = "product_image", nullable = false)
+    private String productImage;
+
     public Products(ProductDTO productDTO) {
         this.productName = productDTO.getProductName();
         this.productDescription = productDTO.getProductDescription();
         this.summary = productDTO.getSummary();
         this.productSkus = productDTO.getProductSkus();
         this.category = productDTO.getCategory();
+        this.productImage = productDTO.getProductImage();
     }
 }

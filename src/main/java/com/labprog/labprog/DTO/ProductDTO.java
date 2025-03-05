@@ -22,5 +22,6 @@ public class ProductDTO {
     private String summary;
     private String manufacturer;
     private String brand_name;
+    private String productImage;
 
 }
