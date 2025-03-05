@@ -21,5 +21,6 @@ public class EmployeesDTO {
     private String password;
     private String profilePhoto;
     private String email;
+    private String cpf;
 
 }

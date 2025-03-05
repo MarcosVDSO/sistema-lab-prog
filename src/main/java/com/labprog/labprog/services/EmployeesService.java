@@ -33,26 +33,43 @@ public class EmployeesService {
         return employeesRepository.save(employee);
     }
 
-    public Employees update(UUID customerId, Employees updatedCustomer) {
+    public Employees update(UUID customerId, Employees employeeData) {
 
         Employees updatedEmployee = employeesRepository.findById(customerId)
                 .orElseThrow(() -> new ObjectNotFoundException());
 
-        verifyCustomer(updatedEmployee, false);
-        // Atualizar apenas os campos que realmente mudaram
-        if (!updatedCustomer.getEmail().equals(updatedEmployee.getEmail())
-                && employeesRepository.existsByEmail(updatedCustomer.getEmail())) {
+//        verifyCustomer(updatedEmployee, false);
+
+        if (employeeData.getEmail() != null && !employeeData.getEmail().equals(updatedEmployee.getEmail())
+                && employeesRepository.existsByEmail(employeeData.getEmail())) {
             throw new DuplicateEmailException();
         }
-        if (!updatedCustomer.getUsername().equals(updatedEmployee.getUsername())
-                && employeesRepository.existsByUsername(updatedCustomer.getUsername())) {
+
+        if (employeeData.getUsername() != null && !employeeData.getUsername().equals(updatedEmployee.getUsername())
+                && employeesRepository.existsByUsername(employeeData.getUsername())) {
             throw new DuplicateUserNameException();
         }
 
-        updatedEmployee.setFirstname(updatedCustomer.getFirstname());
-        updatedEmployee.setLastname(updatedCustomer.getLastname());
-        updatedEmployee.setEmail(updatedCustomer.getEmail());
-        updatedEmployee.setPassword(updatedCustomer.getPassword());
+        if (employeeData.getFirstname() != null) {
+            updatedEmployee.setFirstname(employeeData.getFirstname());
+        }
+
+        if (employeeData.getLastname() != null) {
+            updatedEmployee.setLastname(employeeData.getLastname());
+        }
+
+        if (employeeData.getEmail() != null) {
+            updatedEmployee.setEmail(employeeData.getEmail());
+        }
+
+        if (employeeData.getPassword() != null) {
+            updatedEmployee.setPassword(employeeData.getPassword());
+        }
+
+        if (employeeData.getCpf() != null) {
+            updatedEmployee.setCpf(employeeData.getCpf());
+        }
+
         return employeesRepository.save(updatedEmployee);
 
     }

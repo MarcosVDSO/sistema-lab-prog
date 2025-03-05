@@ -39,6 +39,9 @@ public class Employees {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "cpf", nullable = false)
+    private String cpf;
+
     public Employees(EmployeesDTO employeesDTO) {
         this.employeeId = employeesDTO.getEmployeeId();
         this.firstname = employeesDTO.getFirstname();
@@ -47,6 +50,6 @@ public class Employees {
         this.password = employeesDTO.getPassword();
         this.email = employeesDTO.getEmail();
         this.addresses = employeesDTO.getAddresses();
-
+        this.cpf = employeesDTO.getCpf();
     }
 }

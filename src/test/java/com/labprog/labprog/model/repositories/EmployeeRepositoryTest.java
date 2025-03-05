@@ -26,7 +26,6 @@ public class EmployeeRepositoryTest {
                 .lastname("Arruda")
                 .username("sdadasdasda")
                 .password("123")
-                .profilePhoto("6131")
                 .email("masadasdas").build();
 
         Employees save = repository.save(employee);
@@ -36,7 +35,8 @@ public class EmployeeRepositoryTest {
         Assertions.assertEquals(employee.getLastname(), save.getLastname());
         Assertions.assertEquals(employee.getUsername(), save.getUsername());
         Assertions.assertEquals(employee.getPassword(), save.getPassword());
-        Assertions.assertEquals(employee.getProfilePhoto(), save.getProfilePhoto());
         Assertions.assertEquals(employee.getEmail(), save.getEmail());
+        Assertions.assertEquals(employee.getCpf(), save.getCpf());
+
     }
 }
