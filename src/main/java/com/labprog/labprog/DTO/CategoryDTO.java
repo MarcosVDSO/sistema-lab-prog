@@ -14,18 +14,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CategoryDTO {
 
-    private UUID category_id;
-    private String category_name;
-    private String category_description;
+    private UUID categoryId;
+    private String categoryName;
+    private String categoryDescription;
 
-    @Data
-    @Builder
-    @AllArgsConstructor
-    public static class OrderItemsDTO {
-        private UUID orderItemId;
-        private Long quantity;
-        private Long price;
-        private Order order;
-        private ProductSkus productSkus;
-    }
 }

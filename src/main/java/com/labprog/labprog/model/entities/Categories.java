@@ -33,8 +33,9 @@ public class Categories {
     private String categoryDescription;
 
     public Categories(CategoryDTO categoryDTO) {
-        this.categoryId = categoryDTO.getCategory_id();
-        this.categoryName = categoryDTO.getCategory_name();
-        this.categoryDescription = categoryDTO.getCategory_description();
+
+        this.categoryName = categoryDTO.getCategoryName();
+        this.categoryDescription = categoryDTO.getCategoryDescription();
+
     }
 }

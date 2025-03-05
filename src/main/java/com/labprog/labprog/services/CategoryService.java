@@ -35,12 +35,16 @@ public class CategoryService {
         return categoriesRepository.findById(category_id);
     }
 
-    public Categories udpateCategory(UUID category_id, Categories updatedCategory) {
+    public Categories updateCategory(UUID category_id, Categories updatedCategory) {
         logger.info("Updating category with ID: {}", category_id);
         Categories existingCategory = categoriesRepository.findById(category_id).orElseThrow(() -> new RuntimeException("Category not found"));
 
-        existingCategory.setCategoryName(updatedCategory.getCategoryName());
-        existingCategory.setCategoryDescription(updatedCategory.getCategoryDescription());
+        if (updatedCategory.getCategoryName() != null) {
+            existingCategory.setCategoryName(updatedCategory.getCategoryName());
+        }
+        if (updatedCategory.getCategoryDescription() != null) {
+            existingCategory.setCategoryDescription(updatedCategory.getCategoryDescription());
+        }
 
         return categoriesRepository.save(existingCategory);
     }

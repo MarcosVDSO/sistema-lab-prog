@@ -61,7 +61,7 @@ public class CategoryController {
     public ResponseEntity<Categories> updateCategory(@PathVariable UUID category_id, @RequestBody CategoryDTO categoryDTO) {
         try {
             Categories category = new Categories(categoryDTO);
-            Categories updatedCategory = categoryService.udpateCategory(category_id, category);
+            Categories updatedCategory = categoryService.updateCategory(category_id, category);
             return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
         } catch (RuntimeException e) {
             logger.error("Error updating category: {}", e.getMessage());

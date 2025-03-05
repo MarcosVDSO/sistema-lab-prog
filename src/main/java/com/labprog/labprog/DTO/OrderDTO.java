@@ -6,13 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Data
 @Builder
 @AllArgsConstructor
-public class Order {
+public class OrderDTO {
     private UUID orderId;
     private Customers customer;
     private boolean status;
