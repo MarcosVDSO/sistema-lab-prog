@@ -35,9 +35,25 @@ public class ProductSkuService {
 
         ProductSkus productSku = getProductSkuById(id);
 
-        productSku.setProduct(productSkuData.getProduct());
-        productSku.setPrice(productSkuData.getPrice());
-        productSku.setStockQuantity(productSkuData.getStockQuantity());
+        if (productSkuData.getProduct() != null) {
+            productSku.setProduct(productSkuData.getProduct());
+        }
+
+        if (productSkuData.getSku() != null) {
+            productSku.setSku(productSkuData.getSku());
+        }
+
+        if (productSkuData.getPrice() != null) {
+            productSku.setPrice(productSkuData.getPrice());
+        }
+
+        if (productSkuData.getStockQuantity() != null) {
+            productSku.setStockQuantity(productSkuData.getStockQuantity());
+        }
+
+        if (productSkuData.getProductImage() != null) {
+            productSku.setProductImage(productSkuData.getProductImage());
+        }
 
         return productSkusRepository.save(productSku);
     }
@@ -60,7 +76,7 @@ public class ProductSkuService {
         }
 
         if (productSku.getStockQuantity() == null || productSku.getStockQuantity() <= 0) {
-            throw new RuntimeException("Quantity value is not valid");
+            throw new RuntimeException("Stock quantity value is not valid");
         }
 
         if (productSku.getSku() == null || productSku.getSku().isEmpty()) {
