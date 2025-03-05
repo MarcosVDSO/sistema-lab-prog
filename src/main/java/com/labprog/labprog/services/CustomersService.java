@@ -39,20 +39,35 @@ public class CustomersService {
         Customers existingCustomer = customerRepository.findById(customerId)
                 .orElseThrow(() ->  new ObjectNotFoundException("Customer not found"));
 
-        verifyCustomer(updatedCustomer, false);
-        if (!updatedCustomer.getEmail().equals(existingCustomer.getEmail())
-                && customerRepository.existsByEmail(updatedCustomer.getEmail())) {
+//        verifyCustomer(updatedCustomer, false);
+        if ((updatedCustomer.getEmail() != null && !updatedCustomer.getEmail().equals(existingCustomer.getEmail())
+                && customerRepository.existsByEmail(updatedCustomer.getEmail()))) {
             throw new DuplicateEmailException();
         }
-        if (!updatedCustomer.getUsername().equals(existingCustomer.getUsername())
-                && customerRepository.existsByUsername(updatedCustomer.getUsername())) {
+        if ((updatedCustomer.getUsername() != null && !updatedCustomer.getUsername().equals(existingCustomer.getUsername())
+                && customerRepository.existsByUsername(updatedCustomer.getUsername()))) {
             throw new DuplicateUserNameException();
         }
 
-        existingCustomer.setFirstname(updatedCustomer.getFirstname());
-        existingCustomer.setLastname(updatedCustomer.getLastname());
-        existingCustomer.setEmail(updatedCustomer.getEmail());
-        existingCustomer.setPassword(updatedCustomer.getPassword());
+        if (updatedCustomer.getFirstname() != null) {
+            existingCustomer.setFirstname(updatedCustomer.getFirstname());
+        }
+
+        if (updatedCustomer.getLastname() != null) {
+            existingCustomer.setLastname(updatedCustomer.getLastname());
+        }
+
+        if (updatedCustomer.getEmail() != null) {
+            existingCustomer.setEmail(updatedCustomer.getEmail());
+        }
+
+        if (updatedCustomer.getPassword() != null) {
+            existingCustomer.setPassword(updatedCustomer.getPassword());
+        }
+
+        if (updatedCustomer.getCpf() != null) {
+            existingCustomer.setPassword(updatedCustomer.getCpf());
+        }
 
         return customerRepository.save(existingCustomer);
 
@@ -80,9 +95,6 @@ public class CustomersService {
         }
         if (customer.getPassword() == null) {
             throw new InvalidPasswordException();
-        }
-        if (customer.getAddresses() == null || customer.getAddresses().isEmpty()) {
-            throw new InvalidAddressException();
         }
         if (customer.getUsername() == null) {
             throw new InvalidPasswordException();

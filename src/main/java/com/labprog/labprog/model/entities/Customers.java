@@ -45,14 +45,16 @@ public class Customers {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "cpf", nullable = false)
+    private String cpf;
+
     public Customers(CustomerDTO customerDTO) {
-        this.customerId = customerDTO.getCustomerId();
         this.cart = customerDTO.getCart();
         this.firstname = customerDTO.getFirstname();
         this.lastname = customerDTO.getLastname();
         this.username = customerDTO.getUsername();
         this.password = customerDTO.getPassword();
         this.email = customerDTO.getEmail();
-        this.addresses = customerDTO.getAddresses();
+        this.cpf = customerDTO.getCpf();
     }
 }
