@@ -1,10 +1,8 @@
 package com.labprog.labprog.controllers;
 
 import com.labprog.labprog.DTO.AdminDTO;
-import com.labprog.labprog.DTO.EmployeesDTO;
 import com.labprog.labprog.model.entities.Admins;
-import com.labprog.labprog.model.entities.Employees;
-import com.labprog.labprog.services.AdminServices;
+import com.labprog.labprog.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +16,7 @@ import java.util.UUID;
 @RequestMapping("/admins")
 public class AdminController {
     @Autowired
-    private AdminServices adminService;
+    private AdminService adminService;
 
     @PostMapping
     public ResponseEntity<Admins> addAdmin(@RequestBody AdminDTO adminDTO) {

@@ -25,7 +25,6 @@ public class AdminRepositoryTest {
                     .lastname("oliveira")
                     .password("password")
                     .username("usernameteste")
-                    .profilePhoto("profilePhoto")
                     .email("email").build();
 
         Admins save = repository.save(admin);
@@ -35,7 +34,6 @@ public class AdminRepositoryTest {
         Assertions.assertEquals(admin.getLastname(), save.getLastname());
         Assertions.assertEquals(admin.getPassword(), save.getPassword());
         Assertions.assertEquals(admin.getUsername(), save.getUsername());
-        Assertions.assertEquals(admin.getProfilePhoto(), save.getProfilePhoto());
         Assertions.assertEquals(admin.getEmail(), save.getEmail());
     
     }

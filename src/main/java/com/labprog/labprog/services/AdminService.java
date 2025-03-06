@@ -2,9 +2,7 @@ package com.labprog.labprog.services;
 
 import com.labprog.labprog.exceptions.*;
 import com.labprog.labprog.model.entities.Admins;
-import com.labprog.labprog.model.entities.Employees;
 import com.labprog.labprog.model.repositories.AdminRepository;
-import com.labprog.labprog.model.repositories.EmployeesRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AdminServices {
+public class AdminService {
     @Autowired
     AdminRepository adminRepository;
 
