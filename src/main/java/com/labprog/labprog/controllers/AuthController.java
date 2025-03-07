@@ -2,7 +2,7 @@ package com.labprog.labprog.controllers;
 
 
 import com.labprog.labprog.DTO.AuthDTO;
-import com.labprog.labprog.DTO.AdminAuthRegisterDTO;
+import com.labprog.labprog.DTO.UserAuthRegisterDTO;
 import com.labprog.labprog.DTO.TokenResponseDTO;
 import com.labprog.labprog.model.entities.Admins;
 import com.labprog.labprog.model.entities.Customers;
@@ -83,7 +83,7 @@ public class AuthController {
     }
 
     @PostMapping("/admin/register")
-    public ResponseEntity registerAdmin(@RequestBody AdminAuthRegisterDTO data) {
+    public ResponseEntity registerAdmin(@RequestBody UserAuthRegisterDTO data) {
         if (this.adminRepository.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
@@ -94,7 +94,7 @@ public class AuthController {
     }
 
     @PostMapping("/employee/register")
-    public ResponseEntity registerEmployee(@RequestBody AdminAuthRegisterDTO data) {
+    public ResponseEntity registerEmployee(@RequestBody UserAuthRegisterDTO data) {
         if (this.employeesRepository.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
@@ -105,7 +105,7 @@ public class AuthController {
     }
 
     @PostMapping("/customer/register")
-    public ResponseEntity registerCustomer(@RequestBody AdminAuthRegisterDTO data) {
+    public ResponseEntity registerCustomer(@RequestBody UserAuthRegisterDTO data) {
         if (this.customerRepository.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());

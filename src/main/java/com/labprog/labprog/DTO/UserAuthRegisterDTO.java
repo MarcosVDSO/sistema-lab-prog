@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminAuthRegisterDTO {
+public class UserAuthRegisterDTO {
     private String username;
     private String password;
     private String firstname;
