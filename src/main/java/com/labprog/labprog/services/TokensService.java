@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.labprog.labprog.model.entities.Admins;
+import com.labprog.labprog.model.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class TokensService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(Admins admin) {
+    public String generateToken(User admin) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
