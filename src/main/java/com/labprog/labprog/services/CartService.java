@@ -1,7 +1,9 @@
 package com.labprog.labprog.services;
 
+import com.labprog.labprog.model.entities.CartItems;
 import com.labprog.labprog.model.entities.Carts;
 import com.labprog.labprog.model.entities.Customers;
+import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.model.repositories.CartsRepository;
 import com.labprog.labprog.model.repositories.CustomerRepository;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,44 +26,68 @@ public class CartService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public Carts createCart(UUID customerId) {
-        logger.info("Creating new cart for customer ID: {}", customerId);
+    @Autowired
+    private ProductSkuService productSkuService;
 
-        Optional<Customers> customer = customerRepository.findById(customerId);
+    @Autowired
+    private CartItemService cartItemService;
 
-        if (customer.isPresent()) {
-            Carts cart = new Carts();
-            cart.setCustomer(customer.get());
-            cart.setTotal(0L);
-            if (customer.get().getCart() == null) {
-                customer.get().setCart(cart);
-            }
-            return cartsRepository.save(cart);
-        } else {
-            throw new RuntimeException("Customer not found");
+    public Carts createCart() {
+
+        Carts cart = new Carts();
+        cart.setTotal(0L);
+
+        return cartsRepository.save(cart);
+
+    }
+
+    public Carts addProductToCart(UUID cartId, UUID productSkuId, Long quantity) {
+
+        Carts cart = cartsRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found!"));
+        ProductSkus productSku = productSkuService.getProductSkuById(productSkuId);
+        CartItems cartItem = cartItemService.createCartItem(productSku, quantity);
+
+        List<CartItems> cartItems = cart.getCartItems();
+        for (CartItems _cartItem : cartItems) {
+            if (_cartItem.getProductSku().getProductSkuId() == productSkuId) throw new RuntimeException("Product sku already in cart");
         }
+
+        if (quantity  > cartItem.getProductSku().getStockQuantity()) throw new RuntimeException("Quantity is greater than stock");
+
+        cart.getCartItems().add(cartItem);
+        cartItem.setCart(cart);
+        cart.setTotal(cart.getTotal() + cartItem.getProductSku().getPrice() * quantity);
+
+        return cartsRepository.save(cart);
+
     }
 
-    public Carts getCartByCustomerId(UUID customerId) {
-        logger.info("Getting cart for customer ID: {}", customerId);
-        return cartsRepository.findByCustomer_CustomerId(customerId)
-                .orElseThrow(() -> new RuntimeException("Cart not found for customer"));
+    public Carts removeProductFromCart(UUID cartId, UUID cartItemId) {
+
+        Carts cart = cartsRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found!"));
+        CartItems cartItem = cartItemService.getCartItem(cartItemId);
+
+        cart.setTotal(cart.getTotal() - cartItem.getProductSku().getPrice() * cartItem.getQuantity());
+        cart.getCartItems().remove(cartItem);
+        cartItem.setCart(null);
+        cartItemService.deleteCartItem(cartItem);
+
+        return cartsRepository.save(cart);
     }
 
-    public Carts updateCart(UUID cartId, Carts updatedCart) {
-        logger.info("Updating cart ID: {}", cartId);
-        Carts existingCart = cartsRepository.findById(cartId)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
+    public Carts clearCart(UUID cartId) {
 
-        existingCart.setTotal(updatedCart.getTotal());
+        Carts cart = cartsRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found!"));
 
-        return cartsRepository.save(existingCart);
+        List<CartItems> cartItems = cart.getCartItems();
+
+        if (cartItems == null) throw new RuntimeException("Cart is empty");
+
+
+        cart.getCartItems().clear();
+        cart.setTotal(0L);
+
+        return cartsRepository.save(cart);
     }
 
-    public void deleteCart(UUID cartId) {
-        logger.info("Deleting cart ID: {}", cartId);
-        Carts cart = cartsRepository.findById(cartId)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
-        cartsRepository.delete(cart);
-    }
 }

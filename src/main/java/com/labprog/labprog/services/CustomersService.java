@@ -1,6 +1,7 @@
 package com.labprog.labprog.services;
 
 import com.labprog.labprog.exceptions.*;
+import com.labprog.labprog.model.entities.Carts;
 import com.labprog.labprog.model.entities.Customers;
 import com.labprog.labprog.model.repositories.CustomerRepository;
 import jakarta.transaction.Transactional;
@@ -18,6 +19,8 @@ import java.util.regex.Pattern;
 public class CustomersService {
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    CartService cartService;
 
 
     public List<Customers> findAll() {
@@ -31,6 +34,11 @@ public class CustomersService {
     @Transactional
     public Customers save(Customers customer) {
         verifyCustomer(customer, true);
+
+        Carts cart = cartService.createCart();
+        customer.setCart(cart);
+        cart.setCustomer(customer);
+
         return customerRepository.save(customer);
     }
 

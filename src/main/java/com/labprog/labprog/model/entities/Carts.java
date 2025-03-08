@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,9 +24,10 @@ public class Carts {
     private UUID cartId;
 
     @OneToOne(mappedBy = "cart")
+    @JsonIgnore
     private Customers customer;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItems> cartItems;
 
     @Column(name = "total", nullable = false)

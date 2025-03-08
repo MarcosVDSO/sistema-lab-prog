@@ -8,6 +8,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.labprog.labprog.model.entities.CartItems;
 
 public interface CartItemsRepository extends JpaRepository<CartItems, UUID>{
-
-    List<CartItems> findByCart_CartId(UUID cartId);
 }

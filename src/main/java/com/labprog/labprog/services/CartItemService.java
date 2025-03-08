@@ -25,25 +25,14 @@ public class CartItemService {
     @Autowired
     private CartsRepository cartsRepository;
 
-    @Autowired
-    private ProductSkusRepository productSkusRepository;
 
-    public CartItems addCartItem(UUID customerId, UUID productSkuId, Long quantity) {
-        logger.info("Adding product to cart for customer ID: {}", customerId);
+    public CartItems createCartItem(ProductSkus productSku, Long quantity) {
 
-        Carts cart = cartsRepository.findByCustomer_CustomerId(customerId)
-                .orElseThrow(() -> new RuntimeException("Cart not found for customer"));
-
-        ProductSkus productSku = productSkusRepository.findById(productSkuId)
-                .orElseThrow(() -> new RuntimeException("Product SKU not found"));
+        if (quantity < 0) throw new RuntimeException("Cart item quantity cannot be 0 or less");
 
         CartItems cartItem = new CartItems();
-        cartItem.setCart(cart);
         cartItem.setProductSku(productSku);
         cartItem.setQuantity(quantity);
-
-        cart.setTotal((long) (cart.getTotal() + productSku.getPrice() * quantity));
-        cartsRepository.save(cart);
 
         return cartItemsRepository.save(cartItem);
     }
@@ -54,28 +43,26 @@ public class CartItemService {
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));
     }
 
-    public CartItems updateCartItem(UUID cartItemId, Long quantity) {
-        logger.info("Updating cart item ID: {}", cartItemId);
+    public CartItems updateQuantityOfCartItem(UUID cartItemId, Long newQuantity) {
+
+        if (newQuantity <= 0) throw new RuntimeException("Cart item quantity cannot be 0 or less");
+
         CartItems cartItem = cartItemsRepository.findById(cartItemId)
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));
-
-        cartItem.setQuantity(quantity);
-
         Carts cart = cartItem.getCart();
-        cart.setTotal((long) (cart.getTotal() + cartItem.getProductSku().getPrice() * (quantity - cartItem.getQuantity())));
+
+        if (newQuantity > cartItem.getProductSku().getStockQuantity()) throw new RuntimeException("Quantity is greater than stock");
+
+        cart.setTotal(cart.getTotal() - cartItem.getProductSku().getPrice() * cartItem.getQuantity());
+        cartItem.setQuantity(newQuantity);
+        cart.setTotal(cart.getTotal() + cartItem.getProductSku().getPrice() * cartItem.getQuantity());
+
         cartsRepository.save(cart);
 
         return cartItemsRepository.save(cartItem);
     }
 
-    public void deleteCartItem(UUID cartItemId) {
-        logger.info("Deleting cart item ID: {}", cartItemId);
-        CartItems cartItem = cartItemsRepository.findById(cartItemId)
-                .orElseThrow(() -> new RuntimeException("Cart item not found"));
-
-        Carts cart = cartItem.getCart();
-        cart.setTotal((long) (cart.getTotal() - cartItem.getProductSku().getPrice() * cartItem.getQuantity()));
-        cartsRepository.save(cart);
+    public void deleteCartItem(CartItems cartItem) {
 
         cartItemsRepository.delete(cartItem);
     }

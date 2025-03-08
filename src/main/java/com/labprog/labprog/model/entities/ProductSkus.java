@@ -22,6 +22,7 @@ public class ProductSkus {
     private UUID productSkuId;
 
     @OneToOne(mappedBy = "productSku")
+    @JsonIgnore
     private CartItems cartItem;
 
     @ManyToOne

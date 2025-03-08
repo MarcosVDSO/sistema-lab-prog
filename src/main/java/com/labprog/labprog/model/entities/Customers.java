@@ -30,7 +30,6 @@ public class Customers implements User, UserDetails {
 
     @Setter
     @OneToOne
-    @JsonIgnore
     @JoinColumn(name = "cart_id")
     private Carts cart;
 

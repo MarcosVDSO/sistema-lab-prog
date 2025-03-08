@@ -27,23 +27,17 @@ public class ProductSkusRepositoryTest {
     public void testCreateProductSkus() {
         Products product = Products.builder()
                 .productSkus(new ArrayList<ProductSkus>())
-                .categories(new ArrayList<Categories>())
                 .productName("produto2")
                 .productDescription("descricao2")
                 .summary("Sumario2")
-                .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
-                .updatedAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
                 .build();
 
         Products saveProduct = repositoryProducts.save(product);
         ProductSkus productSkus = ProductSkus.builder()
-                .cartItem(new ArrayList<CartItems>())
                 .product(saveProduct)
                 .sku("123456")
-                .quantity(10L)
-                .price(5.0D)
-                .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
-                .updatedAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
+                .stockQuantity(10L)
+                .price(5L)
                 .build();
 
         ProductSkus save = repository.save(productSkus);
@@ -51,9 +45,7 @@ public class ProductSkusRepositoryTest {
         Assertions.assertEquals(productSkus.getCartItem(), save.getCartItem());
         Assertions.assertEquals(productSkus.getProduct(), save.getProduct());
         Assertions.assertEquals(productSkus.getSku(), save.getSku());
-        Assertions.assertEquals(productSkus.getQuantity(), save.getQuantity());
+        Assertions.assertEquals(productSkus.getStockQuantity(), save.getStockQuantity());
         Assertions.assertEquals(productSkus.getPrice(), save.getPrice());
-        Assertions.assertEquals(productSkus.getCreatedAt(), save.getCreatedAt());
-        Assertions.assertEquals(productSkus.getUpdatedAt(), save.getUpdatedAt());
     }
 }
