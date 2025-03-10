@@ -37,6 +37,7 @@ public class ProductSkuController {
             List<ProductSkus> productSkus = productSkuServices.getAllProductSkus();
             return new ResponseEntity<>(productSkus, HttpStatus.OK);
         } catch (RuntimeException e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }

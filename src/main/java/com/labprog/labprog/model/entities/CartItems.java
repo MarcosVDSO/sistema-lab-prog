@@ -27,7 +27,7 @@ public class CartItems {
     @JsonIgnore
     private Carts cart;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "product_sku_id")
     private ProductSkus productSku;
 

@@ -1,6 +1,8 @@
 package com.labprog.labprog.configs;
 
 import com.labprog.labprog.model.repositories.AdminRepository;
+import com.labprog.labprog.model.repositories.CustomerRepository;
+import com.labprog.labprog.model.repositories.EmployeesRepository;
 import com.labprog.labprog.services.TokensService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -21,7 +24,11 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     TokensService tokenService;
     @Autowired
-    AdminRepository repository;
+    AdminRepository adminRepository;
+    @Autowired
+    EmployeesRepository employeesRepository;
+    @Autowired
+    CustomerRepository customerRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -29,10 +36,25 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (token != null) {
             var username = tokenService.validateToken(token);
-            UserDetails admin = repository.findByUsername(username);
 
-            var authentication = new UsernamePasswordAuthenticationToken(admin, null, admin.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserDetails adminUser = adminRepository.findByUsername(username);
+            if (adminUser != null) {
+                var authentication = new UsernamePasswordAuthenticationToken(adminUser, null, adminUser.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
+            UserDetails employeeUser = employeesRepository.findByUsername(username);
+            if (employeeUser != null) {
+                var authentication = new UsernamePasswordAuthenticationToken(employeeUser, null, employeeUser.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
+            UserDetails customerUser = employeesRepository.findByUsername(username);
+            if (customerUser != null) {
+                var authentication = new UsernamePasswordAuthenticationToken(customerUser, null, customerUser.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
         }
 
         filterChain.doFilter(request, response);

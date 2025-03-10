@@ -45,12 +45,13 @@ public class CartService {
 
         Carts cart = cartsRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found!"));
         ProductSkus productSku = productSkuService.getProductSkuById(productSkuId);
-        CartItems cartItem = cartItemService.createCartItem(productSku, quantity);
 
         List<CartItems> cartItems = cart.getCartItems();
         for (CartItems _cartItem : cartItems) {
             if (_cartItem.getProductSku().getProductSkuId() == productSkuId) throw new RuntimeException("Product sku already in cart");
         }
+
+        CartItems cartItem = cartItemService.createCartItem(productSku, quantity);
 
         if (quantity  > cartItem.getProductSku().getStockQuantity()) throw new RuntimeException("Quantity is greater than stock");
 

@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,8 +31,8 @@ public class ProductSkus {
     @JoinColumn(name = "product_id")
     private Products product;
 
-    @OneToOne(mappedBy = "productSku")
-    private OrderItems orderItem;
+    @OneToMany(mappedBy = "productSku")
+    private List<OrderItems> orderItems;
 
     @Column(name = "sku", nullable = false)
     private String sku;
