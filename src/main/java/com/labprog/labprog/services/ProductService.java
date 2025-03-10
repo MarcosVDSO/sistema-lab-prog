@@ -94,7 +94,7 @@ public class ProductService {
         Products product = getProductById(productId);
 
         Categories category = categoryService.createCategory(categoryData);
-        category.setProduct(product);
+        category.getProducts().add(product);
 
         product.setCategory(category);
 
@@ -108,7 +108,7 @@ public class ProductService {
 
         if (product != null && category != null) {
             product.setCategory(category);
-            category.setProduct(product);
+            category.getProducts().add(product);
             return productsRepository.save(product);
         }
 

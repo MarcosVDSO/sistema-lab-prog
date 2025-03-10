@@ -29,7 +29,7 @@ public class CategoryController {
             List<Categories> categories = categoryService.getAllCategories();
             return new ResponseEntity<>(categories, HttpStatus.OK);
         } catch (RuntimeException e) {
-            logger.error("Error finding categories");
+            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }

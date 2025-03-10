@@ -24,9 +24,9 @@ public class Categories {
     @Column(name = "category_id")
     private UUID categoryId;
 
-    @OneToOne(mappedBy = "category")
+    @OneToMany(mappedBy = "category")
     @JsonIgnore
-    private Products product;
+    private List<Products> products;
 
     @Column(name = "category_name", nullable = false)
     private String categoryName;
