@@ -2,7 +2,8 @@ package com.labprog.labprog.DTO;
 
 import com.labprog.labprog.model.entities.Addresses;
 import com.labprog.labprog.model.entities.Carts;
-import jakarta.persistence.*;
+import com.labprog.labprog.model.entities.enums.ROLES;
+import com.labprog.labprog.model.entities.enums.USER_STATUS;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Data
 @Builder
 @AllArgsConstructor
-public class CustomerDTO {
+public class UserDTO {
     private UUID customerId;
 
     private List<Addresses> addresses;
@@ -24,5 +25,7 @@ public class CustomerDTO {
     private String password;
     private String profilePhoto;
     private String email;
+    private String role;
+    private String status;
 
 }

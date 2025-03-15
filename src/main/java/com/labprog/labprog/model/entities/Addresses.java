@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -41,16 +40,8 @@ public class Addresses {
     private String neighborhood;
 
     @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admins admin;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customers customer;
-
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employees employee;
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     public Addresses(AddressesDTO addressesDTO) {
         this.country = addressesDTO.getCountry();
@@ -58,9 +49,7 @@ public class Addresses {
         this.landmark = addressesDTO.getLandmark();
         this.city = addressesDTO.getCity();
         this.cep = addressesDTO.getCep();
-        this.admin = addressesDTO.getAdmin();
-        this.customer = addressesDTO.getCustomer();
-        this.employee = addressesDTO.getEmployee();
+        this.user = addressesDTO.getUser();
         this.addressId = addressesDTO.getAddressId();
         this.neighborhood = addressesDTO.getNeighborhood();
     }

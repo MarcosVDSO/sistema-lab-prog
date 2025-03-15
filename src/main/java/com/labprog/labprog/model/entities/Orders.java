@@ -33,8 +33,8 @@ public class Orders {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customers customer;
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItems> orderItems;

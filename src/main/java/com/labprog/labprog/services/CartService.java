@@ -2,17 +2,14 @@ package com.labprog.labprog.services;
 
 import com.labprog.labprog.model.entities.CartItems;
 import com.labprog.labprog.model.entities.Carts;
-import com.labprog.labprog.model.entities.Customers;
 import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.model.repositories.CartsRepository;
-import com.labprog.labprog.model.repositories.CustomerRepository;
+import com.labprog.labprog.model.repositories.UserRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,7 +21,7 @@ public class CartService {
     private CartsRepository cartsRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private ProductSkuService productSkuService;

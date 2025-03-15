@@ -1,38 +1,20 @@
 
-CREATE TABLE "employees" (
-    employee_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    cpf VARCHAR(100) NOT NULL,
-    firstname VARCHAR(100) NOT NULL,
-    lastname VARCHAR(100) NOT NULL,
-    username VARCHAR(100) NOT NULL UNIQUE,
-    "password" VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE "admins" (
-    admin_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    cpf VARCHAR(100) NOT NULL,
-    firstname VARCHAR(100) NOT NULL,
-    lastname VARCHAR(100) NOT NULL,
-    username VARCHAR(100) NOT NULL UNIQUE,
-    "password" VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL
-);
-
 CREATE TABLE "carts" (
     cart_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     total INTEGER NOT NULL
 );
 
-CREATE TABLE "customers" (
-    customer_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    cpf VARCHAR(100) NOT NULL,
+CREATE TABLE "users" (
+    user_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    cpf VARCHAR(100) NOT NULL UNIQUE,
     cart_id UUID,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
     username VARCHAR(100) NOT NULL UNIQUE,
     "password" VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    role VARCHAR(100) NOT NULL,
+    status VARCHAR(100) NOT NULL,
 
     CONSTRAINT fk_cart_id
         FOREIGN KEY (cart_id)
@@ -42,9 +24,7 @@ CREATE TABLE "customers" (
 
 CREATE TABLE "addresses" (
     address_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    admin_id UUID,
-    employee_id UUID,
-    customer_id UUID,
+    user_id UUID,
     country VARCHAR(50) NOT NULL,
     "state" VARCHAR(50) NOT NULL,
     landmark VARCHAR(50) NOT NULL,
@@ -52,19 +32,9 @@ CREATE TABLE "addresses" (
     cep VARCHAR(50) NOT NULL,
     neighborhood VARCHAR(50) NOT NULL,
 
-    CONSTRAINT fk_admin_id
-        FOREIGN KEY (admin_id)
-        REFERENCES "admins"(admin_id)
-        ON DELETE SET NULL,
-
-    CONSTRAINT fk_employee_id
-            FOREIGN KEY (employee_id)
-            REFERENCES "employees"(employee_id)
-            ON DELETE SET NULL,
-
-    CONSTRAINT fk_customer_id
-            FOREIGN KEY (customer_id)
-            REFERENCES "customers"(customer_id)
+    CONSTRAINT fk_user_id
+            FOREIGN KEY (user_id)
+            REFERENCES "users" (user_id)
             ON DELETE SET NULL
 );
 
@@ -124,14 +94,14 @@ CREATE TABLE "cart_items" (
 
 CREATE TABLE "orders" (
     order_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    customer_id UUID,
+    user_id UUID,
     status VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT fk_customer_id
-        FOREIGN KEY (customer_id)
-        REFERENCES "customers"(customer_id)
+    CONSTRAINT fk_user_id
+        FOREIGN KEY (user_id)
+        REFERENCES "users"(user_id)
         ON DELETE SET NULL
 );
 

@@ -2,7 +2,6 @@ package com.labprog.labprog.model.repositories;
 
 import com.labprog.labprog.model.entities.CartItems;
 import com.labprog.labprog.model.entities.Carts;
-import com.labprog.labprog.model.entities.Customers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

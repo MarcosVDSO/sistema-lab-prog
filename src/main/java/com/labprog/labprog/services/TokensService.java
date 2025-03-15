@@ -4,13 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.labprog.labprog.model.entities.Admins;
-import com.labprog.labprog.model.entities.User;
+import com.labprog.labprog.model.entities.Users;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -20,16 +18,19 @@ public class TokensService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(User admin) {
+    public String generateToken(Users user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            String token = JWT.create()
+            return JWT.create()
                     .withIssuer("auth-api")
-                    .withSubject(admin.getUsername())
+                    .withSubject(user.getUsername())
+//                    .withSubject(user.getFirstname())
+//                    .withSubject(user.getLastname())
+//                    .withSubject(user.getEmail())
+//                    .withSubject(user.getCpf())
+//                    .withSubject(user.getRole())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
-
-            return token;
 
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Error while generating token", exception);

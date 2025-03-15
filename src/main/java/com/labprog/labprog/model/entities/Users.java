@@ -1,11 +1,10 @@
 package com.labprog.labprog.model.entities;
 
-import com.labprog.labprog.DTO.AdminDTO;
+import com.labprog.labprog.DTO.UserDTO;
+import com.labprog.labprog.model.entities.enums.ROLES;
+import com.labprog.labprog.model.entities.enums.USER_STATUS;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,19 +14,27 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Admins")
+@Table(name = "Users")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Admins implements User, UserDetails {
+public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "admin_id")
-    private UUID adminId;
+    @Column(name = "user_id")
+    private UUID userId;
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Addresses> addresses;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Orders> orders;
+
+    @Setter
+    @OneToOne
+    @JoinColumn(name = "cart_id")
+    private Carts cart;
 
     @Column(name = "firstname", nullable = false)
     private String firstname;
@@ -38,40 +45,47 @@ public class Admins implements User, UserDetails {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "cpf", nullable = false, unique = true)
-    private String cpf;
-
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    public Admins(AdminDTO adminDTO) {
-        this.adminId = adminDTO.getAdminId();
-        this.firstname = adminDTO.getFirstname();
-        this.lastname = adminDTO.getLastname();
-        this.username = adminDTO.getUsername();
-        this.password = adminDTO.getPassword();
-        this.email = adminDTO.getEmail();
-        this.addresses = adminDTO.getAddresses();
-        this.cpf = adminDTO.getCpf();
+    @Column(name = "cpf", nullable = false, unique = true)
+    private String cpf;
+
+    @Column(name = "role", nullable = false)
+    private String role;
+
+    @Column(name = "status", nullable = false)
+    private String status;
+
+    public Users(UserDTO userDTO) {
+        this.cart = userDTO.getCart();
+        this.firstname = userDTO.getFirstname();
+        this.lastname = userDTO.getLastname();
+        this.username = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.email = userDTO.getEmail();
+        this.cpf = userDTO.getCpf();
+        this.role = userDTO.getRole();
+        this.status = userDTO.getStatus();
     }
 
-    public Admins(String firstname, String lastname, String username, String password, String cpf, String email) {
+    public Users(String firstname, String lastname, String username, String password, String cpf, String email, String role, String status) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.password = password;
         this.cpf = cpf;
         this.email = email;
+        this.role = role;
+        this.status = status;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(
-                new SimpleGrantedAuthority("ROLE_ADMIN"),
-                new SimpleGrantedAuthority("ROLE_EMPLOYEE"),
                 new SimpleGrantedAuthority("ROLE_CUSTOMER")
         );
     }

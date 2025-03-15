@@ -4,15 +4,9 @@ package com.labprog.labprog.controllers;
 import com.labprog.labprog.DTO.AuthDTO;
 import com.labprog.labprog.DTO.UserAuthRegisterDTO;
 import com.labprog.labprog.DTO.TokenResponseDTO;
-import com.labprog.labprog.model.entities.Admins;
-import com.labprog.labprog.model.entities.Customers;
-import com.labprog.labprog.model.entities.Employees;
-import com.labprog.labprog.model.repositories.AdminRepository;
-import com.labprog.labprog.model.repositories.CustomerRepository;
-import com.labprog.labprog.model.repositories.EmployeesRepository;
-import com.labprog.labprog.services.AdminService;
-import com.labprog.labprog.services.CustomersService;
-import com.labprog.labprog.services.EmployeesService;
+import com.labprog.labprog.model.entities.Users;
+import com.labprog.labprog.model.repositories.UserRepository;
+import com.labprog.labprog.services.UserService;
 import com.labprog.labprog.services.TokensService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,85 +26,40 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private AdminRepository adminRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private EmployeesRepository employeesRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    private AdminService adminService;
-
-    @Autowired
-    private EmployeesService employeesService;
-
-    @Autowired
-    private CustomersService customersService;
+    private UserService userService;
 
     @Autowired
     private TokensService tokensService;
 
-    @PostMapping("/admin/login")
+    @PostMapping("/login")
     public ResponseEntity<TokenResponseDTO> loginAdmin(@RequestBody AuthDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.getUsername(), data.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        var token = tokensService.generateToken((Admins) auth.getPrincipal());
+        var token = tokensService.generateToken((Users) auth.getPrincipal());
 
         return ResponseEntity.ok(new TokenResponseDTO(token, "ADMIN"));
     }
 
-    @PostMapping("/employee/login")
-    public ResponseEntity<TokenResponseDTO> loginEmployee(@RequestBody AuthDTO data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.getUsername(), data.getPassword());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
-
-        var token = tokensService.generateToken((Employees) auth.getPrincipal());
-
-        return ResponseEntity.ok(new TokenResponseDTO(token, "EMPLOYEE"));
-    }
-
-    @PostMapping("/customer/login")
-    public ResponseEntity<TokenResponseDTO> loginCustomer(@RequestBody AuthDTO data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.getUsername(), data.getPassword());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
-
-        var token = tokensService.generateToken((Customers) auth.getPrincipal());
-
-        return ResponseEntity.ok(new TokenResponseDTO(token, "CUSTOMER"));
-    }
-
-    @PostMapping("/admin/register")
+    @PostMapping("/register")
     public ResponseEntity registerAdmin(@RequestBody UserAuthRegisterDTO data) {
-        if (this.adminRepository.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
+        if (this.userRepository.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
-        Admins newAdmin = new Admins(data.getFirstname(), data.getLastname(), data.getUsername(), encryptedPassword,  data.getCpf(), data.getEmail());
-        adminService.save(newAdmin);
-
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/employee/register")
-    public ResponseEntity registerEmployee(@RequestBody UserAuthRegisterDTO data) {
-        if (this.employeesRepository.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
-        Employees newEmployee = new Employees(data.getFirstname(), data.getLastname(), data.getUsername(), encryptedPassword,  data.getCpf(), data.getEmail());
-        employeesService.save(newEmployee);
-
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/customer/register")
-    public ResponseEntity registerCustomer(@RequestBody UserAuthRegisterDTO data) {
-        if (this.customerRepository.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
-        Customers newCustomer = new Customers(data.getFirstname(), data.getLastname(), data.getUsername(), encryptedPassword,  data.getCpf(), data.getEmail());
-        customersService.save(newCustomer);
+        Users newUser = new Users(
+                data.getFirstname(),
+                data.getLastname(),
+                data.getUsername(),
+                encryptedPassword,
+                data.getCpf(),
+                data.getEmail(),
+                data.getRole(),
+                data.getStatus()
+        );
+        userService.save(newUser);
 
         return ResponseEntity.ok().build();
     }

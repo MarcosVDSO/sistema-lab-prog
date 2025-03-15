@@ -1,14 +1,10 @@
 package com.labprog.labprog.DTO;
 
-import com.labprog.labprog.model.entities.Admins;
-import com.labprog.labprog.model.entities.Customers;
-import com.labprog.labprog.model.entities.Employees;
-import jakarta.persistence.*;
+import com.labprog.labprog.model.entities.Users;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -23,8 +19,6 @@ public class AddressesDTO {
     private String city;
     private String cep;
     private String neighborhood;
-    private Admins admin;
-    private Customers customer;
-    private Employees employee;
+    private Users user;
 
 }

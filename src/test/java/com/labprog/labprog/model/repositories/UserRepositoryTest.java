@@ -1,8 +1,7 @@
 package com.labprog.labprog.model.repositories;
 
 import com.labprog.labprog.model.entities.Addresses;
-import com.labprog.labprog.model.entities.Carts;
-import com.labprog.labprog.model.entities.Customers;
+import com.labprog.labprog.model.entities.Users;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,13 +15,13 @@ import java.util.ArrayList;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class CustomerRepositoryTest {
+public class UserRepositoryTest {
     @Autowired
-    CustomerRepository repository;
+    UserRepository repository;
 
     @Test
     public void testCreateCustomer() {
-        Customers customer = Customers.builder().addresses(new ArrayList<Addresses>())
+        Users customer = Users.builder().addresses(new ArrayList<Addresses>())
                 .firstname("Kleiton")
                 .lastname("Arruda")
                 .username("sdadasdasda")
@@ -30,7 +29,7 @@ public class CustomerRepositoryTest {
                 .profilePhoto("6131")
                 .email("masadasdas").build();
 
-        Customers save = repository.save(customer);
+        Users save = repository.save(customer);
         Assertions.assertNotNull(save);
         Assertions.assertEquals(customer.getAddresses(), save.getAddresses());
         Assertions.assertEquals(customer.getFirstname(), save.getFirstname());

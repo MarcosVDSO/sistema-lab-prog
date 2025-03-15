@@ -1,5 +1,7 @@
 package com.labprog.labprog.DTO;
 
+import com.labprog.labprog.model.entities.enums.ROLES;
+import com.labprog.labprog.model.entities.enums.USER_STATUS;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +18,6 @@ public class UserAuthRegisterDTO {
     private String lastname;
     private String cpf;
     private String email;
+    private String role;
+    private String status;
 }

@@ -2,58 +2,59 @@ package com.labprog.labprog.services;
 
 import com.labprog.labprog.exceptions.*;
 import com.labprog.labprog.model.entities.Carts;
-import com.labprog.labprog.model.entities.Customers;
-import com.labprog.labprog.model.repositories.CustomerRepository;
+import com.labprog.labprog.model.entities.Users;
+import com.labprog.labprog.model.repositories.UserRepository;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Service
-public class CustomersService {
+public class UserService {
     @Autowired
-    CustomerRepository customerRepository;
+    UserRepository userRepository;
     @Autowired
     CartService cartService;
 
 
-    public List<Customers> findAll() {
-        return customerRepository.findAll();
+    public List<Users> findAll() {
+        return userRepository.findAll();
     }
 
-    public Optional<Customers> findById(UUID id) {
-        return customerRepository.findById(id);
+    public Optional<Users> findById(UUID id) {
+        return userRepository.findById(id);
     }
 
     @Transactional
-    public Customers save(Customers customer) {
-        verifyCustomer(customer, true);
+    public Users save(Users user) {
+        verifyCustomer(user, true);
 
-        Carts cart = cartService.createCart();
-        customer.setCart(cart);
-        cart.setCustomer(customer);
+        if (Objects.equals(user.getRole(), "CUSTOMER")) {
+            Carts cart = cartService.createCart();
+            user.setCart(cart);
+            cart.setUser(user);
+        }
 
-        return customerRepository.save(customer);
+        return userRepository.save(user);
     }
 
-    public Customers update(UUID customerId, Customers updatedCustomer) {
+    public Users update(UUID customerId, Users updatedCustomer) {
 
-        Customers existingCustomer = customerRepository.findById(customerId)
+        Users existingCustomer = userRepository.findById(customerId)
                 .orElseThrow(() ->  new ObjectNotFoundException("Customer not found"));
 
 //        verifyCustomer(updatedCustomer, false);
         if ((updatedCustomer.getEmail() != null && !updatedCustomer.getEmail().equals(existingCustomer.getEmail())
-                && customerRepository.existsByEmail(updatedCustomer.getEmail()))) {
+                && userRepository.existsByEmail(updatedCustomer.getEmail()))) {
             throw new DuplicateEmailException();
         }
         if ((updatedCustomer.getUsername() != null && !updatedCustomer.getUsername().equals(existingCustomer.getUsername())
-                && customerRepository.existsByUsername(updatedCustomer.getUsername()))) {
+                && userRepository.existsByUsername(updatedCustomer.getUsername()))) {
             throw new DuplicateUserNameException();
         }
 
@@ -77,21 +78,21 @@ public class CustomersService {
             existingCustomer.setPassword(updatedCustomer.getCpf());
         }
 
-        return customerRepository.save(existingCustomer);
+        return userRepository.save(existingCustomer);
 
 
     }
 
 
     public void deleteById(UUID customerId) {
-            Optional<Customers> customer = customerRepository.findById(customerId);
+            Optional<Users> customer = userRepository.findById(customerId);
             if (customer.isEmpty()) {
                 throw new ObjectNotFoundException("Customer not found");
             }
-            customerRepository.deleteById(customerId);
+            userRepository.deleteById(customerId);
         }
 
-    private void verifyCustomer(Customers customer, boolean isNewCustomer) {
+    private void verifyCustomer(Users customer, boolean isNewCustomer) {
         if (customer == null) {
             throw new ObjectNotFoundException("Customer not found");
         }
@@ -109,10 +110,10 @@ public class CustomersService {
         }
 
         if (isNewCustomer) {
-            if (customerRepository.existsByEmail(customer.getEmail())) {
+            if (userRepository.existsByEmail(customer.getEmail())) {
                 throw new DuplicateEmailException();
             }
-            if (customerRepository.existsByUsername(customer.getUsername())) {
+            if (userRepository.existsByUsername(customer.getUsername())) {
                 throw new DuplicateUserNameException();
             }
         }

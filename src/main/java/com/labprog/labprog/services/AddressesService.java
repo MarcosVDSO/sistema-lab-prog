@@ -2,15 +2,10 @@ package com.labprog.labprog.services;
 
 import com.labprog.labprog.exceptions.ObjectNotFoundException;
 import com.labprog.labprog.model.entities.Addresses;
-import com.labprog.labprog.model.entities.Customers;
 import com.labprog.labprog.model.repositories.AddressRepository;
-import com.labprog.labprog.model.repositories.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.stereotype.Service;
 
-import java.rmi.server.UID;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
