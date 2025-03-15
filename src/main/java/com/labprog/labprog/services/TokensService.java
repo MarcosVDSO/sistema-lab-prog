@@ -24,11 +24,6 @@ public class TokensService {
             return JWT.create()
                     .withIssuer("auth-api")
                     .withSubject(user.getUsername())
-//                    .withSubject(user.getFirstname())
-//                    .withSubject(user.getLastname())
-//                    .withSubject(user.getEmail())
-//                    .withSubject(user.getCpf())
-//                    .withSubject(user.getRole())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
 

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -85,6 +86,22 @@ public class Users implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        if (Objects.equals(this.role, "ADMIN")) {
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_ADMIN"),
+                    new SimpleGrantedAuthority("ROLE_EMPLOYEE"),
+                    new SimpleGrantedAuthority("ROLE_CUSTOMER")
+            );
+        }
+
+        if (Objects.equals(this.role, "EMPLOYEE")) {
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_EMPLOYEE"),
+                    new SimpleGrantedAuthority("ROLE_CUSTOMER")
+            );
+        }
+
         return List.of(
                 new SimpleGrantedAuthority("ROLE_CUSTOMER")
         );

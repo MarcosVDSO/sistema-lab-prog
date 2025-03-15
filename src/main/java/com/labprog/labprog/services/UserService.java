@@ -30,6 +30,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Users findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     @Transactional
     public Users save(Users user) {
         verifyCustomer(user, true);

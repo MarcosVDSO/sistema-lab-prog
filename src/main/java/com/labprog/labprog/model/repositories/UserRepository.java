@@ -9,5 +9,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface UserRepository extends JpaRepository<Users, UUID>{
     boolean existsByEmail(String email);
     boolean existsByUsername(String username);
-    UserDetails findByUsername(String username);
+    Users findByUsername(String username);
 }

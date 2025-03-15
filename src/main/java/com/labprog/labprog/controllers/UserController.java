@@ -49,6 +49,13 @@ public class UserController {
         return new ResponseEntity<>(user.get(), HttpStatus.OK);
 
     }
+
+    @GetMapping("/byUsername/{username}")
+    public ResponseEntity<Users> getUserByEmail(@PathVariable String username) {
+        Users user = userService.findByUsername(username);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @PutMapping("/{uid}")
     public ResponseEntity<Users> updateUser(@PathVariable UUID uid, @RequestBody UserDTO userDTO) {
         Users user = new Users(userDTO);
