@@ -3,6 +3,7 @@ package com.labprog.labprog.services;
 import com.labprog.labprog.model.entities.Categories;
 import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.model.entities.Products;
+import com.labprog.labprog.model.entities.Review;
 import com.labprog.labprog.model.repositories.ProductSkusRepository;
 import com.labprog.labprog.model.repositories.ProductsRepository;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ public class ProductService {
     private ProductSkuService productSkuService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ReviewService reviewService;
 
     public Products createProduct(Products product) {
 
@@ -113,6 +116,16 @@ public class ProductService {
         }
 
         return null;
+    }
+
+    public Products addComment(UUID productId, Review categorieData) {
+        Products product = getProductById(productId);
+
+        Review review = reviewService.create(categorieData);
+        product.getReviews().add(review);
+        review.setProduct(product);
+
+        return productsRepository.save(product);
     }
 
     private void validateProduct(Products product) {

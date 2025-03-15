@@ -37,6 +37,9 @@ public class Users implements UserDetails {
     @JoinColumn(name = "cart_id")
     private Carts cart;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
     @Column(name = "firstname", nullable = false)
     private String firstname;
 

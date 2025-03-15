@@ -3,9 +3,11 @@ package com.labprog.labprog.controllers;
 import com.labprog.labprog.DTO.CategoryDTO;
 import com.labprog.labprog.DTO.ProductDTO;
 import com.labprog.labprog.DTO.ProductSkuDTO;
+import com.labprog.labprog.DTO.ReviewDTO;
 import com.labprog.labprog.model.entities.Categories;
 import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.model.entities.Products;
+import com.labprog.labprog.model.entities.Review;
 import com.labprog.labprog.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,10 +61,22 @@ public class ProductController {
         }
     }
 
-    @PostMapping("category/{productId}/{categoryId}")
+    @PostMapping("/category/{productId}/{categoryId}")
     public ResponseEntity<Products> addCategoryToProduct(@PathVariable UUID productId, @PathVariable UUID categoryId) {
         try {
             Products product = productServices.addCategory(productId, categoryId);
+            return new ResponseEntity<>(product, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/addComment/{productId}")
+    public ResponseEntity<Products> addComment(@PathVariable UUID productId, @RequestBody ReviewDTO reviewDTO) {
+        try {
+            Review review = new Review(reviewDTO);
+            Products product = productServices.addComment(productId, review);
             return new ResponseEntity<>(product, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             e.printStackTrace();

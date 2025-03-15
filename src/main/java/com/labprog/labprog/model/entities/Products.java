@@ -29,6 +29,9 @@ public class Products {
     @JoinColumn(name = "category_id")
     private Categories category;
 
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
+
     @Column(name = "product_name", nullable = false)
     private String productName;
 
