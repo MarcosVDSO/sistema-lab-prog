@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
@@ -34,6 +36,12 @@ public class AddressServiceTest {
         Addresses createdAddress = addressesService.save(address);
 
         Assertions.assertEquals("Brazil", createdAddress.getCountry());
+        Assertions.assertEquals("Maranhão", createdAddress.getState());
+        Assertions.assertEquals("Perto do shopping", createdAddress.getLandmark());
+        Assertions.assertEquals("São Luis", createdAddress.getCity());
+        Assertions.assertEquals("00000000", createdAddress.getCep());
+        Assertions.assertEquals("Calhau", createdAddress.getNeighborhood());
+        Assertions.assertEquals("Holandeses", createdAddress.getStreet());
 
     }
 
@@ -163,6 +171,105 @@ public class AddressServiceTest {
         });
 
         Assertions.assertEquals("Street cannot be null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void shouldFindOneAddressSuccessfully() {
+        Addresses address = Addresses.builder()
+                .country("Brazil")
+                .state("Maranhão")
+                .landmark("Perto do shopping")
+                .city("São Luis")
+                .cep("00000000")
+                .neighborhood("Calhau")
+                .street("Holandeses")
+                .build();
+
+        Addresses createdAddress = addressesService.save(address);
+
+        Addresses foundedAddress = addressesService.findById(createdAddress.getAddressId());
+
+        Assertions.assertEquals(foundedAddress.getCountry(), createdAddress.getCountry());
+        Assertions.assertEquals(foundedAddress.getState(), createdAddress.getState());
+        Assertions.assertEquals(foundedAddress.getLandmark(), createdAddress.getLandmark());
+        Assertions.assertEquals(foundedAddress.getCity(), createdAddress.getCity());
+        Assertions.assertEquals(foundedAddress.getCep(), createdAddress.getCep());
+        Assertions.assertEquals(foundedAddress.getNeighborhood(), createdAddress.getNeighborhood());
+        Assertions.assertEquals(foundedAddress.getStreet(), createdAddress.getStreet());
+    }
+
+    @Test
+    public void shouldReturnNothingIfAddressNotExists() {
+        UUID addressId = UUID.randomUUID();
+
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {
+            addressesService.findById(addressId);
+        });
+
+        Assertions.assertEquals("Address not found!", exception.getMessage());
+    }
+
+    @Test
+    public void shouldUpdateAddressSuccessfully() {
+        Addresses address = Addresses.builder()
+                .country("Brazil")
+                .state("Maranhão")
+                .landmark("Perto do shopping")
+                .city("São Luis")
+                .cep("00000000")
+                .neighborhood("Calhau")
+                .street("Holandeses")
+                .build();
+
+        Addresses createdAddress = addressesService.save(address);
+
+        Addresses newAddressData = Addresses.builder()
+                .country("United States")
+                .build();
+
+        Addresses updatedAddress = addressesService.update(createdAddress.getAddressId(), newAddressData);
+
+        Assertions.assertEquals("United States", updatedAddress.getCountry());
+
+    }
+
+    @Test
+    public void shouldntUpdateIfAddressNotExists() {
+        UUID addressId = UUID.randomUUID();
+
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {
+            addressesService.update(addressId, new Addresses());
+        });
+
+        Assertions.assertEquals("Address not found!", exception.getMessage());
+    }
+
+    @Test
+    public void shouldDeleteAddressSuccessfully() {
+        Addresses address = Addresses.builder()
+                .country("Brazil")
+                .state("Maranhão")
+                .landmark("Perto do shopping")
+                .city("São Luis")
+                .cep("00000000")
+                .neighborhood("Calhau")
+                .street("Holandeses")
+                .build();
+
+        Addresses createdAddress = addressesService.save(address);
+
+        addressesService.deleteById(createdAddress.getAddressId());
+    }
+
+    @Test
+    public void shouldntDeleteIfAddressNotExists() {
+        UUID addressId = UUID.randomUUID();
+
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {
+            addressesService.deleteById(addressId);
+        });
+
+        Assertions.assertEquals("Address not found!", exception.getMessage());
     }
 
 }

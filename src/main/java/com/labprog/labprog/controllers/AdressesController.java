@@ -21,8 +21,8 @@ public class AdressesController {
     @GetMapping("/{uid}")
     public ResponseEntity<Addresses> getAdress(@PathVariable UUID uid) {
         try {
-            Optional<Addresses> address = addressesService.findById(uid);
-            return new ResponseEntity<>(address.get(), HttpStatus.OK);
+            Addresses address = addressesService.findById(uid);
+            return new ResponseEntity<>(address, HttpStatus.OK);
         }catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }

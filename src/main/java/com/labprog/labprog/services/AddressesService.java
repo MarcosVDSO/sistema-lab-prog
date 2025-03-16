@@ -18,8 +18,9 @@ public class AddressesService {
         return addressRepository.findAll();
     }
 
-    public Optional<Addresses> findById(UUID id) {
-        return addressRepository.findById(id);
+    public Addresses findById(UUID id) {
+        return addressRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Address not found!"));
     }
 
     public Addresses save(Addresses address) {
@@ -29,34 +30,42 @@ public class AddressesService {
     }
 
     public void deleteById(UUID id) {
-        addressRepository.deleteById(id);
+
+        Addresses address = addressRepository.findById(id)
+                        .orElseThrow(() -> new ObjectNotFoundException("Address not found!"));
+
+        addressRepository.delete(address);
     }
 
     public Addresses update(UUID id, Addresses address) {
-        Addresses existingAddres = addressRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Address Not Found"));
+        Addresses existingAddress = addressRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Address not found!"));
 
         if (address.getCep() != null) {
-            existingAddres.setCep(address.getCep());
+            existingAddress.setCep(address.getCep());
         }
 
         if (address.getCity() != null) {
-            existingAddres.setCity(address.getCity());
+            existingAddress.setCity(address.getCity());
         }
 
         if (address.getState() != null) {
-            existingAddres.setState(address.getState());
+            existingAddress.setState(address.getState());
         }
 
         if (address.getLandmark() != null) {
-            existingAddres.setLandmark(address.getLandmark());
+            existingAddress.setLandmark(address.getLandmark());
         }
 
         if (address.getCountry() != null) {
-            existingAddres.setCountry(address.getCountry());
+            existingAddress.setCountry(address.getCountry());
         }
 
-        return addressRepository.save(existingAddres);
+        if (address.getStreet() != null) {
+            existingAddress.setStreet(existingAddress.getStreet());
+        }
+
+        return addressRepository.save(existingAddress);
 
     }
 
