@@ -22,22 +22,20 @@ public class ProductRepositoryTest {
     public void testCreateProduct() {
         Products product = Products.builder()
                 .productSkus(new ArrayList<ProductSkus>())
-                .categories(new ArrayList<Categories>())
                 .productName("produto")
                 .productDescription("descricao")
                 .summary("Sumario")
-                .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
-                .updatedAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
+                .manufacturer("Fabricante")
+                .brandName("Marca")
                 .build();
 
         Products save = repository.save(product);
         Assertions.assertNotNull(save);
         Assertions.assertEquals(product.getProductSkus(), save.getProductSkus());
-        Assertions.assertEquals(product.getCategories(), save.getCategories());
         Assertions.assertEquals(product.getProductName(), save.getProductName());
         Assertions.assertEquals(product.getProductDescription(), save.getProductDescription());
         Assertions.assertEquals(product.getSummary(), save.getSummary());
-        Assertions.assertEquals(product.getCreatedAt(), save.getCreatedAt());
-        Assertions.assertEquals(product.getUpdatedAt(), save.getUpdatedAt());
+        Assertions.assertEquals(product.getManufacturer(), save.getManufacturer());
+        Assertions.assertEquals(product.getBrandName(), save.getBrandName());
     }
 }

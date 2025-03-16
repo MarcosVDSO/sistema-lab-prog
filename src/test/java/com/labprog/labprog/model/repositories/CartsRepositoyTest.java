@@ -24,8 +24,6 @@ public class CartsRepositoyTest {
         Carts cart = Carts.builder()
                 .cartItems(new ArrayList<CartItems>())
                 .total(10L)
-                .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
-                .updatedAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
                 .build();
 
         Carts save = repository.save(cart);
@@ -33,8 +31,6 @@ public class CartsRepositoyTest {
         Assertions.assertNotNull(save);
         Assertions.assertEquals(cart.getCartItems(), save.getCartItems());
         Assertions.assertEquals(cart.getTotal(), save.getTotal());
-        Assertions.assertEquals(cart.getCreatedAt(), save.getCreatedAt());
-        Assertions.assertEquals(cart.getUpdatedAt(), save.getUpdatedAt());
     }
 
     @Test

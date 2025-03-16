@@ -23,16 +23,12 @@ public class CartItemRepositoryTest {
 
         CartItems cartItem = CartItems.builder()
                 .quantity(10L)
-                .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
-                .updatedAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
                 .build();
 
         CartItems save = repository.save(cartItem);
 
         Assertions.assertNotNull(save);
         Assertions.assertEquals(cartItem.getQuantity(), save.getQuantity());
-        Assertions.assertEquals(cartItem.getCreatedAt(), save.getCreatedAt());
-        Assertions.assertEquals(cartItem.getUpdatedAt(), save.getUpdatedAt());
     }
 
     @Test

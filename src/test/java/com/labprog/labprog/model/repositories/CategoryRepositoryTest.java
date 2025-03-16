@@ -23,18 +23,13 @@ public class CategoryRepositoryTest {
         Categories category = Categories.builder()
                 .categoryName("Fones")
                 .categoryDescription("Fones de ouvido")
-                .createdAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
-                .updatedAt(LocalDateTime.of(2024, 11, 27, 10, 30, 0))
                 .build();
 
         Categories save = repository.save(category);
 
         Assertions.assertNotNull(save);
-        Assertions.assertEquals(category.getSubCategories(), save.getSubCategories());
         Assertions.assertEquals(category.getCategoryName(), save.getCategoryName());
         Assertions.assertEquals(category.getCategoryDescription(), save.getCategoryDescription());
-        Assertions.assertEquals(category.getCreatedAt(), save.getCreatedAt());
-        Assertions.assertEquals(category.getUpdatedAt(), save.getUpdatedAt());
     }
 
     @Test

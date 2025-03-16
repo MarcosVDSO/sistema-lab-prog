@@ -39,6 +39,9 @@ public class Addresses {
     @Column(name = "neighborhood", nullable = false)
     private String neighborhood;
 
+    @Column(name = "street", nullable = false)
+    private String street;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;

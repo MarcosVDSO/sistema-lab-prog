@@ -30,6 +30,8 @@ public class ProductSkusRepositoryTest {
                 .productName("produto2")
                 .productDescription("descricao2")
                 .summary("Sumario2")
+                .manufacturer("Fabricante")
+                .brandName("Marca")
                 .build();
 
         Products saveProduct = repositoryProducts.save(product);

@@ -19,6 +19,7 @@ public class AddressesDTO {
     private String city;
     private String cep;
     private String neighborhood;
+    private String street;
     private Users user;
 
 }

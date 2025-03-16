@@ -28,6 +28,8 @@ public class AddressRepositoryTest {
                 .landmark("Perto da praça")
                 .city("São Luis")
                 .cep("123")
+                .neighborhood("Lira")
+                .street("Pedro Lessa")
                 .build();
 
         Addresses save = repository.save(address);
@@ -38,6 +40,8 @@ public class AddressRepositoryTest {
         Assertions.assertEquals(address.getLandmark(), save.getLandmark());
         Assertions.assertEquals(address.getCity(), save.getCity());
         Assertions.assertEquals(address.getCep(), save.getCep());
+        Assertions.assertEquals(address.getNeighborhood(), save.getNeighborhood());
+        Assertions.assertEquals(address.getStreet(), save.getStreet());
 
     }
 

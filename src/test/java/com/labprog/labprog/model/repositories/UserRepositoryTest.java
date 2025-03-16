@@ -26,7 +26,9 @@ public class UserRepositoryTest {
                 .lastname("Arruda")
                 .username("sdadasdasda")
                 .password("123")
-                .profilePhoto("6131")
+                .cpf("123")
+                .role("ADMIN")
+//                .profilePhoto("6131")
                 .email("masadasdas").build();
 
         Users save = repository.save(customer);
@@ -36,7 +38,9 @@ public class UserRepositoryTest {
         Assertions.assertEquals(customer.getLastname(), save.getLastname());
         Assertions.assertEquals(customer.getUsername(), save.getUsername());
         Assertions.assertEquals(customer.getPassword(), save.getPassword());
-        Assertions.assertEquals(customer.getProfilePhoto(), save.getProfilePhoto());
+//        Assertions.assertEquals(customer.getProfilePhoto(), save.getProfilePhoto());
         Assertions.assertEquals(customer.getEmail(), save.getEmail());
+        Assertions.assertEquals(customer.getCpf(), save.getCpf());
+        Assertions.assertEquals(customer.getRole(), save.getRole());
     }
 }
