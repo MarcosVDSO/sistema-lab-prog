@@ -14,29 +14,26 @@ import java.util.UUID;
 @Service
 public class CategoryService {
 
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CategoryService.class);
-
     @Autowired
     private CategoriesRepository categoriesRepository;
 
     public Categories createCategory(Categories category) {
-        logger.info("Adding new category: {}", category.getCategoryName());
 
         return categoriesRepository.save(category);
     }
 
     public List<Categories> getAllCategories() {
-        logger.info("Searching all categories");
+
         return categoriesRepository.findAll();
     }
 
     public Optional<Categories> getCategoryById(UUID category_id) {
-        logger.info("Searching category with ID: {}", category_id);
+
         return categoriesRepository.findById(category_id);
     }
 
     public Categories updateCategory(UUID category_id, Categories updatedCategory) {
-        logger.info("Updating category with ID: {}", category_id);
+
         Categories existingCategory = categoriesRepository.findById(category_id).orElseThrow(() -> new RuntimeException("Category not found"));
 
         if (updatedCategory.getCategoryName() != null) {
@@ -50,7 +47,7 @@ public class CategoryService {
     }
 
     public void deleteCategory(UUID category_id) {
-        logger.info("Deleting category with ID: {}", category_id);
+
         Categories category = categoriesRepository.findById(category_id).orElseThrow(() -> new RuntimeException("Category not found"));
         categoriesRepository.delete(category);
     }

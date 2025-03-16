@@ -62,25 +62,29 @@ public class AddressesService {
 
     private void verifyAddress(Addresses addresses) {
         if (addresses == null) {
-            throw new IllegalArgumentException("Endereço nulo");
+            throw new IllegalArgumentException("Address cannot be null");
         }
-        if (addresses.getCep() == null) {
-            throw new IllegalArgumentException("cep é obrigatorio");
+        if (addresses.getCep() == null || addresses.getCep().isBlank()) {
+            throw new IllegalArgumentException("CEP cannot be null or empty");
         }
-        if (addresses.getCity() == null) {
-            throw new IllegalArgumentException("Cidade é obrigatorio");
+        if (addresses.getCity() == null || addresses.getCity().isBlank()) {
+            throw new IllegalArgumentException("City cannot be null or empty");
         }
-        if (addresses.getCountry() == null) {
-            throw new IllegalArgumentException("País é obrigatorio");
+        if (addresses.getCountry() == null || addresses.getCountry().isBlank()) {
+            throw new IllegalArgumentException("Country cannot be null or empty");
         }
-        if (addresses.getState() == null) {
-            throw new IllegalArgumentException("Estado é obrigatorio");
+        if (addresses.getState() == null || addresses.getState().isBlank()) {
+            throw new IllegalArgumentException("State cannot be null or empty");
         }
-        if (addresses.getLandmark() == null) {
-            throw new IllegalArgumentException("Ponto de referencia é nulo");
+        if (addresses.getLandmark() == null || addresses.getLandmark().isBlank()) {
+            throw new IllegalArgumentException("Landmark cannot be null or empty");
         }
-        if (addresses.getNeighborhood() == null) {
-            throw new IllegalArgumentException("Vizinhança é nula");
+        if (addresses.getNeighborhood() == null || addresses.getNeighborhood().isBlank()) {
+            throw new IllegalArgumentException("Neighborhood cannot be null or empty");
+        }
+
+        if (addresses.getStreet() == null || addresses.getStreet().isBlank()) {
+            throw new IllegalArgumentException("Street cannot be null or empty");
         }
 
     }
