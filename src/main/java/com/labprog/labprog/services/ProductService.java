@@ -1,9 +1,6 @@
 package com.labprog.labprog.services;
 
-import com.labprog.labprog.model.entities.Categories;
-import com.labprog.labprog.model.entities.ProductSkus;
-import com.labprog.labprog.model.entities.Products;
-import com.labprog.labprog.model.entities.Review;
+import com.labprog.labprog.model.entities.*;
 import com.labprog.labprog.model.repositories.ProductSkusRepository;
 import com.labprog.labprog.model.repositories.ProductsRepository;
 import org.slf4j.LoggerFactory;
@@ -28,6 +25,8 @@ public class ProductService {
     private CategoryService categoryService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private UserService userService;
 
     public Products createProduct(Products product) {
 
@@ -118,12 +117,17 @@ public class ProductService {
         return null;
     }
 
-    public Products addComment(UUID productId, Review categorieData) {
+    public Products addComment(UUID productId, UUID userId,Review categorieData) {
         Products product = getProductById(productId);
+        Users user = userService.findById(userId).orElseThrow(
+                () -> new RuntimeException("User not found with id" + userId)
+        );
 
         Review review = reviewService.create(categorieData);
         product.getReviews().add(review);
         review.setProduct(product);
+        review.setUser(user);
+        user.getReviews().add(review);
 
         return productsRepository.save(product);
     }

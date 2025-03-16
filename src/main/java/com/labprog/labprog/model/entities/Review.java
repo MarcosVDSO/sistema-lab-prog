@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -31,20 +32,40 @@ public class Review {
     @JoinColumn(name = "user_id")
     private Users user;
 
+    @Column(name = "title", nullable = false)
+    private String title;
+
     @Column(name = "comment", nullable = false)
     private String comment;
 
     @Column(name = "stars", nullable = false)
     private Integer stars;
 
-    public Review(String comment, Integer stars) {
+    @Column(name = "likes", nullable = false)
+    private Integer likes;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    public Review(String title, String comment, Integer stars) {
+        this.title = title;
         this.comment = comment;
         this.stars = stars;
+        this.likes = 0;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     public Review(ReviewDTO reviewDTO) {
+        this.title = reviewDTO.getTitle();
         this.comment = reviewDTO.getComment();
         this.stars = reviewDTO.getStars();
+        this.likes = 0;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
 }

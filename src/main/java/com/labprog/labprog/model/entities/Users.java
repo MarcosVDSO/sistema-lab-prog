@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.labprog.labprog.DTO.UserDTO;
 import com.labprog.labprog.model.entities.enums.ROLES;
 import com.labprog.labprog.model.entities.enums.USER_STATUS;
@@ -38,6 +39,7 @@ public class Users implements UserDetails {
     private Carts cart;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Review> reviews;
 
     @Column(name = "firstname", nullable = false)

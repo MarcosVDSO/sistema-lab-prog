@@ -72,11 +72,11 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/addComment/{productId}")
-    public ResponseEntity<Products> addComment(@PathVariable UUID productId, @RequestBody ReviewDTO reviewDTO) {
+    @PostMapping("/addComment/{productId}/{userId}")
+    public ResponseEntity<Products> addComment(@PathVariable UUID productId, @PathVariable UUID userId, @RequestBody ReviewDTO reviewDTO) {
         try {
             Review review = new Review(reviewDTO);
-            Products product = productServices.addComment(productId, review);
+            Products product = productServices.addComment(productId, userId, review);
             return new ResponseEntity<>(product, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             e.printStackTrace();

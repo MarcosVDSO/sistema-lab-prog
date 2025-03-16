@@ -17,20 +17,6 @@ public class ProductSkuController {
     @Autowired
     private ProductSkuService productSkuServices;
 
-    @PostMapping
-    public ResponseEntity<ProductSkus> createProductSku(@RequestBody ProductSkuDTO productSkuDTO) {
-
-        try {
-            ProductSkus productSkus = new ProductSkus(productSkuDTO);
-            ProductSkus savedProducts = productSkuServices.createProductSku(productSkus);
-            return new ResponseEntity<>(savedProducts, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-
-    }
-
     @GetMapping
     public ResponseEntity<List<ProductSkus>> getAllProductSkus() {
         try {
