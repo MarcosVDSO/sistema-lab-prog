@@ -19,5 +19,4 @@ public class UserAuthRegisterDTO {
     private String cpf;
     private String email;
     private String role;
-    private String status;
 }

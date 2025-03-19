@@ -78,17 +78,6 @@ public class Users implements UserDetails {
         this.status = userDTO.getStatus();
     }
 
-    public Users(String firstname, String lastname, String username, String password, String cpf, String email, String role, String status) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.username = username;
-        this.password = password;
-        this.cpf = cpf;
-        this.email = email;
-        this.role = role;
-        this.status = status;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

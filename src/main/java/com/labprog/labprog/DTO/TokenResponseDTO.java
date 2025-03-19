@@ -9,5 +9,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class TokenResponseDTO {
     private String token;
-    private String role;
 }

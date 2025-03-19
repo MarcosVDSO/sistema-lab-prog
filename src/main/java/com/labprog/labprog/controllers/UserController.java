@@ -22,14 +22,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    @PostMapping
-    public ResponseEntity<Users> addUser(@RequestBody UserDTO userDTO) {
-        Users user = new Users(userDTO);
-        Users savedUser = userService.save(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-    }
 
     @DeleteMapping("/{uid}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID uid) {
@@ -51,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/byUsername/{username}")
-    public ResponseEntity<Users> getUserByEmail(@PathVariable String username) {
+    public ResponseEntity<Users> getUserByUsername(@PathVariable String username) {
         Users user = userService.findByUsername(username);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

@@ -26,39 +26,38 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
     private TokensService tokensService;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponseDTO> loginAdmin(@RequestBody AuthDTO data) {
+    public ResponseEntity<TokenResponseDTO> loginUser(@RequestBody AuthDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.getUsername(), data.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokensService.generateToken((Users) auth.getPrincipal());
 
-        return ResponseEntity.ok(new TokenResponseDTO(token, "ADMIN"));
+        return ResponseEntity.ok(new TokenResponseDTO(token));
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerAdmin(@RequestBody UserAuthRegisterDTO data) {
-        if (this.userRepository.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
+    public ResponseEntity registerUser(@RequestBody UserAuthRegisterDTO data) {
+        if (this.userService.findByUsername(data.getUsername()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
-        Users newUser = new Users(
-                data.getFirstname(),
-                data.getLastname(),
-                data.getUsername(),
-                encryptedPassword,
-                data.getCpf(),
-                data.getEmail(),
-                data.getRole(),
-                data.getStatus()
-        );
+
+        Users newUser = Users.builder()
+                .firstname(data.getFirstname())
+                .lastname(data.getLastname())
+                .username(data.getUsername())
+                .password(encryptedPassword)
+                .cpf(data.getCpf())
+                .email(data.getEmail())
+                .role(data.getRole())
+                .status("ENABLED")
+                .build();
+
         userService.save(newUser);
 
         return ResponseEntity.ok().build();
