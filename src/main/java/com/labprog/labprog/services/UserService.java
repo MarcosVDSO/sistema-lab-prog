@@ -26,8 +26,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<Users> findById(UUID id) {
-        return userRepository.findById(id);
+    public Users findById(UUID id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found!"));
     }
 
     public Users findByUsername(String username) {
@@ -50,7 +50,7 @@ public class UserService {
     public Users update(UUID customerId, Users updatedCustomer) {
 
         Users existingCustomer = userRepository.findById(customerId)
-                .orElseThrow(() ->  new ObjectNotFoundException("Customer not found"));
+                .orElseThrow(() ->  new ObjectNotFoundException("User not found!"));
 
 //        verifyCustomer(updatedCustomer, false);
         if ((updatedCustomer.getEmail() != null && !updatedCustomer.getEmail().equals(existingCustomer.getEmail())
@@ -91,26 +91,36 @@ public class UserService {
     public void deleteById(UUID customerId) {
             Optional<Users> customer = userRepository.findById(customerId);
             if (customer.isEmpty()) {
-                throw new ObjectNotFoundException("Customer not found");
+                throw new ObjectNotFoundException("User not found!");
             }
             userRepository.deleteById(customerId);
         }
 
     private void verifyCustomer(Users customer, boolean isNewCustomer) {
         if (customer == null) {
-            throw new ObjectNotFoundException("Customer not found");
+            throw new ObjectNotFoundException("User not found!");
         }
-        if (customer.getFirstname() == null || customer.getLastname() == null) {
+        if (customer.getFirstname() == null || customer.getLastname() == null ||
+            customer.getFirstname().isBlank() || customer.getLastname().isBlank()) {
             throw new InvalidNameException();
         }
         if (!isValidEmail(customer.getEmail())) {
             throw new InvalidEmailException();
         }
-        if (customer.getPassword() == null) {
+        if (customer.getPassword() == null || customer.getPassword().isBlank()) {
             throw new InvalidPasswordException();
         }
-        if (customer.getUsername() == null) {
-            throw new InvalidPasswordException();
+        if (customer.getUsername() == null || customer.getUsername().isBlank()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+        if (customer.getCpf() == null || customer.getCpf().isBlank()) {
+            throw new IllegalArgumentException("Cpf cannot be null or empty");
+        }
+        if (customer.getRole() == null || customer.getRole().isBlank()) {
+            throw new IllegalArgumentException("Role cannot be null or empty");
+        }
+        if (customer.getStatus() == null || customer.getStatus().isBlank()) {
+            throw new IllegalArgumentException("Status cannot be null or empty");
         }
 
         if (isNewCustomer) {

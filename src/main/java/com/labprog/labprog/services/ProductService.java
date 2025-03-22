@@ -119,9 +119,7 @@ public class ProductService {
 
     public Products addComment(UUID productId, UUID userId,Review categorieData) {
         Products product = getProductById(productId);
-        Users user = userService.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found with id" + userId)
-        );
+        Users user = userService.findById(userId);
 
         Review review = reviewService.create(categorieData);
         product.getReviews().add(review);

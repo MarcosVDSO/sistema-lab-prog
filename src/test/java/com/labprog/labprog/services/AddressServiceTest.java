@@ -3,6 +3,7 @@ package com.labprog.labprog.services;
 
 import com.labprog.labprog.model.entities.Addresses;
 import com.labprog.labprog.model.entities.Products;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
+@Transactional
 public class AddressServiceTest {
     @Autowired
     private AddressesService addressesService;

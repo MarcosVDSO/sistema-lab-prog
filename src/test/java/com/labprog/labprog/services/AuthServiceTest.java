@@ -2,6 +2,7 @@ package com.labprog.labprog.services;
 
 import com.labprog.labprog.model.entities.Addresses;
 import com.labprog.labprog.model.entities.Users;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
+@Transactional
 public class AuthServiceTest {
 
     @Autowired
