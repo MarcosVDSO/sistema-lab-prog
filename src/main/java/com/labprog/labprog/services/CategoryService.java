@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,6 +19,10 @@ public class CategoryService {
     private CategoriesRepository categoriesRepository;
 
     public Categories createCategory(Categories category) {
+
+        if (category.getProducts() == null) {
+            category.setProducts(new ArrayList<>());
+        }
 
         return categoriesRepository.save(category);
     }

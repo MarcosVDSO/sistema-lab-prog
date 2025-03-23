@@ -34,6 +34,11 @@ public class ProductService {
         if (product.getProductSkus() == null) {
             product.setProductSkus(new ArrayList<>());
         }
+
+        if (product.getReviews() == null) {
+            product.setReviews(new ArrayList<>());
+        }
+
         return productsRepository.save(product);
     }
 
@@ -43,7 +48,7 @@ public class ProductService {
 
     public Products getProductById(UUID id) {
         return productsRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id" + id));
+                .orElseThrow(() -> new RuntimeException("Product not found!"));
     }
 
     public Products updateProduct(UUID id, Products productData) {
@@ -74,7 +79,7 @@ public class ProductService {
         Products product = getProductById(id);
 
         if (product == null) {
-            throw new RuntimeException("Product not found with id" + id);
+            throw new RuntimeException("Product not found!");
         }
 
         productsRepository.delete(product);
@@ -131,24 +136,24 @@ public class ProductService {
     }
 
     private void validateProduct(Products product) {
-        if (product.getProductName() == null) {
-            throw new RuntimeException("Product name is required");
+        if (product.getProductName() == null || product.getProductName().isBlank()) {
+            throw new RuntimeException("Product name cannot be null or empty");
         }
 
-        if (product.getProductDescription() == null) {
-            throw new RuntimeException("Product description is empty");
+        if (product.getProductDescription() == null || product.getProductDescription().isBlank()) {
+            throw new RuntimeException("Product description cannot be null or empty");
         }
 
-        if (product.getSummary() == null) {
-            throw new RuntimeException("Product summary is empty");
+        if (product.getSummary() == null || product.getSummary().isBlank()) {
+            throw new RuntimeException("Summary cannot be null or empty");
         }
 
-        if (product.getManufacturer() == null) {
-            throw new RuntimeException("Product manufacturer is empty");
+        if (product.getManufacturer() == null || product.getManufacturer().isBlank()) {
+            throw new RuntimeException("Manufacturer cannot be null or empty");
         }
 
-        if (product.getBrandName() == null) {
-            throw new RuntimeException("Product brand name is empty");
+        if (product.getBrandName() == null || product.getBrandName().isBlank()) {
+            throw new RuntimeException("Brand name cannot be null or empty");
         }
     }
 

@@ -8,10 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -42,6 +39,10 @@ public class UserService {
             Carts cart = cartService.createCart();
             user.setCart(cart);
             cart.setUser(user);
+        }
+
+        if (user.getReviews() == null) {
+            user.setReviews(new ArrayList<>());
         }
 
         return userRepository.save(user);
