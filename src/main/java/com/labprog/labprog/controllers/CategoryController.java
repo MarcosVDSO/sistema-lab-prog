@@ -37,8 +37,8 @@ public class CategoryController {
     @GetMapping("/{category_id}")
     public ResponseEntity<Categories> getCategoryById(@PathVariable UUID category_id) {
         try {
-            Optional<Categories> category = categoryService.getCategoryById(category_id);
-            return new ResponseEntity<>(category.get(), HttpStatus.OK);
+            Categories category = categoryService.getCategoryById(category_id);
+            return new ResponseEntity<>(category, HttpStatus.OK);
         } catch (RuntimeException e) {
             logger.error("Error finding category: {}", e.getMessage());
             return ResponseEntity.badRequest().build();

@@ -16,7 +16,7 @@ import java.util.UUID;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-public class ProductTests {
+public class ProductServiceTests {
 
     @Autowired
     private ProductService productService;

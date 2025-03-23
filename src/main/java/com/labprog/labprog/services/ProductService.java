@@ -111,7 +111,7 @@ public class ProductService {
     public Products addCategory(UUID productId, UUID categoryId) {
         Products product = getProductById(productId);
 
-        Categories category = categoryService.getCategoryById(categoryId).orElse(null);
+        Categories category = categoryService.getCategoryById(categoryId);
 
         if (product != null && category != null) {
             product.setCategory(category);
