@@ -79,8 +79,12 @@ public class ProductSkuService {
             throw new RuntimeException("Stock quantity value is not valid");
         }
 
-        if (productSku.getSku() == null || productSku.getSku().isEmpty()) {
+        if (productSku.getSku() == null || productSku.getSku().isBlank()) {
             throw new RuntimeException("Sku value is not valid");
+        }
+
+        if (productSku.getProductImage() == null || productSku.getProductImage().isBlank()) {
+            throw new RuntimeException("Product image cannot be null or empty");
         }
 
     }
