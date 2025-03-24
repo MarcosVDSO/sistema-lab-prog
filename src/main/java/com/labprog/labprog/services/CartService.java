@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +34,7 @@ public class CartService {
 
         Carts cart = new Carts();
         cart.setTotal(0L);
+        cart.setCartItems(new ArrayList<>());
 
         return cartsRepository.save(cart);
 
@@ -49,8 +51,6 @@ public class CartService {
         }
 
         CartItems cartItem = cartItemService.createCartItem(productSku, quantity);
-
-        if (quantity  > cartItem.getProductSku().getStockQuantity()) throw new RuntimeException("Quantity is greater than stock");
 
         cart.getCartItems().add(cartItem);
         cartItem.setCart(cart);

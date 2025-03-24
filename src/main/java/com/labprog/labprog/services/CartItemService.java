@@ -29,6 +29,7 @@ public class CartItemService {
     public CartItems createCartItem(ProductSkus productSku, Long quantity) {
 
         if (quantity < 0) throw new RuntimeException("Cart item quantity cannot be 0 or less");
+        if (quantity > productSku.getStockQuantity()) throw new RuntimeException("Cart item quantity is greater than stock");
 
         CartItems cartItem = new CartItems();
         cartItem.setProductSku(productSku);
@@ -38,7 +39,7 @@ public class CartItemService {
     }
 
     public CartItems getCartItem(UUID cartItemId) {
-        logger.info("Getting cart item ID: {}", cartItemId);
+
         return cartItemsRepository.findById(cartItemId)
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));
     }
@@ -51,7 +52,7 @@ public class CartItemService {
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));
         Carts cart = cartItem.getCart();
 
-        if (newQuantity > cartItem.getProductSku().getStockQuantity()) throw new RuntimeException("Quantity is greater than stock");
+        if (newQuantity > cartItem.getProductSku().getStockQuantity()) throw new RuntimeException("Quantity cannot be greater than stock");
 
         cart.setTotal(cart.getTotal() - cartItem.getProductSku().getPrice() * cartItem.getQuantity());
         cartItem.setQuantity(newQuantity);
