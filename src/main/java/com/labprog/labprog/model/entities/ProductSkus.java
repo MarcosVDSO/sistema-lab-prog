@@ -32,6 +32,7 @@ public class ProductSkus {
     private Products product;
 
     @OneToMany(mappedBy = "productSku")
+    @JsonIgnore
     private List<OrderItems> orderItems;
 
     @Column(name = "sku", nullable = false)

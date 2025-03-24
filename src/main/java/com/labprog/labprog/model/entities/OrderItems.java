@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,11 +24,9 @@ public class OrderItems {
     @Column(name = "quantity", nullable = false)
     private Long quantity;
 
-    @Column(name = "price", nullable = false)
-    private Double price;
-
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Orders order;
 
     @OneToOne

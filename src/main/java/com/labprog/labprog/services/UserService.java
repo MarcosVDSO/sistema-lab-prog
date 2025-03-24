@@ -84,18 +84,15 @@ public class UserService {
         }
 
         return userRepository.save(existingCustomer);
-
-
     }
 
-
     public void deleteById(UUID customerId) {
-            Optional<Users> customer = userRepository.findById(customerId);
-            if (customer.isEmpty()) {
-                throw new ObjectNotFoundException("User not found!");
-            }
-            userRepository.deleteById(customerId);
+        Optional<Users> customer = userRepository.findById(customerId);
+        if (customer.isEmpty()) {
+            throw new ObjectNotFoundException("User not found!");
         }
+        userRepository.deleteById(customerId);
+    }
 
     private void verifyCustomer(Users customer, boolean isNewCustomer) {
         if (customer == null) {

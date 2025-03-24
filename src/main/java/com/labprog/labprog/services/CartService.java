@@ -40,6 +40,12 @@ public class CartService {
 
     }
 
+    public Carts getCart(UUID cartId) {
+        return cartsRepository.findById(cartId).orElseThrow(
+                () -> new RuntimeException("Cart not found!")
+        );
+    }
+
     public Carts addProductToCart(UUID cartId, UUID productSkuId, Long quantity) {
 
         Carts cart = cartsRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found!"));
