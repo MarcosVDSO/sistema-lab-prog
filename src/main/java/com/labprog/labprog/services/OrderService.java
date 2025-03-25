@@ -53,4 +53,13 @@ public class OrderService {
         return ordersRepository.save(order);
     }
 
+    public List<Orders> getAllOrders() {
+        return ordersRepository.findAll();
+    }
+
+    public Orders getOrderById(UUID orderId) {
+        return ordersRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found!"));
+    }
+
 }
