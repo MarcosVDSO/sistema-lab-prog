@@ -24,6 +24,5 @@ public class ProductSkuDTO {
     private Long price;
     private String sku;
     private Map<String, Object> product_attributes;
-    private String productImage;
 
 }

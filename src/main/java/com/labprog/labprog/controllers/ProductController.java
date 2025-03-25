@@ -1,21 +1,22 @@
 package com.labprog.labprog.controllers;
 
-import com.labprog.labprog.DTO.CategoryDTO;
-import com.labprog.labprog.DTO.ProductDTO;
-import com.labprog.labprog.DTO.ProductSkuDTO;
-import com.labprog.labprog.DTO.ReviewDTO;
+import com.labprog.labprog.DTO.*;
 import com.labprog.labprog.model.entities.Categories;
 import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.model.entities.Products;
 import com.labprog.labprog.model.entities.Review;
 import com.labprog.labprog.services.ProductService;
+import com.labprog.labprog.services.UploadImageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.UUID;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 @RequestMapping("/product")
@@ -23,6 +24,8 @@ public class ProductController {
 
     @Autowired
     private ProductService productServices;
+    @Autowired
+    private UploadImageService uploadImageService;
 
     @PostMapping
     public ResponseEntity<Products> createProduct(@RequestBody ProductDTO productDTO) {
@@ -38,9 +41,20 @@ public class ProductController {
     }
 
     @PostMapping("/productSku/{id}")
-    public ResponseEntity<Products> addProductSkuToProduct(@PathVariable UUID id, @RequestBody ProductSkuDTO productSkuDTO) {
+    public ResponseEntity<Products> addProductSkuToProduct(
+            @PathVariable UUID id, @ModelAttribute ProductSkuForm form
+            ) throws IOException {
         try {
-            ProductSkus productSku = new ProductSkus(productSkuDTO);
+
+            String imageUrl = uploadImageService.saveImage(form);
+
+            ProductSkus productSku = ProductSkus.builder()
+                    .sku(form.getSku())
+                    .price(form.getPrice())
+                    .stockQuantity(form.getStockQuantity())
+                    .productImage(imageUrl)
+                    .build();
+
             Products product = productServices.addProductSku(id, productSku);
             return new ResponseEntity<>(product, HttpStatus.CREATED);
         } catch (RuntimeException e) {

@@ -56,6 +56,5 @@ public class ProductSkus {
         this.stockQuantity = productSkuDTO.getStockQuantity();
         this.price = productSkuDTO.getPrice();
         this.sku = productSkuDTO.getSku();
-        this.productImage = productSkuDTO.getProductImage();
     }
 }
