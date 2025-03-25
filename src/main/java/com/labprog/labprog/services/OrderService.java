@@ -33,6 +33,7 @@ public class OrderService {
                 .status("DONE")
                 .orderItems(new ArrayList<>())
                 .user(user)
+                .total(cart.getTotal())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();

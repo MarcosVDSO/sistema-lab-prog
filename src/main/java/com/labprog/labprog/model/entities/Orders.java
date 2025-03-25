@@ -27,6 +27,9 @@ public class Orders {
     @Column(name = "status", nullable = false)
     private String status;
 
+    @Column(name = "total", nullable = false)
+    private Long total;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

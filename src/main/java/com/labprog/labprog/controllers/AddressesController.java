@@ -9,17 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/addresses")
-public class AdressesController {
+public class AddressesController {
     @Autowired
     AddressesService addressesService;
 
     @GetMapping("/{uid}")
-    public ResponseEntity<Addresses> getAdress(@PathVariable UUID uid) {
+    public ResponseEntity<Addresses> getAddress(@PathVariable UUID uid) {
         try {
             Addresses address = addressesService.findById(uid);
             return new ResponseEntity<>(address, HttpStatus.OK);
