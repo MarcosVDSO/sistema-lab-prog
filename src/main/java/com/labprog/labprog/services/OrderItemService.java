@@ -12,6 +12,9 @@ public class OrderItemService {
 
     public OrderItems createOrderItem(OrderItems orderItems) {
         validate(orderItems);
+
+        orderItems.getProductSku().setStockQuantity(orderItems.getProductSku().getStockQuantity() - orderItems.getQuantity());
+
         return orderItemsRepository.save(orderItems);
     }
 

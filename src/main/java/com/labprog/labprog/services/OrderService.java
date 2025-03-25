@@ -1,6 +1,7 @@
 package com.labprog.labprog.services;
 
 import com.labprog.labprog.model.entities.*;
+import com.labprog.labprog.model.repositories.CartItemsRepository;
 import com.labprog.labprog.model.repositories.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,6 @@ public class OrderService {
     OrdersRepository ordersRepository;
     @Autowired
     OrderItemService orderItemService;
-    @Autowired
-    CartService cartService;
     @Autowired
     UserService userService;
 
