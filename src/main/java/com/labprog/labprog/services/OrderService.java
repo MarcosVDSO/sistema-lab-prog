@@ -29,6 +29,10 @@ public class OrderService {
         Users user = userService.findById(userId);
         Carts cart = user.getCart();
 
+        if (cart.getCartItems().isEmpty()) {
+            throw new RuntimeException("Cart is empty");
+        }
+
         Orders order = Orders.builder()
                 .status("DONE")
                 .orderItems(new ArrayList<>())
