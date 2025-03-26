@@ -46,6 +46,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/productSku/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/productSku/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/productSku/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/product/addComment").permitAll()
                         .anyRequest().permitAll())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
