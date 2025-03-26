@@ -1,13 +1,16 @@
 package com.labprog.labprog.controllers;
 
 import com.labprog.labprog.DTO.ProductSkuDTO;
+import com.labprog.labprog.DTO.ProductSkuForm;
 import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.services.ProductSkuService;
+import com.labprog.labprog.services.UploadImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +19,8 @@ import java.util.UUID;
 public class ProductSkuController {
     @Autowired
     private ProductSkuService productSkuServices;
+    @Autowired
+    private UploadImageService uploadImageService;
 
     @GetMapping
     public ResponseEntity<List<ProductSkus>> getAllProductSkus() {
@@ -39,13 +44,23 @@ public class ProductSkuController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductSkus> updateProductSku(@PathVariable UUID id, @RequestBody ProductSkuDTO productSkuDTO) {
+    public ResponseEntity<ProductSkus> updateProductSku(@PathVariable UUID id,
+                                                        @ModelAttribute ProductSkuForm form) {
 
         try {
-            ProductSkus productSkus = new ProductSkus(productSkuDTO);
+
+            String imageUrl = uploadImageService.saveImage(form);
+
+            ProductSkus productSkus = ProductSkus.builder()
+                    .sku(form.getSku())
+                    .price(form.getPrice())
+                    .stockQuantity(form.getStockQuantity())
+                    .productImage(imageUrl)
+                    .build();
             ProductSkus updatedProductSkus = productSkuServices.updateProductSku(id, productSkus);
+
             return new ResponseEntity<>(updatedProductSkus, HttpStatus.OK);
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | IOException e) {
             return ResponseEntity.badRequest().build();
         }
 

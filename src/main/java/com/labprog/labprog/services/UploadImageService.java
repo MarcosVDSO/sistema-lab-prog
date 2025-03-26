@@ -26,7 +26,7 @@ public class UploadImageService {
             MultipartFile file = form.getImage();
 
             if (file.isEmpty()) {
-                throw new RuntimeException("O arquivo está vazio");
+                return null;
             }
 
             String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
