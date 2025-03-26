@@ -1,5 +1,6 @@
 package com.labprog.labprog.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.labprog.labprog.DTO.AddressesDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,8 +43,12 @@ public class Addresses {
     @Column(name = "street", nullable = false)
     private String street;
 
+    @Column(name = "number", nullable = false)
+    private String number;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private Users user;
 
     public Addresses(AddressesDTO addressesDTO) {
@@ -54,6 +59,8 @@ public class Addresses {
         this.cep = addressesDTO.getCep();
         this.user = addressesDTO.getUser();
         this.addressId = addressesDTO.getAddressId();
+        this.street = addressesDTO.getStreet();
+        this.number = addressesDTO.getNumber();
         this.neighborhood = addressesDTO.getNeighborhood();
     }
 }

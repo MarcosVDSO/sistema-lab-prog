@@ -1,7 +1,10 @@
 package com.labprog.labprog.controllers;
 
+import com.labprog.labprog.DTO.AddressesDTO;
 import com.labprog.labprog.DTO.UserDTO;
+import com.labprog.labprog.model.entities.Addresses;
 import com.labprog.labprog.model.entities.Users;
+import com.labprog.labprog.services.AddressesService;
 import com.labprog.labprog.services.UserService;
 //import com.labprog.labprog.services.utils.PasswordEncryptionService;
 import org.slf4j.Logger;
@@ -54,6 +57,18 @@ public class UserController {
         Users updatedUser = userService.update(uid, user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 
+    }
+
+    @PostMapping("/address/{userId}")
+    public ResponseEntity<Users> addAddress(@PathVariable UUID userId, @RequestBody AddressesDTO addressDTO){
+        try {
+            Addresses address = new Addresses(addressDTO);
+            Users user = userService.addAddress(userId, address);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

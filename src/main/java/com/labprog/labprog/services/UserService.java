@@ -1,6 +1,7 @@
 package com.labprog.labprog.services;
 
 import com.labprog.labprog.exceptions.*;
+import com.labprog.labprog.model.entities.Addresses;
 import com.labprog.labprog.model.entities.Carts;
 import com.labprog.labprog.model.entities.Users;
 import com.labprog.labprog.model.repositories.UserRepository;
@@ -17,6 +18,8 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     CartService cartService;
+    @Autowired
+    AddressesService addressesService;
 
 
     public List<Users> findAll() {
@@ -92,6 +95,17 @@ public class UserService {
             throw new ObjectNotFoundException("User not found!");
         }
         userRepository.deleteById(customerId);
+    }
+
+    public Users addAddress(UUID userId, Addresses addressData) {
+        Users user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found!"));
+
+        Addresses address = addressesService.save(addressData);
+
+        user.getAddresses().add(address);
+        address.setUser(user);
+
+        return userRepository.save(user);
     }
 
     private void verifyCustomer(Users customer, boolean isNewCustomer) {
