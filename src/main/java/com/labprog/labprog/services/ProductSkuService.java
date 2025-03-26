@@ -1,7 +1,9 @@
 package com.labprog.labprog.services;
 
 import com.labprog.labprog.model.entities.ProductSkus;
+import com.labprog.labprog.model.entities.Products;
 import com.labprog.labprog.model.repositories.ProductSkusRepository;
+import com.labprog.labprog.model.repositories.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ public class ProductSkuService {
 
     @Autowired
     private ProductSkusRepository productSkusRepository;
+    @Autowired
+    private ProductsRepository productRepository;
 
     public ProductSkus createProductSku(ProductSkus productSku) {
 
@@ -29,6 +33,14 @@ public class ProductSkuService {
     public ProductSkus getProductSkuById(UUID id) {
         return productSkusRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product sku not found with id" + id));
+    }
+
+    public List<ProductSkus> getProductSkusByProductId(UUID productId) {
+
+        Products product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product sku not found with product id" + productId));
+
+        return product.getProductSkus();
     }
 
     public ProductSkus updateProductSku(UUID id, ProductSkus productSkuData) {

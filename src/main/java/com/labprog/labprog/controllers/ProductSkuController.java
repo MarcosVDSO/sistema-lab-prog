@@ -43,6 +43,16 @@ public class ProductSkuController {
         }
     }
 
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<List<ProductSkus>> getAllProductSkusByProductId(@PathVariable UUID productId) {
+        try {
+            List<ProductSkus> productSkus = productSkuServices.getProductSkusByProductId(productId);
+            return new ResponseEntity<>(productSkus, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ProductSkus> updateProductSku(@PathVariable UUID id,
                                                         @ModelAttribute ProductSkuForm form) {
