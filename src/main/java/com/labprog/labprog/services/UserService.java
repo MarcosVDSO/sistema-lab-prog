@@ -7,6 +7,7 @@ import com.labprog.labprog.model.entities.Users;
 import com.labprog.labprog.model.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -79,11 +80,12 @@ public class UserService {
         }
 
         if (updatedCustomer.getPassword() != null) {
-            existingCustomer.setPassword(updatedCustomer.getPassword());
+            String encryptedPassword = new BCryptPasswordEncoder().encode(updatedCustomer.getPassword());
+            existingCustomer.setPassword(encryptedPassword);
         }
 
         if (updatedCustomer.getCpf() != null) {
-            existingCustomer.setPassword(updatedCustomer.getCpf());
+            existingCustomer.setCpf(updatedCustomer.getCpf());
         }
 
         return userRepository.save(existingCustomer);
