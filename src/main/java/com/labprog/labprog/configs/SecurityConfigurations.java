@@ -40,7 +40,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/orders/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/orders/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/orders/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/product/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/product/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/product/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/product/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/productSku/**").hasRole("ADMIN")
