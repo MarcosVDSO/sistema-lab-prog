@@ -67,24 +67,24 @@ public class UserService {
             throw new DuplicateUserNameException();
         }
 
-        if (updatedCustomer.getFirstname() != null) {
+        if (updatedCustomer.getFirstname() != null && !updatedCustomer.getFirstname().isBlank()) {
             existingCustomer.setFirstname(updatedCustomer.getFirstname());
         }
 
-        if (updatedCustomer.getLastname() != null) {
+        if (updatedCustomer.getLastname() != null && !updatedCustomer.getLastname().isBlank()) {
             existingCustomer.setLastname(updatedCustomer.getLastname());
         }
 
-        if (updatedCustomer.getEmail() != null) {
+        if (updatedCustomer.getEmail() != null && !updatedCustomer.getEmail().isBlank()) {
             existingCustomer.setEmail(updatedCustomer.getEmail());
         }
 
-        if (updatedCustomer.getPassword() != null) {
+        if (updatedCustomer.getPassword() != null && !updatedCustomer.getPassword().isBlank()) {
             String encryptedPassword = new BCryptPasswordEncoder().encode(updatedCustomer.getPassword());
             existingCustomer.setPassword(encryptedPassword);
         }
 
-        if (updatedCustomer.getCpf() != null) {
+        if (updatedCustomer.getCpf() != null && !updatedCustomer.getCpf().isBlank()) {
             existingCustomer.setCpf(updatedCustomer.getCpf());
         }
 

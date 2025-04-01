@@ -31,7 +31,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/addresses/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/addresses/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/addresses/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/addresses/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/addresses/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/carts/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/carts/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/carts/**").authenticated()
