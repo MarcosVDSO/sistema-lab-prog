@@ -34,7 +34,7 @@ public class OrderService {
         }
 
         Orders order = Orders.builder()
-                .status("DONE")
+                .status("PENDING")
                 .orderItems(new ArrayList<>())
                 .user(user)
                 .total(cart.getTotal())
@@ -52,6 +52,18 @@ public class OrderService {
 
             OrderItems createdOrderItem = orderItemService.createOrderItem(orderItem);
             order.getOrderItems().add(createdOrderItem);
+        }
+
+        return ordersRepository.save(order);
+    }
+
+    public Orders changeOrderStatus(UUID orderId, String orderStatus) {
+
+        Orders order = ordersRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found!"));
+
+        if (orderStatus != null) {
+            order.setStatus(orderStatus);
         }
 
         return ordersRepository.save(order);

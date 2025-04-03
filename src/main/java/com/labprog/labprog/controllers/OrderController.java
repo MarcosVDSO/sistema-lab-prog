@@ -1,5 +1,6 @@
 package com.labprog.labprog.controllers;
 
+import com.labprog.labprog.DTO.ChangeStatusDTO;
 import com.labprog.labprog.model.entities.Orders;
 import com.labprog.labprog.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,13 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public ResponseEntity<Orders> findOrder(@PathVariable UUID orderId) {
         Orders order = orderService.getOrderById(orderId);
+
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    @PutMapping("/changeStatus/{orderId}")
+    public ResponseEntity<Orders> changeStatus(@PathVariable UUID orderId, @RequestBody ChangeStatusDTO status) {
+        Orders order = orderService.changeOrderStatus(orderId, status.getStatus());
 
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
