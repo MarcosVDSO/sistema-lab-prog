@@ -4,6 +4,10 @@ import com.labprog.labprog.model.entities.*;
 import com.labprog.labprog.model.repositories.CartItemsRepository;
 import com.labprog.labprog.model.repositories.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -69,8 +73,9 @@ public class OrderService {
         return ordersRepository.save(order);
     }
 
-    public List<Orders> getAllOrders() {
-        return ordersRepository.findAll();
+    public Page<Orders> getAllOrders(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return ordersRepository.findAll(pageable);
     }
 
     public Orders getOrderById(UUID orderId) {
