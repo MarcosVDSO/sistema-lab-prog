@@ -5,9 +5,12 @@ import com.labprog.labprog.model.entities.Products;
 import com.labprog.labprog.model.repositories.ProductSkusRepository;
 import com.labprog.labprog.model.repositories.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,8 +29,9 @@ public class ProductSkuService {
         return productSkusRepository.save(productSku);
     }
 
-    public List<ProductSkus> getAllProductSkus() {
-        return productSkusRepository.findAll();
+    public Page<ProductSkus> getAllProductSkus(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "sku"));
+        return productSkusRepository.findAll(pageable);
     }
 
     public ProductSkus getProductSkuById(UUID id) {

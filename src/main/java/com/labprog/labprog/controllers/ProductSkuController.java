@@ -6,6 +6,7 @@ import com.labprog.labprog.model.entities.ProductSkus;
 import com.labprog.labprog.services.ProductSkuService;
 import com.labprog.labprog.services.UploadImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,12 @@ public class ProductSkuController {
     private UploadImageService uploadImageService;
 
     @GetMapping
-    public ResponseEntity<List<ProductSkus>> getAllProductSkus() {
+    public ResponseEntity<Page<ProductSkus>> getAllProductSkus(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
         try {
-            List<ProductSkus> productSkus = productSkuServices.getAllProductSkus();
+            Page<ProductSkus> productSkus = productSkuServices.getAllProductSkus(page, size);
             return new ResponseEntity<>(productSkus, HttpStatus.OK);
         } catch (RuntimeException e) {
             e.printStackTrace();
