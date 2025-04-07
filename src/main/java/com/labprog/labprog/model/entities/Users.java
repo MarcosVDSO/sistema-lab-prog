@@ -31,6 +31,7 @@ public class Users implements UserDetails {
     private List<Addresses> addresses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Orders> orders;
 
     @Setter

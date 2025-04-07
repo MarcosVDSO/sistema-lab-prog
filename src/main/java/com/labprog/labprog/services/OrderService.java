@@ -27,7 +27,7 @@ public class OrderService {
         return ordersRepository.findAll();
     }
 
-    public Orders save(UUID userId) {
+    public Orders save(UUID userId, String status) {
 
         Users user = userService.findById(userId);
         Carts cart = user.getCart();
@@ -37,7 +37,7 @@ public class OrderService {
         }
 
         Orders order = Orders.builder()
-                .status("PENDING")
+                .status(status)
                 .orderItems(new ArrayList<>())
                 .user(user)
                 .total(cart.getTotal())
@@ -80,6 +80,11 @@ public class OrderService {
     public Orders getOrderById(UUID orderId) {
         return ordersRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found!"));
+    }
+
+    public Page<Orders> getOrderByUserid(UUID userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return ordersRepository.findAll(pageable);
     }
 
 }

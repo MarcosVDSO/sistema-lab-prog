@@ -38,7 +38,6 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private Users user;
 
     @OneToMany(mappedBy = "order")

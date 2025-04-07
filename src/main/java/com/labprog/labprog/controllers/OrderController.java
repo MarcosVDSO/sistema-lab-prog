@@ -21,9 +21,9 @@ public class OrderController {
     OrderService orderService;
 
     @PostMapping("/{cartId}")
-    public ResponseEntity<Orders> createOrder(@PathVariable UUID cartId) {
+    public ResponseEntity<Orders> createOrder(@PathVariable UUID cartId, @RequestParam String status) {
 
-        Orders order = orderService.save(cartId);
+        Orders order = orderService.save(cartId, status);
 
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
@@ -34,6 +34,17 @@ public class OrderController {
             @RequestParam(defaultValue = "10") int size
     ) {
         Page<Orders> orders = orderService.getAllOrders(page, size);
+
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+    @GetMapping("/byUserId/{userId}")
+    public ResponseEntity<Page<Orders>> findAllOrdersByUserId(
+            @PathVariable UUID userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<Orders> orders = orderService.getOrderByUserid(userId, page, size);
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
