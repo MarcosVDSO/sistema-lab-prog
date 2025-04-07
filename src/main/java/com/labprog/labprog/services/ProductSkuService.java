@@ -39,12 +39,10 @@ public class ProductSkuService {
                 .orElseThrow(() -> new RuntimeException("Product sku not found with id" + id));
     }
 
-    public List<ProductSkus> getProductSkusByProductId(UUID productId) {
+    public Page<ProductSkus> getProductSkusByProductId(UUID productId, int page, int size) {
 
-        Products product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product sku not found with product id" + productId));
-
-        return product.getProductSkus();
+        Pageable pageable = PageRequest.of(page, size);
+        return productSkusRepository.findByProduct_ProductId(productId, pageable);
     }
 
     public ProductSkus updateProductSku(UUID id, ProductSkus productSkuData) {

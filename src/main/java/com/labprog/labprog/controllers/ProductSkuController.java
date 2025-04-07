@@ -48,9 +48,13 @@ public class ProductSkuController {
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<List<ProductSkus>> getAllProductSkusByProductId(@PathVariable UUID productId) {
+    public ResponseEntity<Page<ProductSkus>> getAllProductSkusByProductId(
+            @PathVariable UUID productId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
         try {
-            List<ProductSkus> productSkus = productSkuServices.getProductSkusByProductId(productId);
+            Page<ProductSkus> productSkus = productSkuServices.getProductSkusByProductId(productId, page, size);
             return new ResponseEntity<>(productSkus, HttpStatus.OK);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();

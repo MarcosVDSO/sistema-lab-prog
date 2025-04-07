@@ -5,6 +5,7 @@ import com.labprog.labprog.model.entities.Categories;
 import com.labprog.labprog.services.CategoryService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,12 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Categories>> getAllCategories() {
+    public ResponseEntity<Page<Categories>> getAllCategories(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
         try {
-            List<Categories> categories = categoryService.getAllCategories();
+            Page<Categories> categories = categoryService.getAllCategories(page, size);
             return new ResponseEntity<>(categories, HttpStatus.OK);
         } catch (RuntimeException e) {
             e.printStackTrace();

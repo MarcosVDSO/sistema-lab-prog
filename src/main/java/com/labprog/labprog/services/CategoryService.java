@@ -4,6 +4,10 @@ import com.labprog.labprog.model.entities.Categories;
 import com.labprog.labprog.model.repositories.CategoriesRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,9 +33,9 @@ public class CategoryService {
         return categoriesRepository.save(category);
     }
 
-    public List<Categories> getAllCategories() {
-
-        return categoriesRepository.findAll();
+    public Page<Categories> getAllCategories(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return categoriesRepository.findAll(pageable);
     }
 
     public Categories getCategoryById(UUID category_id) {

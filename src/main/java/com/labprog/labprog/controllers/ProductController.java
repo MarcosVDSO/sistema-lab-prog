@@ -8,6 +8,7 @@ import com.labprog.labprog.model.entities.Review;
 import com.labprog.labprog.services.ProductService;
 import com.labprog.labprog.services.UploadImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -99,9 +100,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Products>> getAllProducts() {
+    public ResponseEntity<Page<Products>> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
         try {
-            List<Products> products = productServices.getAllProducts();
+            Page<Products> products = productServices.getAllProducts(page, size);
             return new ResponseEntity<>(products, HttpStatus.OK);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();

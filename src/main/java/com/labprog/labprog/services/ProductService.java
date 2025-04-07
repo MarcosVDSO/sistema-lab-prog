@@ -6,6 +6,10 @@ import com.labprog.labprog.model.repositories.ProductsRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,8 +46,9 @@ public class ProductService {
         return productsRepository.save(product);
     }
 
-    public List<Products> getAllProducts() {
-        return productsRepository.findAll();
+    public Page<Products> getAllProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productsRepository.findAll(pageable);
     }
 
     public Products getProductById(UUID id) {
