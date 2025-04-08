@@ -40,6 +40,7 @@ public class ProductSkusRepositoryTest {
                 .sku("123456")
                 .stockQuantity(10L)
                 .price(5L)
+                .productImage("teste")
                 .build();
 
         ProductSkus save = repository.save(productSkus);

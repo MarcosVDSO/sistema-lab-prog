@@ -29,6 +29,7 @@ public class UserRepositoryTest {
                 .cpf("123")
                 .role("ADMIN")
 //                .profilePhoto("6131")
+                .status("ENABLED")
                 .email("masadasdas").build();
 
         Users save = repository.save(customer);

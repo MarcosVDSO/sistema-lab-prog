@@ -33,6 +33,7 @@ public class AddressServiceTest {
                 .cep("00000000")
                 .neighborhood("Calhau")
                 .street("Holandeses")
+                .number("20")
                 .build();
 
         Addresses createdAddress = addressesService.save(address);
@@ -150,6 +151,7 @@ public class AddressServiceTest {
                     .cep("00000000")
                     .neighborhood("   ")
                     .street("Holandeses")
+                    .number("20")
                     .build()
             );
         });
@@ -168,6 +170,7 @@ public class AddressServiceTest {
                     .cep("00000000")
                     .neighborhood("Calhau")
                     .street("   ")
+                    .number("20")
                     .build()
             );
         });
@@ -185,6 +188,7 @@ public class AddressServiceTest {
                 .cep("00000000")
                 .neighborhood("Calhau")
                 .street("Holandeses")
+                .number("20")
                 .build();
 
         Addresses createdAddress = addressesService.save(address);
@@ -221,6 +225,7 @@ public class AddressServiceTest {
                 .cep("00000000")
                 .neighborhood("Calhau")
                 .street("Holandeses")
+                .number("20")
                 .build();
 
         Addresses createdAddress = addressesService.save(address);
@@ -256,6 +261,7 @@ public class AddressServiceTest {
                 .cep("00000000")
                 .neighborhood("Calhau")
                 .street("Holandeses")
+                .number("20")
                 .build();
 
         Addresses createdAddress = addressesService.save(address);

@@ -30,6 +30,7 @@ public class AddressRepositoryTest {
                 .cep("123")
                 .neighborhood("Lira")
                 .street("Pedro Lessa")
+                .number("10")
                 .build();
 
         Addresses save = repository.save(address);
