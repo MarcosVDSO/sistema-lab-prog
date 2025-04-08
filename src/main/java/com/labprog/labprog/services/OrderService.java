@@ -84,7 +84,7 @@ public class OrderService {
 
     public Page<Orders> getOrderByUserid(UUID userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-        return ordersRepository.findAll(pageable);
+        return ordersRepository.findByUser_UserId(userId, pageable);
     }
 
 }
