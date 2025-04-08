@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/carts")
-@CrossOrigin(origins = "https://system-lab-prog-front-q1oo.vercel.app", allowedHeaders = "*")
+@CrossOrigin(origins = "https://system-lab-prog-front-production.up.railway.app", allowedHeaders = "*")
 public class CartController {
 
     @Autowired

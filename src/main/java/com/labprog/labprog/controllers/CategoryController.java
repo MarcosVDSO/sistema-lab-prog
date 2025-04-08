@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/categories")
-@CrossOrigin(origins = "https://system-lab-prog-front-q1oo.vercel.app", allowedHeaders = "*")
+@CrossOrigin(origins = "https://system-lab-prog-front-production.up.railway.app", allowedHeaders = "*")
 public class CategoryController {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(CategoryController.class);

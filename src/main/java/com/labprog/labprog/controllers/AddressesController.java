@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/addresses")
-@CrossOrigin(origins = "https://system-lab-prog-front-q1oo.vercel.app", allowedHeaders = "*")
+@CrossOrigin(origins = "https://system-lab-prog-front-production.up.railway.app", allowedHeaders = "*")
 public class AddressesController {
     @Autowired
     AddressesService addressesService;
