@@ -21,6 +21,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/product")
+@CrossOrigin(origins = "https://system-lab-prog-front-q1oo.vercel.app", allowedHeaders = "*")
 public class ProductController {
 
     @Autowired

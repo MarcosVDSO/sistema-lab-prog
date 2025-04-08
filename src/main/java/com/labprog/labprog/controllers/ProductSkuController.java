@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/productSku")
+@CrossOrigin(origins = "https://system-lab-prog-front-q1oo.vercel.app", allowedHeaders = "*")
 public class ProductSkuController {
     @Autowired
     private ProductSkuService productSkuServices;
