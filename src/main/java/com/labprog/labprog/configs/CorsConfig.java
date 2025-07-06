@@ -15,6 +15,7 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:5173",
                                 "https://system-lab-prog-front-q1oo.vercel.app",
+                                "https://classy-bublanina-a5784e.netlify.app/",
                                 "https://system-lab-prog-front-production.up.railway.app")
                         .allowedMethods("GET", "PUT", "DELETE", "POST")
                         .allowedHeaders("*")
